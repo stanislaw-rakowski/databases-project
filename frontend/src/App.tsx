@@ -2,7 +2,7 @@ import * as React from 'react'
 
 const App = () => {
 	React.useEffect(() => {
-		const getStatus = async () => await fetch('http://localhost:5000/status')
+		const getStatus = async () => await fetch(`${import.meta.env.VITE_SERVER_URL}status`)
 
 		getStatus()
 	}, [])
