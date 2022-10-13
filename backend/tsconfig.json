@@ -5,6 +5,7 @@
     "sourceMap": true
   },
   "include": [
+    "*.d.ts",
     "src/**/*.ts"
   ]
 }

@@ -5,5 +5,3 @@ CREATE TABLE `Posts` (
     `content` VARCHAR(255),
     PRIMARY KEY (`id`)
 );
-
-INSERT INTO `Posts` (`id`, `author`, `title`, `content`) VALUES (`123`, `John`, `test`, `content`);
