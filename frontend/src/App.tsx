@@ -1,13 +1,19 @@
 import { ThemeProvider } from 'styled-components'
+import { Routes, Route } from 'react-router-dom'
 import theme from './theme'
 import GlobalStyles from './GlobalStyles'
-import HomePage from './components/HomePage'
+import HomePage from './pages/HomePage'
+import LandingPage from './pages/LandingPage'
 
 const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyles />
-			<HomePage />
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/about" element={<LandingPage />} />
+				<Route path="/browse" element={<h1>browse animals</h1>} />
+			</Routes>
 		</ThemeProvider>
 	)
 }

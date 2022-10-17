@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 	padding: 2rem;
 `
 
-const HomePage = () => {
+const LandingPage = () => {
 	const [data, setData] = React.useState<any>(null)
 
 	React.useEffect(() => {
@@ -25,10 +25,10 @@ const HomePage = () => {
 
 	return (
 		<Wrapper>
-			<h1>Hello World!</h1>
+			<h1>Landing Page</h1>
 			<p>{JSON.stringify(data)}</p>
 		</Wrapper>
 	)
 }
 
-export default HomePage
+export default LandingPage
