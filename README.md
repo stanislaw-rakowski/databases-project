@@ -6,7 +6,7 @@ Enter frontend app folder:
 
 `cd frontend`
 
-Create `.env` file at the root of directory and fill it with: 
+Create `.env` file at the root of directory and fill it with:
 
 `VITE_SERVER_URL=http://localhost:5000/`
 
@@ -20,7 +20,6 @@ Start the app in dev mode:
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-
 ## Backend development
 
 Enter backend app folder:
@@ -31,17 +30,13 @@ Install the dependencies:
 
 `npm i`
 
-Start the app in dev mode:
-
-`npm run dev`
-
-Build Docker image:
-
-`docker-compose build`
-
 Spin up Docker container:
 
 `docker-compose up`
+
+Start the app in dev mode:
+
+`npm run dev`
 
 The server is running at [http://localhost:5000](http://localhost:5000)
 

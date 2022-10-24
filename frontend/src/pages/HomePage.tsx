@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Heading, StyledLink, LinksSection } from '../components/common'
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -23,22 +23,6 @@ const Wrapper = styled.div`
 			background-position: 0% 50%;
 		}
 	}
-`
-
-const Heading = styled.h1`
-	font-size: 7rem;
-	font-weight: 800;
-`
-
-const StyledLink = styled(Link)`
-	font-size: 2rem;
-	color: ${({ theme }) => theme.colors.primaryFontColor};
-`
-
-const LinksSection = styled.ul`
-	display: flex;
-	gap: 4rem;
-	list-style: none;
 `
 
 const HomePage = () => {
