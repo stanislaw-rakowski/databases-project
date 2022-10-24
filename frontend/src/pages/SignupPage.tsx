@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { Wrapper, FormIsland } from '../components/form'
+import { Wrapper, FormIsland } from '../components/common'
 import AuthForm from '../components/AuthForm'
 
 const SignupPage = () => {
@@ -12,7 +12,7 @@ const SignupPage = () => {
 	}
 
 	return (
-		<Wrapper onSubmit={handleFormSubmit}>
+		<Wrapper>
 			<h1>Sign up</h1>
 			<FormIsland>
 				<AuthForm setEmail={setEmail} setPassword={setPassword} onSubmit={handleFormSubmit} />
