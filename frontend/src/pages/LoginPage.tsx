@@ -6,9 +6,21 @@ const LoginPage = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	const handleFormSubmit = (event: FormEvent) => {
+	const handleFormSubmit = async (event: FormEvent) => {
 		event.preventDefault()
-		console.log({ email, password })
+
+		await (
+			await fetch(`${import.meta.env.VITE_SERVER_URL}login`, {
+				method: 'POST',
+				body: JSON.stringify({
+					email,
+					password,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+		).json()
 	}
 
 	return (
