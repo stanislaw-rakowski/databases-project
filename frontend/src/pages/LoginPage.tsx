@@ -15,7 +15,7 @@ const LoginPage = () => {
 		<Wrapper>
 			<h1>Log in</h1>
 			<FormIsland>
-				<AuthForm setEmail={setEmail} setPassword={setPassword} onSubmit={handleFormSubmit} />
+				<AuthForm ctaText="Log in" setEmail={setEmail} setPassword={setPassword} onSubmit={handleFormSubmit} />
 			</FormIsland>
 		</Wrapper>
 	)

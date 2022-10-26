@@ -44,12 +44,13 @@ const SubmitButton = styled.button`
 `
 
 type Props = {
+	ctaText: string
 	setEmail: (email: string) => void
 	setPassword: (password: string) => void
 	onSubmit: (event: React.FormEvent) => void
 }
 
-const AuthForm: React.FC<Props> = ({ setEmail, setPassword, onSubmit }) => {
+const AuthForm: React.FC<Props> = ({ ctaText, setEmail, setPassword, onSubmit }) => {
 	return (
 		<StyledForm onSubmit={(event) => onSubmit(event)}>
 			<Field>
@@ -72,7 +73,7 @@ const AuthForm: React.FC<Props> = ({ setEmail, setPassword, onSubmit }) => {
 					required
 				/>
 			</Field>
-			<SubmitButton type="submit">Log in</SubmitButton>
+			<SubmitButton type="submit">{ctaText}</SubmitButton>
 		</StyledForm>
 	)
 }

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Heading, StyledLink, LinksSection } from '../components/common'
 
@@ -41,17 +40,6 @@ const Image = styled.img`
 `
 
 const LandingPage = () => {
-	const [data, setData] = useState<any>(null)
-
-	useEffect(() => {
-		const getStatus = async () => {
-			const res = await (await fetch(`${import.meta.env.VITE_SERVER_URL}status`)).json()
-			setData(res)
-		}
-
-		getStatus()
-	}, [])
-
 	return (
 		<Wrapper>
 			<Nav>

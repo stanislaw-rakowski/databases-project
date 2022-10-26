@@ -1,7 +1,14 @@
-CREATE TABLE `Posts` (
+CREATE TABLE `Organizations` (
     `id` VARCHAR(255) NOT NULL,
-    `author` VARCHAR(255),
-    `title` VARCHAR(255),
-    `content` VARCHAR(255),
+    `email` VARCHAR(255),
+    `password` VARCHAR(255),
     PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `Shelters` (
+    `id` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `owner` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (owner) REFERENCES Organizations(id)
+)
