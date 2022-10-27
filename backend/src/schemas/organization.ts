@@ -11,6 +11,7 @@ export type Organization = Static<typeof OrganizationSchema>
 export const OrganizationRequestSchema = Type.Omit(OrganizationSchema, ['id'])
 
 export const LoginResponseSchema = Type.Object({
+	organizationId: Type.String(),
 	email: Type.String(),
 	token: Type.String(),
 })

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import Cookies from 'universal-cookie'
+import { seedDatabase } from '../lib/api'
+import { removeAuth } from '../lib/auth'
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -12,27 +13,19 @@ const Wrapper = styled.div`
 `
 
 const ManagementPage = () => {
-	const cookies = new Cookies()
-	const token = cookies.get('TOKEN')
-
 	useEffect(() => {
-		const get = async () => {
-			await (
-				await fetch(`${import.meta.env.VITE_SERVER_URL}seed`, {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
-					},
-				})
-			).json()
-		}
-		get()
+		seedDatabase()
 	}, [])
+
+	const handleLogOut = () => {
+		removeAuth()
+		window.location.reload()
+	}
 
 	return (
 		<Wrapper>
 			<h1>Management App</h1>
+			<button onClick={handleLogOut}>Log out</button>
 		</Wrapper>
 	)
 }

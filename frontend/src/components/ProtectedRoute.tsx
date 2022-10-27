@@ -1,9 +1,8 @@
 import { Outlet, Navigate } from 'react-router-dom'
-import Cookies from 'universal-cookie'
+import { getAuth } from '../lib/auth'
 
 const ProtectedRoute = ({ redirectPath = '/about' }) => {
-	const cookies = new Cookies()
-	const token = cookies.get('TOKEN')
+	const token = getAuth()?.token
 
 	if (!token) {
 		return <Navigate to={redirectPath} replace />

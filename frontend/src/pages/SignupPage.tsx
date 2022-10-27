@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react'
 import { Wrapper, FormIsland } from '../components/common'
 import AuthForm from '../components/AuthForm'
+import { requestSignup } from '../lib/api'
 
 const SignupPage = () => {
 	const [email, setEmail] = useState('')
@@ -9,18 +10,7 @@ const SignupPage = () => {
 	const handleFormSubmit = async (event: FormEvent) => {
 		event.preventDefault()
 
-		await (
-			await fetch(`${import.meta.env.VITE_SERVER_URL}signup`, {
-				method: 'POST',
-				body: JSON.stringify({
-					email,
-					password,
-				}),
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			})
-		).json()
+		requestSignup({ email, password })
 	}
 
 	return (

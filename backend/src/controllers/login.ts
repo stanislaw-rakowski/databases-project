@@ -42,6 +42,7 @@ export const LoginController = (server: FastifyInstance) => ({
 			reply.status(200)
 
 			return {
+				organizationId: organization.id,
 				email: organization.email,
 				token,
 			}
