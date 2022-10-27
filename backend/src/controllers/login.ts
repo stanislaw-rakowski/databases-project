@@ -35,7 +35,7 @@ export const LoginController = (server: FastifyInstance) => ({
 					organizationId: organization.id,
 					email: organization.email,
 				},
-				'Random_key',
+				'RANDOM-TOKEN',
 				{ expiresIn: '24h' },
 			)
 
