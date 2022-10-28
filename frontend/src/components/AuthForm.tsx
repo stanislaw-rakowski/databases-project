@@ -27,6 +27,11 @@ const Input = styled.input`
 	border-radius: 4px;
 `
 
+const ErrorMessage = styled.span`
+	font-size: small;
+	color: red;
+`
+
 const SubmitButton = styled.button`
 	width: 100%;
 	appearance: none;
@@ -48,9 +53,10 @@ type Props = {
 	setEmail: (email: string) => void
 	setPassword: (password: string) => void
 	onSubmit: (event: React.FormEvent) => void
+	error: string | null
 }
 
-const AuthForm: React.FC<Props> = ({ ctaText, setEmail, setPassword, onSubmit }) => {
+const AuthForm: React.FC<Props> = ({ ctaText, setEmail, setPassword, onSubmit, error }) => {
 	return (
 		<StyledForm onSubmit={(event) => onSubmit(event)}>
 			<Field>
@@ -73,6 +79,7 @@ const AuthForm: React.FC<Props> = ({ ctaText, setEmail, setPassword, onSubmit })
 					required
 				/>
 			</Field>
+			{error && <ErrorMessage>{error}</ErrorMessage>}
 			<SubmitButton type="submit">{ctaText}</SubmitButton>
 		</StyledForm>
 	)

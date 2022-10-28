@@ -1,5 +1,10 @@
 import { getAuth, removeAuth } from './auth'
 
+export type FetchError<T = unknown> = Error & {
+	data: T
+	status: number
+}
+
 export const fetcher = async <T>(url: string, options?: RequestInit): Promise<T> => {
 	const token = getAuth()?.token
 
@@ -26,5 +31,9 @@ export const fetcher = async <T>(url: string, options?: RequestInit): Promise<T>
 		window.location.reload()
 	}
 
-	throw new Error('Unable to fetch')
+	const error = new Error('Unable to fetch') as FetchError
+	error.status = response.status
+	error.data = data
+
+	throw error
 }

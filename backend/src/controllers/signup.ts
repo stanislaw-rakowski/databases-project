@@ -13,7 +13,7 @@ export const SignupController = (server: FastifyInstance) => ({
 			])) as [Organization[], any]
 
 			if (organizations.length > 0) {
-				reply.status(401)
+				reply.status(403)
 
 				return {
 					message: `Organization with email ${email} is already registered`,
