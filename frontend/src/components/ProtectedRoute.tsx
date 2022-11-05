@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import { getAuth } from '../lib/auth'
 
-const ProtectedRoute = ({ redirectPath = '/about' }) => {
+const ProtectedRoute = ({ redirectPath = '/log-in' }) => {
 	const token = getAuth()?.token
 
 	if (!token) {

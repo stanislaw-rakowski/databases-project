@@ -1,25 +1,15 @@
 import styled from 'styled-components'
-import { Heading, StyledLink, LinksSection } from '../components/common'
+import LandingNav from '../components/LandingNav'
 
 const Wrapper = styled.div`
 	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	background-color: ${({ theme }) => theme.colors.primaryBackground};
-	padding: 2rem 150px;
 `
 
-const Nav = styled.nav`
-	position: fixed;
-	top: 0;
-	right: 0;
+const Content = styled.main`
+	height: calc(100% - 100px);
 	width: 100%;
-	height: 100px;
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	padding: 1rem 3rem;
 `
 
 const Section = styled.div`
@@ -31,34 +21,46 @@ const Section = styled.div`
 	justify-content: center;
 `
 
+const Heading = styled.h1`
+	font-size: 5rem;
+	font-weight: 800;
+	margin: 2rem;
+`
+
+const Color = styled.span`
+	color: ${({ theme }) => theme.colors.accentFontColor};
+`
+
 const SubHeading = styled.p`
 	font-size: 2rem;
+	margin: 0 2rem;
 `
 
 const Image = styled.img`
-	height: 50%;
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
 `
 
 const LandingPage = () => {
 	return (
 		<Wrapper>
-			<Nav>
-				<LinksSection>
-					<li>
-						<StyledLink to="/sign-up">Sign up</StyledLink>
-					</li>
-					<li>
-						<StyledLink to="/log-in">Log in</StyledLink>
-					</li>
-				</LinksSection>
-			</Nav>
-			<Section>
-				<Heading>Manage your animals like a pro</Heading>
-				<SubHeading>sign up today for our all in one animal management platform</SubHeading>
-			</Section>
-			<Section>
-				<Image src="src/assets/cat-and-dog.png" alt="" />
-			</Section>
+			<LandingNav />
+			<Content>
+				<Section>
+					<Heading>
+						Manage your animals <br />
+						<Color>like a pro</Color>
+					</Heading>
+					<SubHeading>sign up today for our all in one animal management platform</SubHeading>
+				</Section>
+				<Section>
+					<Image
+						src="https://thumbs.dreamstime.com/b/man-his-dog-beautiful-red-mountain-forest-landscape-man-his-dog-beautiful-red-mountain-forest-landscape-vector-144740090.jpg"
+						alt=""
+					/>
+				</Section>
+			</Content>
 		</Wrapper>
 	)
 }

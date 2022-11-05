@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Heading, StyledLink, LinksSection } from '../components/common'
+import { Heading } from '../components/common'
+import Link from '../components/Link'
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -25,6 +26,12 @@ const Wrapper = styled.div`
 	}
 `
 
+const LinksSection = styled.ul`
+	display: flex;
+	gap: 4rem;
+	list-style: none;
+`
+
 const HomePage = () => {
 	return (
 		<Wrapper>
@@ -34,10 +41,10 @@ const HomePage = () => {
 			<nav>
 				<LinksSection>
 					<li>
-						<StyledLink to="/browse">Browse animals</StyledLink>
+						<Link to="/browse" variant="basic" text="Browse animals" />
 					</li>
 					<li>
-						<StyledLink to="/about">Manager's app</StyledLink>
+						<Link to="/about" variant="button" text="Manager's app" />
 					</li>
 				</LinksSection>
 			</nav>

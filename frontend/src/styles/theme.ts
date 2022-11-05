@@ -1,12 +1,15 @@
 const theme = {
 	colors: {
-		primaryBackground: '#242424',
-		secondaryBackground: '#141414',
-		primaryFontColor: '#e9e9e9',
-		secondaryFontColor: '#a8a8a8',
-		primaryButtonBackground: '#6daaf8',
-		primaryButtonBackgroundHover: '#9dceff',
-		destructiveButtonBackground: '#d64646',
+		primaryBackground: '#111728',
+		secondaryBackground: '#1F2937',
+		primaryFontColor: '#FFFFFF',
+		secondaryFontColor: '#9CA3AF',
+		accentFontColor: '#818CF8',
+		primaryButtonBackground: '#6366F1',
+		secondaryButtonBackground: '#4B5563',
+		primaryButtonBackgroundHover: '#4E46E5',
+		secondaryButtonBackgroundHover: '#384151',
+		destructiveButtonBackground: '#D64646',
 	},
 } as const
 
