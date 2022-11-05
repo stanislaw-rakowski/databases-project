@@ -57,6 +57,7 @@ const LandingPage = () => {
 				<SubHeading>sign up today for our all in one animal management platform</SubHeading>
 			</Section>
 			<Section>
+				<h1 className="text-3xl font-bold underline bg-green-400">Hello world!</h1>
 				<Image src="src/assets/cat-and-dog.png" alt="" />
 			</Section>
 		</Wrapper>
