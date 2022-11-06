@@ -39,6 +39,8 @@ export const LoginController = (server: FastifyInstance) => ({
 				{ expiresIn: '24h' },
 			)
 
+			reply.setCookie('token', token)
+
 			reply.status(200)
 
 			return {
