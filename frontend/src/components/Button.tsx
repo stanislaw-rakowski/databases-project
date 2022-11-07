@@ -20,8 +20,14 @@ const SubmitButton = styled(BaseButton)`
 	width: 100%;
 `
 
+const HoverFrameButton = styled(BaseButton)`
+	&:hover {
+		border: 1px solid ${({ theme }) => theme.colors.primaryFontColor};
+	}
+`
+
 type Props = {
-	variant: 'base' | 'submit'
+	variant: 'base' | 'submit' | 'hover-frame'
 	children: React.ReactNode
 	onClick?: () => void
 }
@@ -37,6 +43,9 @@ const Button = ({ children, onClick, variant }: Props) => {
 					{children}
 				</SubmitButton>
 			)
+
+		case 'hover-frame':
+			return <HoverFrameButton onClick={onClick}>{children}</HoverFrameButton>
 	}
 }
 

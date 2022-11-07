@@ -24,7 +24,7 @@ const LandingNav = () => {
 			<DogPaw />
 			<LinksSection>
 				<li>
-					<Link to="/log-in" variant="basic" text="Log in" />
+					<Link to="/log-in" variant="hover-frame" text="Log in" />
 				</li>
 				<li>
 					<Link to="/sign-up" variant="button" text="Sign up" />

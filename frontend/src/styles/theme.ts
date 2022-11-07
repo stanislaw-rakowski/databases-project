@@ -10,6 +10,8 @@ const theme = {
 		primaryButtonBackgroundHover: '#4E46E5',
 		secondaryButtonBackgroundHover: '#384151',
 		destructiveButtonBackground: '#D64646',
+		sideBarSurface: '#2c2c2c',
+		sideBarSurfaceHover: '#151515',
 	},
 } as const
 

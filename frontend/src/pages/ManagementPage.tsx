@@ -1,16 +1,19 @@
 import styled from 'styled-components'
 import { seedDatabase } from '../lib/api'
 import { removeAuth } from '../lib/auth'
+import SideBarMenu from '../components/SideBarMenu'
 
 const Wrapper = styled.div`
 	height: 100%;
+	width: 100%;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 20px;
+`
+
+const Content = styled.main`
+	height: 100%;
+	width: calc(100% - 60px);
+	padding: 2rem;
 	background-color: ${({ theme }) => theme.colors.primaryBackground};
-	padding: 2rem 150px;
 `
 
 const ManagementPage = () => {
@@ -21,9 +24,12 @@ const ManagementPage = () => {
 
 	return (
 		<Wrapper>
-			<h1>Management App</h1>
-			<button onClick={handleLogOut}>Log out</button>
-			<button onClick={seedDatabase}>Seed database</button>
+			<SideBarMenu />
+			<Content>
+				<h1>Management App</h1>
+				<button onClick={handleLogOut}>Log out</button>
+				<button onClick={seedDatabase}>Seed database</button>
+			</Content>
 		</Wrapper>
 	)
 }

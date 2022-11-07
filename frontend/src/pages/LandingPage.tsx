@@ -56,7 +56,7 @@ const LandingPage = () => {
 				</Section>
 				<Section>
 					<Image
-						src="https://thumbs.dreamstime.com/b/man-his-dog-beautiful-red-mountain-forest-landscape-man-his-dog-beautiful-red-mountain-forest-landscape-vector-144740090.jpg"
+						src="https://www.creativefabrica.com/wp-content/uploads/2020/12/01/Horizontal-Background-Landscape-with-Dog-Graphics-6955276.jpg"
 						alt=""
 					/>
 				</Section>
