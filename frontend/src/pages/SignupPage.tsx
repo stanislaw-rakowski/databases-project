@@ -1,8 +1,24 @@
 import { FormEvent, useState } from 'react'
 import styled from 'styled-components'
 import { Wrapper, FormIsland } from '../components/common'
-import AuthForm from '../components/AuthForm'
 import { requestSignup } from '../lib/api'
+import InputField from '../components/InputField'
+import Button from '../components/Button'
+
+const StyledForm = styled.form`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	border-radius: 8px;
+`
+
+const ErrorMessage = styled.span`
+	font-size: small;
+	color: red;
+`
 
 const SuccessMessage = styled.span`
 	color: lightgreen;
@@ -29,13 +45,12 @@ const SignupPage = () => {
 		<Wrapper>
 			<h1>Sign up</h1>
 			<FormIsland>
-				<AuthForm
-					ctaText="Sign up"
-					setEmail={setEmail}
-					setPassword={setPassword}
-					onSubmit={handleFormSubmit}
-					error={error}
-				/>
+				<StyledForm onSubmit={handleFormSubmit}>
+					<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
+					<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
+					{error && <ErrorMessage>{error}</ErrorMessage>}
+					<Button variant="submit">Sign up</Button>
+				</StyledForm>
 			</FormIsland>
 			{success && <SuccessMessage>{success}</SuccessMessage>}
 		</Wrapper>
