@@ -1,5 +1,6 @@
 import { fetcher } from './fetcher'
-import { AuthData, AuthRequest } from '../types'
+import { AuthData, AuthRequest, OrganizationIdRequest } from '../types'
+import { getAuth } from './auth'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
 
@@ -23,6 +24,13 @@ export const requestLogin = (data: AuthRequest) => {
 
 export const requestSignup = (data: AuthRequest) => {
 	return callApiEndpoint<AuthRequest, AuthData>('POST', `${baseUrl}/signup`, data)
+}
+
+export const deleteAccount = () => {
+	const organizationId = getAuth()!.organizationId
+	return callApiEndpoint<OrganizationIdRequest, { message: string }>('DELETE', `${baseUrl}/account/delete`, {
+		organizationId,
+	})
 }
 
 export const seedDatabase = () => {

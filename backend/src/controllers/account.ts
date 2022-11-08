@@ -102,4 +102,24 @@ export const AccountController = (server: FastifyInstance) => ({
 			}
 		}
 	},
+	async deleteAccount(request: FastifyRequest<{ Body: { organizationId: string } }>, reply: FastifyReply) {
+		try {
+			const { organizationId } = request.body
+
+			await server.mysql.query('DELETE FROM `Accounts` WHERE `organizationId` = ?', [organizationId])
+
+			reply.status(200)
+
+			return {
+				message: 'ok',
+			}
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Account deletion failed',
+				error,
+			}
+		}
+	},
 })

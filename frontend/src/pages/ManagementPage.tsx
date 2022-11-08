@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { seedDatabase } from '../lib/api'
+import { seedDatabase, deleteAccount } from '../lib/api'
 import { removeAuth } from '../lib/auth'
 import SideBarMenu from '../components/SideBarMenu'
 
@@ -22,6 +22,11 @@ const ManagementPage = () => {
 		window.location.reload()
 	}
 
+	const handleAccountDelete = () => {
+		deleteAccount()
+		handleLogOut()
+	}
+
 	return (
 		<Wrapper>
 			<SideBarMenu />
@@ -29,6 +34,7 @@ const ManagementPage = () => {
 				<h1>Management App</h1>
 				<button onClick={handleLogOut}>Log out</button>
 				<button onClick={seedDatabase}>Seed database</button>
+				<button onClick={handleAccountDelete}>Delete account</button>
 			</Content>
 		</Wrapper>
 	)

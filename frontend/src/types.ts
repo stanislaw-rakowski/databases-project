@@ -8,3 +8,7 @@ export type AuthRequest = {
 	email: string
 	password: string
 }
+
+export type OrganizationIdRequest = {
+	organizationId: string
+}

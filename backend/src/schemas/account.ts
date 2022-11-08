@@ -15,3 +15,7 @@ export const LoginResponseSchema = Type.Object({
 	email: Type.String({ format: 'email' }),
 	token: Type.String(),
 })
+
+export const DeleteAccountRequestSchema = Type.Object({
+	organizationId: Type.String({ format: 'uuid' }),
+})

@@ -1,6 +1,11 @@
 import { FastifyInstance } from 'fastify'
 import { AccountController } from '../controllers/account'
-import { AccountSchema, AccountRequestSchema, LoginResponseSchema } from '../schemas/account'
+import {
+	AccountSchema,
+	AccountRequestSchema,
+	LoginResponseSchema,
+	DeleteAccountRequestSchema,
+} from '../schemas/account'
 
 export default async function Account(server: FastifyInstance) {
 	const controller = AccountController(server)
@@ -27,5 +32,15 @@ export default async function Account(server: FastifyInstance) {
 			},
 		},
 		handler: controller.loginIntoAccount,
+	})
+
+	server.route({
+		url: '/account/delete',
+		method: 'DELETE',
+		schema: {
+			body: DeleteAccountRequestSchema,
+		},
+		preHandler: server.verifyBearerAuth,
+		handler: controller.deleteAccount,
 	})
 }
