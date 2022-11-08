@@ -79,7 +79,7 @@ export const AccountController = (server: FastifyInstance) => ({
 					organizationId: account.organizationId,
 					email: account.email,
 				},
-				'RANDOM-TOKEN',
+				server.config.PRIVATE_KEY,
 				{ expiresIn: '24h' },
 			)
 
