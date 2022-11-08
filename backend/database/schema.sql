@@ -2,6 +2,7 @@ CREATE TABLE Accounts (
     organizationId VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
+    salt VARCHAR(255) NOT NULL,
     shelters VARCHAR(255),
     PRIMARY KEY (organizationId)
 );

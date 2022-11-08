@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { AccountController } from '../controllers/account'
 import {
-	AccountSchema,
 	AccountRequestSchema,
+	SignupResponseSchema,
 	LoginResponseSchema,
 	DeleteAccountRequestSchema,
 } from '../schemas/account'
@@ -16,7 +16,7 @@ export default async function Account(server: FastifyInstance) {
 		schema: {
 			body: AccountRequestSchema,
 			response: {
-				201: AccountSchema,
+				201: SignupResponseSchema,
 			},
 		},
 		handler: controller.createAccount,

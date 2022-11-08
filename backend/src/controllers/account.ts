@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { hash, compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
+import { hashPassword, verifyPassword } from '../utils/hash'
 import { Account } from '../schemas/account'
 
 export const AccountController = (server: FastifyInstance) => ({
@@ -22,21 +22,20 @@ export const AccountController = (server: FastifyInstance) => ({
 				}
 			}
 
-			const hashedPassword = await hash(password, 10)
+			const { hash, salt } = hashPassword(password)
 
 			const organizationId = uuid()
 
-			await server.mysql.query('INSERT INTO `Accounts` (`organizationId`, `email`, `password`) VALUES (?, ?, ?)', [
-				organizationId,
-				email,
-				hashedPassword,
-			])
+			await server.mysql.query(
+				'INSERT INTO `Accounts` (`organizationId`, `email`, `password`, `salt`) VALUES (?, ?, ?, ?)',
+				[organizationId, email, hash, salt],
+			)
 
 			reply.status(201)
 
 			return {
 				organizationId,
-				password: hashedPassword,
+				password: hash,
 				email,
 			}
 		} catch (error) {
@@ -67,7 +66,7 @@ export const AccountController = (server: FastifyInstance) => ({
 
 			const [account] = accounts
 
-			if (!(await compare(password, account.password))) {
+			if (!verifyPassword(password, account.salt, account.password)) {
 				reply.status(403)
 
 				return {
