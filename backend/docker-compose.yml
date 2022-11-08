@@ -12,9 +12,3 @@ services:
       - MYSQL_DATABASE=db
     ports:
       - '3306:3306'
-    
-
-  redis:
-    image: redis
-    ports:
-      - '6379:6379'
