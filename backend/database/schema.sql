@@ -1,9 +1,9 @@
-CREATE TABLE Organizations (
-    id VARCHAR(255) NOT NULL UNIQUE,
+CREATE TABLE Accounts (
+    organizationId VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     shelters VARCHAR(255),
-    PRIMARY KEY (id)
+    PRIMARY KEY (organizationId)
 );
 
 CREATE TABLE Shelters (
@@ -12,10 +12,10 @@ CREATE TABLE Shelters (
     owner VARCHAR(255) NOT NULL,
     animals VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (owner) REFERENCES Organizations(id)
+    FOREIGN KEY (owner) REFERENCES Accounts(organizationId)
 );
 
-ALTER TABLE Organizations ADD FOREIGN KEY (shelters) REFERENCES Shelters(id);
+ALTER TABLE Accounts ADD FOREIGN KEY (shelters) REFERENCES Shelters(id);
 
 CREATE TABLE Animals (
     id VARCHAR(255) NOT NULL UNIQUE,
@@ -25,7 +25,7 @@ CREATE TABLE Animals (
     organization VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY (shelter) REFERENCES Shelters(id),
-    FOREIGN KEY (organization) REFERENCES Organizations(id)
+    FOREIGN KEY (organization) REFERENCES Accounts(organizationId)
 );
 
 ALTER TABLE Shelters ADD FOREIGN KEY (animals) REFERENCES Animals(id);

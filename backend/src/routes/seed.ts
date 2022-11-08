@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { SeedController } from '../controllers/seed'
 
-export default async function Organization(server: FastifyInstance) {
+export default async function Seed(server: FastifyInstance) {
 	const controller = SeedController(server)
 
 	server.addHook('preHandler', server.verifyBearerAuth)
@@ -9,12 +9,6 @@ export default async function Organization(server: FastifyInstance) {
 	server.route({
 		url: '/seed',
 		method: 'GET',
-		// schema: {
-		// 	body: OrganizationRequestSchema,
-		// 	response: {
-		// 		200: LoginResponseSchema,
-		// 	},
-		// },
 		handler: controller.seedDatabase,
 	})
 }
