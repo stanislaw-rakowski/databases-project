@@ -2,18 +2,32 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
 	height: 100%;
+	background-color: ${({ theme }) => theme.colors.primaryBackground};
+`
+
+export const Content = styled.main`
+	height: calc(100% - 100px);
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.colors.primaryBackground};
-	padding: 2rem 150px;
 `
 
 export const Heading = styled.h1`
 	font-size: 7rem;
 	font-weight: 800;
 	margin: 2rem 0;
+`
+
+export const StyledForm = styled.form`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	border-radius: 8px;
 `
 
 export const FormIsland = styled.div`

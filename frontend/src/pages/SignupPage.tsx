@@ -1,19 +1,10 @@
 import { FormEvent, useState } from 'react'
 import styled from 'styled-components'
-import { Wrapper, FormIsland } from '../components/common'
+import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { requestSignup } from '../lib/api'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
-
-const StyledForm = styled.form`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-	border-radius: 8px;
-`
+import LandingNav from '../components/LandingNav'
 
 const ErrorMessage = styled.span`
 	font-size: small;
@@ -43,16 +34,19 @@ const SignupPage = () => {
 
 	return (
 		<Wrapper>
-			<h1>Sign up</h1>
-			<FormIsland>
-				<StyledForm onSubmit={handleFormSubmit}>
-					<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
-					<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
-					{error && <ErrorMessage>{error}</ErrorMessage>}
-					<Button variant="submit">Sign up</Button>
-				</StyledForm>
-			</FormIsland>
-			{success && <SuccessMessage>{success}</SuccessMessage>}
+			<LandingNav />
+			<Content>
+				<h1>Sign up</h1>
+				<FormIsland>
+					<StyledForm onSubmit={handleFormSubmit}>
+						<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
+						<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
+						{error && <ErrorMessage>{error}</ErrorMessage>}
+						<Button variant="submit">Sign up</Button>
+					</StyledForm>
+				</FormIsland>
+				{success && <SuccessMessage>{success}</SuccessMessage>}
+			</Content>
 		</Wrapper>
 	)
 }

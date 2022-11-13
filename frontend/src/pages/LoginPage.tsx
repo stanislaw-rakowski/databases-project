@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Wrapper, FormIsland } from '../components/common'
+import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { setAuth, getAuth } from '../lib/auth'
 import { requestLogin } from '../lib/api'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
-
-const StyledForm = styled.form`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-	border-radius: 8px;
-`
+import LandingNav from '../components/LandingNav'
 
 const ErrorMessage = styled.span`
 	font-size: small;
@@ -50,15 +41,18 @@ const LoginPage = () => {
 
 	return (
 		<Wrapper>
-			<h1>Log in</h1>
-			<FormIsland>
-				<StyledForm onSubmit={handleFormSubmit}>
-					<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
-					<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
-					{error && <ErrorMessage>{error}</ErrorMessage>}
-					<Button variant="submit">Log in</Button>
-				</StyledForm>
-			</FormIsland>
+			<LandingNav />
+			<Content>
+				<h1>Log in</h1>
+				<FormIsland>
+					<StyledForm onSubmit={handleFormSubmit}>
+						<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
+						<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
+						{error && <ErrorMessage>{error}</ErrorMessage>}
+						<Button variant="submit">Log in</Button>
+					</StyledForm>
+				</FormIsland>
+			</Content>
 		</Wrapper>
 	)
 }
