@@ -1,18 +1,13 @@
-import styled from 'styled-components'
-import { seedDatabase, deleteAccount } from '../../lib/api'
-import { removeAuth } from '../../lib/auth'
+import { useState } from 'react'
 import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent } from '../../components/common'
+import Button from '../../components/Button'
 
 const ManagementPage = () => {
-	const handleLogOut = () => {
-		removeAuth()
-		window.location.reload()
-	}
+	const [showShelterCreationForm, setShowShelterCreationForm] = useState(false)
 
-	const handleAccountDelete = () => {
-		deleteAccount()
-		handleLogOut()
+	const handleShelterCreate = () => {
+		setShowShelterCreationForm(true)
 	}
 
 	return (
@@ -20,9 +15,10 @@ const ManagementPage = () => {
 			<SideBarMenu />
 			<AppContent>
 				<h1>Management App</h1>
-				<button onClick={handleLogOut}>Log out</button>
-				<button onClick={seedDatabase}>Seed database</button>
-				<button onClick={handleAccountDelete}>Delete account</button>
+				<Button variant="primary" onClick={handleShelterCreate}>
+					Create shelter
+				</Button>
+				{showShelterCreationForm && <span>form</span>}
 			</AppContent>
 		</AppWrapper>
 	)
