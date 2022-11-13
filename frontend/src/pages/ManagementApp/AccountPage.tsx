@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent } from '../../components/common'
 import { removeAuth } from '../../lib/auth'
@@ -5,14 +6,21 @@ import { deleteAccount } from '../../lib/api'
 import Button from '../../components/Button'
 
 const AccountPage = () => {
+	const navigate = useNavigate()
+
 	const handleLogOut = () => {
 		removeAuth()
-		window.location.reload()
+		navigate('/log-in')
 	}
 
-	const handleAccountDelete = () => {
-		deleteAccount()
-		handleLogOut()
+	const handleAccountDelete = async () => {
+		try {
+			await deleteAccount()
+			removeAuth()
+			navigate('/about')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (

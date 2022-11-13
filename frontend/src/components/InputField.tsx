@@ -33,12 +33,13 @@ const Input = styled.input`
 type Props = {
 	label: string
 	type: string
+	value: string
 	placeholder: string
 	onChange: (value: string) => void
 	required: boolean
 }
 
-const InputField = ({ label, type, placeholder, onChange, required }: Props) => {
+const InputField = ({ label, type, value, placeholder, onChange, required }: Props) => {
 	const id = useId()
 
 	return (
@@ -47,6 +48,7 @@ const InputField = ({ label, type, placeholder, onChange, required }: Props) => 
 			<Input
 				type={type}
 				name={id}
+				value={value}
 				placeholder={placeholder}
 				onChange={(event) => onChange(event.target.value)}
 				required={required}

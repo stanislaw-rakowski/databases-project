@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { setAuth, getAuth } from '../lib/auth'
@@ -18,10 +18,17 @@ const LoginPage = () => {
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState<string | null>(null)
 	const navigate = useNavigate()
+	const [params] = useSearchParams()
 
 	useEffect(() => {
 		if (getAuth()) {
 			navigate('/app')
+		}
+
+		const providedEmail = params.get('email')
+
+		if (providedEmail) {
+			setEmail(providedEmail)
 		}
 	}, [])
 
@@ -46,8 +53,22 @@ const LoginPage = () => {
 				<h1>Log in</h1>
 				<FormIsland>
 					<StyledForm onSubmit={handleFormSubmit}>
-						<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
-						<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
+						<InputField
+							label="email"
+							type="email"
+							value={email}
+							placeholder="Enter email"
+							onChange={setEmail}
+							required
+						/>
+						<InputField
+							label="password"
+							type="password"
+							value={password}
+							placeholder="Enter password"
+							onChange={setPassword}
+							required
+						/>
 						{error && <ErrorMessage>{error}</ErrorMessage>}
 						<Button variant="submit">Log in</Button>
 					</StyledForm>

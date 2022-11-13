@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { requestSignup } from '../lib/api'
@@ -16,6 +17,7 @@ const SuccessMessage = styled.span`
 `
 
 const SignupPage = () => {
+	const [_, setSearchParams] = useSearchParams()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -25,6 +27,7 @@ const SignupPage = () => {
 		event.preventDefault()
 		try {
 			await requestSignup({ email, password })
+			setSearchParams({ email: encodeURIComponent(email) })
 			setError(null)
 			setSuccess(`You've been successfuly signed up`)
 		} catch (error: any) {
@@ -39,8 +42,22 @@ const SignupPage = () => {
 				<h1>Sign up</h1>
 				<FormIsland>
 					<StyledForm onSubmit={handleFormSubmit}>
-						<InputField label="email" type="email" placeholder="Enter email" onChange={setEmail} required />
-						<InputField label="password" type="password" placeholder="Enter password" onChange={setPassword} required />
+						<InputField
+							label="email"
+							type="email"
+							value={email}
+							placeholder="Enter email"
+							onChange={setEmail}
+							required
+						/>
+						<InputField
+							label="password"
+							type="password"
+							value={password}
+							placeholder="Enter password"
+							onChange={setPassword}
+							required
+						/>
 						{error && <ErrorMessage>{error}</ErrorMessage>}
 						<Button variant="submit">Sign up</Button>
 					</StyledForm>
