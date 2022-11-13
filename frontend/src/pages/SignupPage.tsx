@@ -1,5 +1,4 @@
 import { FormEvent, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { requestSignup } from '../lib/api'
@@ -17,7 +16,6 @@ const SuccessMessage = styled.span`
 `
 
 const SignupPage = () => {
-	const [_, setSearchParams] = useSearchParams()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -27,7 +25,6 @@ const SignupPage = () => {
 		event.preventDefault()
 		try {
 			await requestSignup({ email, password })
-			setSearchParams({ email: encodeURIComponent(email) })
 			setError(null)
 			setSuccess(`You've been successfuly signed up`)
 		} catch (error: any) {
@@ -37,7 +34,10 @@ const SignupPage = () => {
 
 	return (
 		<Wrapper>
-			<LandingNav />
+			<LandingNav
+				primary={{ to: success ? `/log-in?email=${email}` : '/log-in', text: 'Log in' }}
+				secondary={{ to: '/about', text: 'About' }}
+			/>
 			<Content>
 				<h1>Sign up</h1>
 				<FormIsland>

@@ -48,7 +48,7 @@ const LoginPage = () => {
 
 	return (
 		<Wrapper>
-			<LandingNav />
+			<LandingNav primary={{ to: '/sign-up', text: 'Sign up' }} secondary={{ to: '/about', text: 'About' }} />
 			<Content>
 				<h1>Log in</h1>
 				<FormIsland>

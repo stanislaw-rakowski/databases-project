@@ -47,7 +47,7 @@ const Image = styled.img`
 const LandingPage = () => {
 	return (
 		<Wrapper>
-			<LandingNav />
+			<LandingNav primary={{ to: '/sign-up', text: 'Sign up' }} secondary={{ to: '/log-in', text: 'Log in' }} />
 			<Content>
 				<Section>
 					<Heading>

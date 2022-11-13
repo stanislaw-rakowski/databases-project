@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import DogPaw from './icons'
 import Link from './Link'
@@ -19,49 +18,27 @@ const LinksSection = styled.ul`
 	list-style: none;
 `
 
-const routes = {
-	about: {
-		to: '/about',
-		text: 'About',
-	},
-	signup: {
-		to: '/sign-up',
-		text: 'Sign up',
-	},
-	login: {
-		to: '/log-in',
-		text: 'Log in',
-	},
+type Props = {
+	primary: {
+		to: string
+		text: string
+	}
+	secondary: {
+		to: string
+		text: string
+	}
 }
 
-const locationLinks = {
-	'/about': {
-		primary: routes.signup,
-		secondary: routes.login,
-	},
-	'/log-in': {
-		primary: routes.signup,
-		secondary: routes.about,
-	},
-	'/sign-up': {
-		primary: routes.login,
-		secondary: routes.about,
-	},
-}
-
-const LandingNav = () => {
-	const { pathname } = useLocation()
-	const currentLinks = locationLinks[pathname as keyof typeof locationLinks]
-
+const LandingNav = ({ primary, secondary }: Props) => {
 	return (
 		<Nav>
 			<DogPaw />
 			<LinksSection>
 				<li>
-					<Link to={currentLinks.secondary.to} variant="hover-frame" text={currentLinks.secondary.text} />
+					<Link to={secondary.to} variant="hover-frame" text={secondary.text} />
 				</li>
 				<li>
-					<Link to={currentLinks.primary.to} variant="button" text={currentLinks.primary.text} />
+					<Link to={primary.to} variant="button" text={primary.text} />
 				</li>
 			</LinksSection>
 		</Nav>
