@@ -21,7 +21,7 @@ const Section = styled.div`
 	width: 50%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
 `
 
@@ -30,6 +30,7 @@ const Heading = styled.h1`
 	font-size: 5rem;
 	font-weight: 800;
 	margin: 2rem;
+	margin-left: 10%;
 `
 
 const Color = styled.span`
@@ -40,11 +41,14 @@ const SubHeading = styled.p`
 	width: 70%;
 	font-size: 2rem;
 	margin: 0 2rem;
+	margin-left: 10%;
 `
 
 const InputSection = styled.form`
 	width: 70%;
-	margin-top: 2rem;
+	max-width: 500px;
+	margin: 2rem;
+	margin-left: 10%;
 	display: flex;
 	gap: 1rem;
 
