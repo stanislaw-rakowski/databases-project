@@ -51,7 +51,7 @@ const FrameButton = styled(BaseButton)`
 	}
 `
 
-type Props = {
+type Props = JSX.IntrinsicElements['button'] & {
 	variant: 'base' | 'submit' | 'frame' | 'primary' | 'secondary' | 'destructive'
 	children: React.ReactNode
 	onClick?: () => void

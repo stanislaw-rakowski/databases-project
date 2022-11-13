@@ -1,5 +1,9 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import LandingNav from '../components/LandingNav'
+import Input from '../components/Input'
+import Button from '../components/Button'
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -38,6 +42,18 @@ const SubHeading = styled.p`
 	margin: 0 2rem;
 `
 
+const InputSection = styled.form`
+	width: 70%;
+	margin-top: 2rem;
+	display: flex;
+	gap: 1rem;
+
+	button {
+		height: 40px;
+		flex-shrink: 0;
+	}
+`
+
 const Image = styled.img`
 	height: 100%;
 	width: 100%;
@@ -45,6 +61,9 @@ const Image = styled.img`
 `
 
 const LandingPage = () => {
+	const [email, setEmail] = useState('')
+	const navigate = useNavigate()
+
 	return (
 		<Wrapper>
 			<LandingNav primary={{ to: '/sign-up', text: 'Sign up' }} secondary={{ to: '/log-in', text: 'Log in' }} />
@@ -55,6 +74,18 @@ const LandingPage = () => {
 						<Color>like a pro</Color>
 					</Heading>
 					<SubHeading>sign up today for our all in one animal management platform</SubHeading>
+					<InputSection onSubmit={() => navigate(`/sign-up?email=${email}`)}>
+						<Input
+							type="email"
+							value={email}
+							placeholder="Enter email"
+							onChange={(event) => setEmail(event.target.value)}
+							required
+						/>
+						<Button variant="primary" type="submit">
+							Sign up
+						</Button>
+					</InputSection>
 				</Section>
 				<Section>
 					<Image

@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import styled from 'styled-components'
+import Input from './Input'
 
 const Field = styled.div`
 	width: 100%;
@@ -13,21 +14,6 @@ const Field = styled.div`
 const Label = styled.label`
 	font-size: 1rem;
 	margin-bottom: 5px;
-`
-
-const Input = styled.input`
-	width: 100%;
-	height: 40px;
-	padding: 4px 8px;
-	border: 1px solid ${({ theme }) => theme.colors.secondaryFontColor};
-	border-radius: 4px;
-	background-color: inherit;
-	font-size: 16px;
-	color: ${({ theme }) => theme.colors.primaryFontColor};
-
-	&:focus {
-		outline: 1px solid ${({ theme }) => theme.colors.accentFontColor};
-	}
 `
 
 type Props = {

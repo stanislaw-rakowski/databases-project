@@ -1,4 +1,5 @@
-import { FormEvent, useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { requestSignup } from '../lib/api'
@@ -20,8 +21,17 @@ const SignupPage = () => {
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState<string | null>(null)
 	const [success, setSuccess] = useState<string | null>(null)
+	const [params] = useSearchParams()
 
-	const handleFormSubmit = async (event: FormEvent) => {
+	useEffect(() => {
+		const providedEmail = params.get('email')
+
+		if (providedEmail) {
+			setEmail(providedEmail)
+		}
+	}, [])
+
+	const handleFormSubmit = async (event: React.FormEvent) => {
 		event.preventDefault()
 		try {
 			await requestSignup({ email, password })
