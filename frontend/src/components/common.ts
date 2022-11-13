@@ -5,6 +5,11 @@ export const Wrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.primaryBackground};
 `
 
+export const AppWrapper = styled(Wrapper)`
+	width: 100%;
+	display: flex;
+`
+
 export const Content = styled.main`
 	height: calc(100% - 100px);
 	width: 100%;
@@ -12,6 +17,12 @@ export const Content = styled.main`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+`
+
+export const AppContent = styled.main`
+	height: 100%;
+	width: calc(100% - 60px);
+	padding: 2rem;
 `
 
 export const Heading = styled.h1`

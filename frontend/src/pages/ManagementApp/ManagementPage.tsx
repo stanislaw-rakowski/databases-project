@@ -1,20 +1,8 @@
 import styled from 'styled-components'
-import { seedDatabase, deleteAccount } from '../lib/api'
-import { removeAuth } from '../lib/auth'
-import SideBarMenu from '../components/SideBarMenu'
-
-const Wrapper = styled.div`
-	height: 100%;
-	width: 100%;
-	display: flex;
-`
-
-const Content = styled.main`
-	height: 100%;
-	width: calc(100% - 60px);
-	padding: 2rem;
-	background-color: ${({ theme }) => theme.colors.primaryBackground};
-`
+import { seedDatabase, deleteAccount } from '../../lib/api'
+import { removeAuth } from '../../lib/auth'
+import SideBarMenu from '../../components/SideBarMenu'
+import { AppWrapper, AppContent } from '../../components/common'
 
 const ManagementPage = () => {
 	const handleLogOut = () => {
@@ -28,15 +16,15 @@ const ManagementPage = () => {
 	}
 
 	return (
-		<Wrapper>
+		<AppWrapper>
 			<SideBarMenu />
-			<Content>
+			<AppContent>
 				<h1>Management App</h1>
 				<button onClick={handleLogOut}>Log out</button>
 				<button onClick={seedDatabase}>Seed database</button>
 				<button onClick={handleAccountDelete}>Delete account</button>
-			</Content>
-		</Wrapper>
+			</AppContent>
+		</AppWrapper>
 	)
 }
 

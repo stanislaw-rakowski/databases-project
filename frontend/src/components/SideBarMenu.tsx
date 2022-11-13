@@ -43,22 +43,22 @@ const SideBarMenu = () => {
 		<Menu>
 			<Logo />
 			<li>
-				<MenuItem to="/">
+				<MenuItem to="/app">
 					<FaHome />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/">
+				<MenuItem to="/app/account">
 					<FaUser />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/">
+				<MenuItem to="/app/animals">
 					<FaDog />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/">
+				<MenuItem to="/app/employees">
 					<FaIdBadge />
 				</MenuItem>
 			</li>
