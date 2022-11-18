@@ -1,6 +1,10 @@
 import { FastifyInstance } from 'fastify'
 import { ShelterController } from '../controllers/shelter'
-import { ShelterCreationRequestSchema, ShelterCreationResponseSchema } from '../schemas/shelter'
+import {
+	ShelterCreationRequestSchema,
+	ShelterCreationResponseSchema,
+	ShelterDeletionRequestSchema,
+} from '../schemas/shelter'
 
 export default async function Shelter(server: FastifyInstance) {
 	const controller = ShelterController(server)
@@ -17,5 +21,14 @@ export default async function Shelter(server: FastifyInstance) {
 			},
 		},
 		handler: controller.createShelter,
+	})
+
+	server.route({
+		url: '/shelter/delete',
+		method: 'DELETE',
+		schema: {
+			body: ShelterDeletionRequestSchema,
+		},
+		handler: controller.deleteShelter,
 	})
 }

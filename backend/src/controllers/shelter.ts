@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { ShelterInfo } from '../schemas/shelter'
+import { ShelterCreationInfo, ShelterDeletionInfo } from '../schemas/shelter'
 
 export const ShelterController = (server: FastifyInstance) => ({
-	async createShelter(request: FastifyRequest<{ Body: ShelterInfo }>, reply: FastifyReply) {
+	async createShelter(request: FastifyRequest<{ Body: ShelterCreationInfo }>, reply: FastifyReply) {
 		try {
 			const { organizationId, name } = request.body
 
@@ -23,6 +23,24 @@ export const ShelterController = (server: FastifyInstance) => ({
 
 			return {
 				message: 'Shelter creation failed',
+				error,
+			}
+		}
+	},
+	async deleteShelter(request: FastifyRequest<{ Body: ShelterDeletionInfo }>, reply: FastifyReply) {
+		try {
+			const { organizationId, shelterId } = request.body
+
+			await server.mysql.query('DELETE FROM `Shelters` WHERE `id` = ? AND `owner` = ?', [shelterId, organizationId])
+
+			reply.status(200)
+
+			return { message: 'ok' }
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Shelter deletion failed',
 				error,
 			}
 		}
