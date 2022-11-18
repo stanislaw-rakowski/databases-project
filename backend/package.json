@@ -31,7 +31,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.0.0",
     "@types/tap": "^15.0.5",

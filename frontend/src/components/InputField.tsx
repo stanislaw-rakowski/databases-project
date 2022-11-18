@@ -20,12 +20,12 @@ type Props = {
 	label: string
 	type: string
 	value: string
-	placeholder: string
+	placeholder?: string
 	onChange: (value: string) => void
-	required: boolean
+	required?: boolean
 }
 
-const InputField = ({ label, type, value, placeholder, onChange, required }: Props) => {
+const InputField = ({ label, type, value, placeholder, onChange, required = false }: Props) => {
 	const id = useId()
 
 	return (

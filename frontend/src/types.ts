@@ -12,3 +12,8 @@ export type AuthRequest = {
 export type OrganizationIdRequest = {
 	organizationId: string
 }
+
+export type ShelterCreateRequest = {
+	organizationId: string
+	name: string
+}

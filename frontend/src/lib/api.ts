@@ -1,5 +1,5 @@
 import { fetcher } from './fetcher'
-import { AuthData, AuthRequest, OrganizationIdRequest } from '../types'
+import { AuthData, AuthRequest, OrganizationIdRequest, ShelterCreateRequest } from '../types'
 import { getAuth } from './auth'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
@@ -35,4 +35,12 @@ export const deleteAccount = () => {
 
 export const seedDatabase = () => {
 	return callApiEndpoint<never, { message: string }>('GET', `${baseUrl}/seed`)
+}
+
+export const createShelter = (name: string) => {
+	const organizationId = getAuth()!.organizationId
+	return callApiEndpoint<ShelterCreateRequest, ShelterCreateRequest>('POST', `${baseUrl}/shelter/create`, {
+		organizationId,
+		name,
+	})
 }
