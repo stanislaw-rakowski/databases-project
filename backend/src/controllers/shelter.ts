@@ -7,19 +7,17 @@ export const ShelterController = (server: FastifyInstance) => ({
 		try {
 			const { organizationId, name } = request.body
 
+			const shelterId = uuid()
+
 			await server.mysql.query('INSERT INTO `Shelters` (`id`, `name`, `owner`) VALUES (?, ?, ?)', [
-				uuid(),
+				shelterId,
 				name,
 				organizationId,
 			])
 
-			const dupa = await server.mysql.query('SELECT * FROM `Shelters`')
-
-			console.log(dupa)
-
 			reply.status(201)
 
-			return { organizationId, name }
+			return { shelterId, name }
 		} catch (error) {
 			reply.status(500)
 

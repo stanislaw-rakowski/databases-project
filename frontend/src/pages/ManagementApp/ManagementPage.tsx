@@ -4,11 +4,12 @@ import { AppWrapper, AppContent, StyledForm } from '../../components/common'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
 import { createShelter } from '../../lib/api'
+import { Shelter } from '../../types'
 
 const ManagementPage = () => {
 	const [showShelterCreationForm, setShowShelterCreationForm] = React.useState(false)
 	const [shelterName, setShelterName] = React.useState('')
-	const [shelters, setShelters] = React.useState<any[]>([])
+	const [shelters, setShelters] = React.useState<Shelter[]>([])
 
 	const handleShelterCreate = async (event: React.FormEvent) => {
 		event.preventDefault()
@@ -38,8 +39,8 @@ const ManagementPage = () => {
 						<Button variant="submit">Create</Button>
 					</StyledForm>
 				)}
-				{shelters?.map((shelter, index) => (
-					<div key={index}>{shelter.name}</div>
+				{shelters.map((shelter) => (
+					<div key={shelter.shelterId}>{shelter.name}</div>
 				))}
 			</AppContent>
 		</AppWrapper>

@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ShelterController } from '../controllers/shelter'
-import { ShelterCreationRequestSchema } from '../schemas/shelter'
+import { ShelterCreationRequestSchema, ShelterCreationResponseSchema } from '../schemas/shelter'
 
 export default async function Shelter(server: FastifyInstance) {
 	const controller = ShelterController(server)
@@ -13,7 +13,7 @@ export default async function Shelter(server: FastifyInstance) {
 		schema: {
 			body: ShelterCreationRequestSchema,
 			response: {
-				201: ShelterCreationRequestSchema,
+				201: ShelterCreationResponseSchema,
 			},
 		},
 		handler: controller.createShelter,

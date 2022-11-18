@@ -6,3 +6,8 @@ export const ShelterCreationRequestSchema = Type.Object({
 })
 
 export type ShelterInfo = Static<typeof ShelterCreationRequestSchema>
+
+export const ShelterCreationResponseSchema = Type.Object({
+	shelterId: Type.String(),
+	name: Type.String(),
+})

@@ -17,3 +17,8 @@ export type ShelterCreateRequest = {
 	organizationId: string
 	name: string
 }
+
+export type Shelter = {
+	shelterId: string
+	name: string
+}
