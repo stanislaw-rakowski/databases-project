@@ -78,7 +78,7 @@ const LandingPage = () => {
 						<Color>like a pro</Color>
 					</Heading>
 					<SubHeading>sign up today for our all in one animal management platform</SubHeading>
-					<InputSection onSubmit={() => navigate(`/sign-up?email=${email}`)}>
+					<InputSection onSubmit={() => navigate(`/sign-up?email=${encodeURIComponent(email)}`)}>
 						<Input
 							type="email"
 							value={email}

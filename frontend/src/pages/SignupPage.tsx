@@ -45,7 +45,7 @@ const SignupPage = () => {
 	return (
 		<Wrapper>
 			<LandingNav
-				primary={{ to: success ? `/log-in?email=${email}` : '/log-in', text: 'Log in' }}
+				primary={{ to: success ? `/log-in?email=${encodeURIComponent(email)}` : '/log-in', text: 'Log in' }}
 				secondary={{ to: '/about', text: 'About' }}
 			/>
 			<Content>

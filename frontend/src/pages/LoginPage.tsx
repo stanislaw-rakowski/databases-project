@@ -28,7 +28,7 @@ const LoginPage = () => {
 		const providedEmail = params.get('email')
 
 		if (providedEmail) {
-			setEmail(providedEmail)
+			setEmail(decodeURIComponent(providedEmail))
 		}
 	}, [])
 
