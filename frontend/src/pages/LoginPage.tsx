@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
@@ -14,13 +14,13 @@ const ErrorMessage = styled.span`
 `
 
 const LoginPage = () => {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [error, setError] = useState<string | null>(null)
+	const [email, setEmail] = React.useState('')
+	const [password, setPassword] = React.useState('')
+	const [error, setError] = React.useState<string | null>(null)
 	const navigate = useNavigate()
 	const [params] = useSearchParams()
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (getAuth()) {
 			navigate('/app')
 		}

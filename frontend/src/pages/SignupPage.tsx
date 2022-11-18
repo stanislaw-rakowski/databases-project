@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
@@ -17,13 +17,13 @@ const SuccessMessage = styled.span`
 `
 
 const SignupPage = () => {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [error, setError] = useState<string | null>(null)
-	const [success, setSuccess] = useState<string | null>(null)
+	const [email, setEmail] = React.useState('')
+	const [password, setPassword] = React.useState('')
+	const [error, setError] = React.useState<string | null>(null)
+	const [success, setSuccess] = React.useState<string | null>(null)
 	const [params] = useSearchParams()
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const providedEmail = params.get('email')
 
 		if (providedEmail) {

@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Input from './Input'
 
@@ -26,7 +26,7 @@ type Props = {
 }
 
 const InputField = ({ label, type, value, placeholder, onChange, required = false }: Props) => {
-	const id = useId()
+	const id = React.useId()
 
 	return (
 		<Field>

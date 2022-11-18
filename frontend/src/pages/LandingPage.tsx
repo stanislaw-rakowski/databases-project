@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import LandingNav from '../components/LandingNav'
@@ -65,7 +65,7 @@ const Image = styled.img`
 `
 
 const LandingPage = () => {
-	const [email, setEmail] = useState('')
+	const [email, setEmail] = React.useState('')
 	const navigate = useNavigate()
 
 	return (
