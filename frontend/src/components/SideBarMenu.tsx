@@ -17,15 +17,15 @@ const Menu = styled.menu`
 	list-style: none;
 `
 
-const MenuItem = styled(Link)<{ isSelected: boolean }>`
+const MenuItem = styled(Link)<{ $isSelected: boolean }>`
 	height: 60px;
 	width: 60px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 20px;
-	color: ${({ theme, isSelected }) => (isSelected ? theme.colors.primaryFontColor : theme.colors.secondaryFontColor)};
-	background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.sideBarSurfaceHover : 'inherit')};
+	color: ${({ theme, $isSelected }) => ($isSelected ? theme.colors.primaryFontColor : theme.colors.secondaryFontColor)};
+	background-color: ${({ theme, $isSelected }) => ($isSelected ? theme.colors.sideBarSurfaceHover : 'inherit')};
 	transition: color 150ms ease;
 	transition: background-color 150ms ease;
 
@@ -46,22 +46,22 @@ const SideBarMenu = () => {
 		<Menu>
 			<Logo />
 			<li>
-				<MenuItem to="/app" isSelected={pathname === '/app'}>
+				<MenuItem to="/app" $isSelected={pathname === '/app'}>
 					<FaHome />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/app/account" isSelected={pathname === '/app/account'}>
+				<MenuItem to="/app/account" $isSelected={pathname === '/app/account'}>
 					<FaUser />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/app/animals" isSelected={pathname === '/app/animals'}>
+				<MenuItem to="/app/animals" $isSelected={pathname === '/app/animals'}>
 					<FaDog />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/app/employees" isSelected={pathname === '/app/employees'}>
+				<MenuItem to="/app/employees" $isSelected={pathname === '/app/employees'}>
 					<FaIdBadge />
 				</MenuItem>
 			</li>
