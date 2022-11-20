@@ -2,7 +2,7 @@ import Cookies from 'universal-cookie'
 import { AuthData } from '../types'
 
 const KEY = 'auth'
-const EXPIRATION = 60 * 60 * 24 * 30
+const EXPIRATION = 1000 * 60 * 60 * 24
 
 const cookies = new Cookies()
 
