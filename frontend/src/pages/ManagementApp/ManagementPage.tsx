@@ -3,7 +3,7 @@ import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm } from '../../components/common'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
-import { createShelter, deleteShelter } from '../../lib/api'
+import { createShelter, deleteShelter, getShelters } from '../../lib/api'
 import { Shelter } from '../../types'
 
 const ManagementPage = () => {
@@ -11,11 +11,20 @@ const ManagementPage = () => {
 	const [shelterName, setShelterName] = React.useState('')
 	const [shelters, setShelters] = React.useState<Shelter[]>([])
 
+	React.useEffect(() => {
+		const getUserShelters = async () => {
+			setShelters(await getShelters())
+		}
+
+		getUserShelters()
+	}, [])
+
 	const handleShelterCreate = async (event: React.FormEvent) => {
 		event.preventDefault()
 
 		const response = await createShelter(shelterName)
 		setShelters((current) => [...current, response])
+		setShelterName('')
 	}
 
 	const handleShelterDelete = async (shelterId: string) => {

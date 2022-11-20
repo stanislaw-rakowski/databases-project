@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
 import { ShelterCreationInfo, ShelterDeletionInfo } from '../schemas/shelter'
+import { OrganizationIdRequest } from '../schemas/account'
 
 export const ShelterController = (server: FastifyInstance) => ({
 	async createShelter(request: FastifyRequest<{ Body: ShelterCreationInfo }>, reply: FastifyReply) {
@@ -41,6 +42,27 @@ export const ShelterController = (server: FastifyInstance) => ({
 
 			return {
 				message: 'Shelter deletion failed',
+				error,
+			}
+		}
+	},
+	async getAccountShelters(request: FastifyRequest<{ Body: OrganizationIdRequest }>, reply: FastifyReply) {
+		try {
+			const { organizationId } = request.body
+
+			const [results] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `owner` = ?', [organizationId])) as [
+				any[],
+				unknown,
+			]
+
+			reply.status(200)
+
+			return results.map(({ id, name }) => ({ shelterId: id, name }))
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Failed to get account shelters',
 				error,
 			}
 		}

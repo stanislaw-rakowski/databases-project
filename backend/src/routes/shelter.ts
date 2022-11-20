@@ -4,12 +4,26 @@ import {
 	ShelterCreationRequestSchema,
 	ShelterCreationResponseSchema,
 	ShelterDeletionRequestSchema,
+	GetSheltersResponseSchema,
 } from '../schemas/shelter'
+import { OrganizationIdRequestSchema } from '../schemas/account'
 
 export default async function Shelter(server: FastifyInstance) {
 	const controller = ShelterController(server)
 
 	server.addHook('preHandler', server.verifyBearerAuth)
+
+	server.route({
+		url: '/shelter',
+		method: 'POST',
+		schema: {
+			body: OrganizationIdRequestSchema,
+			response: {
+				200: GetSheltersResponseSchema,
+			},
+		},
+		handler: controller.getAccountShelters,
+	})
 
 	server.route({
 		url: '/shelter/create',

@@ -44,6 +44,13 @@ export const seedDatabase = () => {
 	return callApiEndpoint<never, { message: string }>('GET', `${baseUrl}/seed`)
 }
 
+export const getShelters = () => {
+	const organizationId = getAuth()!.organizationId
+	return callApiEndpoint<OrganizationIdRequest, Shelter[]>('POST', `${baseUrl}/shelter`, {
+		organizationId,
+	})
+}
+
 export const createShelter = (name: string) => {
 	const organizationId = getAuth()!.organizationId
 	return callApiEndpoint<ShelterCreateRequest, Shelter>('POST', `${baseUrl}/shelter/create`, {

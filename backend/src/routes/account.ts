@@ -4,7 +4,7 @@ import {
 	AccountRequestSchema,
 	SignupResponseSchema,
 	LoginResponseSchema,
-	DeleteAccountRequestSchema,
+	OrganizationIdRequestSchema,
 } from '../schemas/account'
 
 export default async function Account(server: FastifyInstance) {
@@ -38,7 +38,7 @@ export default async function Account(server: FastifyInstance) {
 		url: '/account/delete',
 		method: 'DELETE',
 		schema: {
-			body: DeleteAccountRequestSchema,
+			body: OrganizationIdRequestSchema,
 		},
 		preHandler: server.verifyBearerAuth,
 		handler: controller.deleteAccount,

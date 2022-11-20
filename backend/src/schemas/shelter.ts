@@ -18,3 +18,5 @@ export const ShelterDeletionRequestSchema = Type.Object({
 })
 
 export type ShelterDeletionInfo = Static<typeof ShelterDeletionRequestSchema>
+
+export const GetSheltersResponseSchema = Type.Array(ShelterCreationResponseSchema)

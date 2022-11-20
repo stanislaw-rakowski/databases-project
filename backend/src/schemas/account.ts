@@ -26,6 +26,8 @@ export const LoginResponseSchema = Type.Object({
 	token: Type.String(),
 })
 
-export const DeleteAccountRequestSchema = Type.Object({
+export const OrganizationIdRequestSchema = Type.Object({
 	organizationId: Type.String({ format: 'uuid' }),
 })
+
+export type OrganizationIdRequest = Static<typeof OrganizationIdRequestSchema>
