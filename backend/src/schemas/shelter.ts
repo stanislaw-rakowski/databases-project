@@ -1,20 +1,29 @@
 import { Type, Static } from '@sinclair/typebox'
 
+export const ShelterSchema = Type.Object({
+	id: Type.String({ format: 'uuid' }),
+	name: Type.String(),
+	owner: Type.String({ format: 'uuid' }),
+	animals: Type.Unknown(),
+})
+
+export type Shelter = Static<typeof ShelterSchema>
+
 export const ParamsSchema = Type.Object({
 	id: Type.String({ format: 'uuid' }),
 })
 
 export type Params = Static<typeof ParamsSchema>
 
-export const ShelterCreationRequestSchema = Type.Object({
+export const ShelterRequestSchema = Type.Object({
 	name: Type.String(),
 })
 
-export type ShelterCreationInfo = Static<typeof ShelterCreationRequestSchema>
+export type ShelterRequestBody = Static<typeof ShelterRequestSchema>
 
-export const ShelterCreationResponseSchema = Type.Object({
+export const ShelterResponseSchema = Type.Object({
 	shelterId: Type.String(),
 	name: Type.String(),
 })
 
-export const GetSheltersResponseSchema = Type.Array(ShelterCreationResponseSchema)
+export const SheltersResponseSchema = Type.Array(ShelterResponseSchema)

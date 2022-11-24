@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { ShelterCreationInfo, Params } from '../schemas/shelter'
+import { ShelterRequestBody, Params, Shelter } from '../schemas/shelter'
 
 export const ShelterController = (server: FastifyInstance) => ({
-	async createShelter(request: FastifyRequest<{ Body: ShelterCreationInfo }>, reply: FastifyReply) {
+	async createShelter(request: FastifyRequest<{ Body: ShelterRequestBody }>, reply: FastifyReply) {
 		try {
 			const organizationId = request.auth.organizationId
 			const { name } = request.body
@@ -28,6 +28,93 @@ export const ShelterController = (server: FastifyInstance) => ({
 			}
 		}
 	},
+
+	async getShelters(request: FastifyRequest, reply: FastifyReply) {
+		try {
+			const organizationId = request.auth.organizationId
+
+			const [results] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `owner` = ?', [organizationId])) as [
+				Shelter[],
+				unknown,
+			]
+
+			reply.status(200)
+
+			return results.map(({ id, name }) => ({ shelterId: id, name }))
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Failed to get account shelters',
+				error,
+			}
+		}
+	},
+
+	async getShelterById(request: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
+		try {
+			const shelterId = request.params.id
+
+			const [[result]] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `id` = ?', [shelterId])) as [
+				Shelter[],
+				unknown,
+			]
+
+			reply.status(200)
+
+			return result
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Failed to get shelter',
+				error,
+			}
+		}
+	},
+
+	async updateShelterById(request: FastifyRequest<{ Params: Params; Body: ShelterRequestBody }>, reply: FastifyReply) {
+		try {
+			const shelterId = request.params.id
+			const { name } = request.body
+
+			const [[result]] = (await server.mysql.query('UPDATE `Shelters` SET `name` = ? WHERE `id` = ?', [
+				name,
+				shelterId,
+			])) as [Shelter[], unknown]
+
+			reply.status(200)
+
+			return result
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Failed to update shelter',
+				error,
+			}
+		}
+	},
+
+	async deleteShelters(request: FastifyRequest, reply: FastifyReply) {
+		try {
+			const organizationId = request.auth.organizationId
+
+			await server.mysql.query('DELETE FROM `Shelters` WHERE `owner` = ?', [organizationId])
+
+			reply.status(200)
+
+			return { message: 'ok' }
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Shelters deletion failed',
+				error,
+			}
+		}
+	},
+
 	async deleteShelterById(request: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
 		try {
 			const organizationId = request.auth.organizationId
@@ -43,27 +130,6 @@ export const ShelterController = (server: FastifyInstance) => ({
 
 			return {
 				message: 'Shelter deletion failed',
-				error,
-			}
-		}
-	},
-	async getShelters(request: FastifyRequest, reply: FastifyReply) {
-		try {
-			const organizationId = request.auth.organizationId
-
-			const [results] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `owner` = ?', [organizationId])) as [
-				any[],
-				unknown,
-			]
-
-			reply.status(200)
-
-			return results.map(({ id, name }) => ({ shelterId: id, name }))
-		} catch (error) {
-			reply.status(500)
-
-			return {
-				message: 'Failed to get account shelters',
 				error,
 			}
 		}

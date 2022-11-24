@@ -1,11 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ShelterController } from '../controllers/shelter'
-import {
-	ShelterCreationRequestSchema,
-	ShelterCreationResponseSchema,
-	GetSheltersResponseSchema,
-	ParamsSchema,
-} from '../schemas/shelter'
+import { ShelterRequestSchema, SheltersResponseSchema, ShelterResponseSchema, ParamsSchema } from '../schemas/shelter'
 import { MessageResponseSchema } from '../schemas/common'
 
 export const autoPrefix = '/shelters'
@@ -20,22 +15,58 @@ export default async function Shelter(server: FastifyInstance) {
 		method: 'GET',
 		schema: {
 			response: {
-				200: GetSheltersResponseSchema,
+				200: SheltersResponseSchema,
 			},
 		},
 		handler: controller.getShelters,
 	})
 
 	server.route({
+		url: '/:id',
+		method: 'GET',
+		schema: {
+			params: ParamsSchema,
+			response: {
+				200: ShelterResponseSchema,
+			},
+		},
+		handler: controller.getShelterById,
+	})
+
+	server.route({
 		url: '/',
 		method: 'POST',
 		schema: {
-			body: ShelterCreationRequestSchema,
+			body: ShelterRequestSchema,
 			response: {
-				201: ShelterCreationResponseSchema,
+				201: ShelterResponseSchema,
 			},
 		},
 		handler: controller.createShelter,
+	})
+
+	server.route({
+		url: '/:id',
+		method: 'PATCH',
+		schema: {
+			params: ParamsSchema,
+			body: ShelterRequestSchema,
+			response: {
+				200: ShelterResponseSchema,
+			},
+		},
+		handler: controller.updateShelterById,
+	})
+
+	server.route({
+		url: '/',
+		method: 'DELETE',
+		schema: {
+			response: {
+				200: MessageResponseSchema,
+			},
+		},
+		handler: controller.deleteShelters,
 	})
 
 	server.route({

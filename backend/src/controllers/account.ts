@@ -47,6 +47,7 @@ export const AccountController = (server: FastifyInstance) => ({
 			}
 		}
 	},
+
 	async loginIntoAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
 		try {
 			const { email, password } = request.body
@@ -101,6 +102,7 @@ export const AccountController = (server: FastifyInstance) => ({
 			}
 		}
 	},
+
 	async deleteAccount(request: FastifyRequest, reply: FastifyReply) {
 		try {
 			const organizationId = request.auth.organizationId
