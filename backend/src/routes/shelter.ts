@@ -6,6 +6,7 @@ import {
 	GetSheltersResponseSchema,
 	ParamsSchema,
 } from '../schemas/shelter'
+import { MessageResponseSchema } from '../schemas/common'
 
 export const autoPrefix = '/shelters'
 
@@ -42,6 +43,9 @@ export default async function Shelter(server: FastifyInstance) {
 		method: 'DELETE',
 		schema: {
 			params: ParamsSchema,
+			response: {
+				200: MessageResponseSchema,
+			},
 		},
 		handler: controller.deleteShelterById,
 	})
