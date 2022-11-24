@@ -1,7 +1,12 @@
 import { Type, Static } from '@sinclair/typebox'
 
+export const ParamsSchema = Type.Object({
+	id: Type.String({ format: 'uuid' }),
+})
+
+export type Params = Static<typeof ParamsSchema>
+
 export const ShelterCreationRequestSchema = Type.Object({
-	organizationId: Type.String(),
 	name: Type.String(),
 })
 
@@ -11,12 +16,5 @@ export const ShelterCreationResponseSchema = Type.Object({
 	shelterId: Type.String(),
 	name: Type.String(),
 })
-
-export const ShelterDeletionRequestSchema = Type.Object({
-	organizationId: Type.String(),
-	shelterId: Type.String(),
-})
-
-export type ShelterDeletionInfo = Static<typeof ShelterDeletionRequestSchema>
 
 export const GetSheltersResponseSchema = Type.Array(ShelterCreationResponseSchema)

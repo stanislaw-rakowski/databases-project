@@ -25,9 +25,3 @@ export const LoginResponseSchema = Type.Object({
 	email: Type.String({ format: 'email' }),
 	token: Type.String(),
 })
-
-export const OrganizationIdRequestSchema = Type.Object({
-	organizationId: Type.String({ format: 'uuid' }),
-})
-
-export type OrganizationIdRequest = Static<typeof OrganizationIdRequestSchema>

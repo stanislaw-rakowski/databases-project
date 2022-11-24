@@ -3,10 +3,11 @@ import { ShelterController } from '../controllers/shelter'
 import {
 	ShelterCreationRequestSchema,
 	ShelterCreationResponseSchema,
-	ShelterDeletionRequestSchema,
 	GetSheltersResponseSchema,
+	ParamsSchema,
 } from '../schemas/shelter'
-import { OrganizationIdRequestSchema } from '../schemas/account'
+
+export const autoPrefix = '/shelters'
 
 export default async function Shelter(server: FastifyInstance) {
 	const controller = ShelterController(server)
@@ -14,19 +15,18 @@ export default async function Shelter(server: FastifyInstance) {
 	server.addHook('preHandler', server.verifyBearerAuth)
 
 	server.route({
-		url: '/shelter',
-		method: 'POST',
+		url: '/',
+		method: 'GET',
 		schema: {
-			body: OrganizationIdRequestSchema,
 			response: {
 				200: GetSheltersResponseSchema,
 			},
 		},
-		handler: controller.getAccountShelters,
+		handler: controller.getShelters,
 	})
 
 	server.route({
-		url: '/shelter/create',
+		url: '/',
 		method: 'POST',
 		schema: {
 			body: ShelterCreationRequestSchema,
@@ -38,11 +38,11 @@ export default async function Shelter(server: FastifyInstance) {
 	})
 
 	server.route({
-		url: '/shelter/delete',
+		url: '/:id',
 		method: 'DELETE',
 		schema: {
-			body: ShelterDeletionRequestSchema,
+			params: ParamsSchema,
 		},
-		handler: controller.deleteShelter,
+		handler: controller.deleteShelterById,
 	})
 }

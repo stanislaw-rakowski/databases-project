@@ -15,9 +15,9 @@ async function BearerAuth(server: FastifyInstance) {
 		}
 
 		try {
-			const decodedToken = verify(token, server.config.PRIVATE_KEY)
+			const auth = verify(token, server.config.PRIVATE_KEY)
 
-			request.token = decodedToken
+			request.auth = auth
 		} catch {
 			throw reply.unauthorized()
 		}

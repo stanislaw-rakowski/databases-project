@@ -3,7 +3,7 @@ import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm } from '../../components/common'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
-import { createShelter, deleteShelter, getShelters } from '../../lib/api'
+import { createShelter, deleteShelterById, getShelters } from '../../lib/api'
 import { Shelter } from '../../types'
 
 const ManagementPage = () => {
@@ -28,7 +28,7 @@ const ManagementPage = () => {
 	}
 
 	const handleShelterDelete = async (shelterId: string) => {
-		await deleteShelter(shelterId)
+		await deleteShelterById(shelterId)
 		setShelters((current) => current.filter((shelter) => shelter.shelterId !== shelterId))
 	}
 

@@ -1,11 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { AccountController } from '../controllers/account'
-import {
-	AccountRequestSchema,
-	SignupResponseSchema,
-	LoginResponseSchema,
-	OrganizationIdRequestSchema,
-} from '../schemas/account'
+import { AccountRequestSchema, SignupResponseSchema, LoginResponseSchema } from '../schemas/account'
+
+export const autoPrefix = '/account'
 
 export default async function Account(server: FastifyInstance) {
 	const controller = AccountController(server)
@@ -35,11 +32,8 @@ export default async function Account(server: FastifyInstance) {
 	})
 
 	server.route({
-		url: '/account/delete',
+		url: '/',
 		method: 'DELETE',
-		schema: {
-			body: OrganizationIdRequestSchema,
-		},
 		preHandler: server.verifyBearerAuth,
 		handler: controller.deleteAccount,
 	})

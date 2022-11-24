@@ -8,6 +8,6 @@ declare module 'fastify' {
 		verifyBearerAuth: (request: FastifyRequest, reply: FastifyReply, done: (err?: Error) => void) => void
 	}
 	interface FastifyRequest {
-		token: JwtPayload
+		auth: JwtPayload
 	}
 }

@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { ShelterCreationInfo, ShelterDeletionInfo } from '../schemas/shelter'
-import { OrganizationIdRequest } from '../schemas/account'
+import { ShelterCreationInfo, Params } from '../schemas/shelter'
 
 export const ShelterController = (server: FastifyInstance) => ({
 	async createShelter(request: FastifyRequest<{ Body: ShelterCreationInfo }>, reply: FastifyReply) {
 		try {
-			const { organizationId, name } = request.body
+			const organizationId = request.auth.organizationId
+			const { name } = request.body
 
 			const shelterId = uuid()
 
@@ -28,9 +28,10 @@ export const ShelterController = (server: FastifyInstance) => ({
 			}
 		}
 	},
-	async deleteShelter(request: FastifyRequest<{ Body: ShelterDeletionInfo }>, reply: FastifyReply) {
+	async deleteShelterById(request: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
 		try {
-			const { organizationId, shelterId } = request.body
+			const organizationId = request.auth.organizationId
+			const shelterId = request.params.id
 
 			await server.mysql.query('DELETE FROM `Shelters` WHERE `id` = ? AND `owner` = ?', [shelterId, organizationId])
 
@@ -46,9 +47,9 @@ export const ShelterController = (server: FastifyInstance) => ({
 			}
 		}
 	},
-	async getAccountShelters(request: FastifyRequest<{ Body: OrganizationIdRequest }>, reply: FastifyReply) {
+	async getShelters(request: FastifyRequest, reply: FastifyReply) {
 		try {
-			const { organizationId } = request.body
+			const organizationId = request.auth.organizationId
 
 			const [results] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `owner` = ?', [organizationId])) as [
 				any[],

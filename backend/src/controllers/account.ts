@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
 import { sign } from 'jsonwebtoken'
 import { hashPassword, verifyPassword } from '../utils/hash'
-import { Account, OrganizationIdRequest } from '../schemas/account'
+import { Account } from '../schemas/account'
 
 export const AccountController = (server: FastifyInstance) => ({
 	async createAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
@@ -101,9 +101,9 @@ export const AccountController = (server: FastifyInstance) => ({
 			}
 		}
 	},
-	async deleteAccount(request: FastifyRequest<{ Body: OrganizationIdRequest }>, reply: FastifyReply) {
+	async deleteAccount(request: FastifyRequest, reply: FastifyReply) {
 		try {
-			const { organizationId } = request.body
+			const organizationId = request.auth.organizationId
 
 			await server.mysql.query('DELETE FROM `Accounts` WHERE `organizationId` = ?', [organizationId])
 
