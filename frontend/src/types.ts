@@ -14,4 +14,4 @@ export type Shelter = {
 	name: string
 }
 
-export type ShelterCreateRequest = Omit<Shelter, 'shelterId'>
+export type ShelterRequest = Omit<Shelter, 'shelterId'>

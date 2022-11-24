@@ -1,5 +1,5 @@
 import { fetcher } from './fetcher'
-import { AuthData, AuthRequest, ShelterCreateRequest, Shelter } from '../types'
+import { AuthData, AuthRequest, ShelterRequest, Shelter } from '../types'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
 
@@ -33,10 +33,24 @@ export const getShelters = () => {
 	return callApiEndpoint<never, Shelter[]>('GET', `${baseUrl}/shelters`)
 }
 
+export const getShelterById = (id: string) => {
+	return callApiEndpoint<never, Shelter>('GET', `${baseUrl}/shelters/${id}`)
+}
+
 export const createShelter = (name: string) => {
-	return callApiEndpoint<ShelterCreateRequest, Shelter>('POST', `${baseUrl}/shelters`, {
+	return callApiEndpoint<ShelterRequest, Shelter>('POST', `${baseUrl}/shelters`, {
 		name,
 	})
+}
+
+export const updateShelterById = (id: string, name: string) => {
+	return callApiEndpoint<ShelterRequest, Shelter>('PATCH', `${baseUrl}/shelters/${id}`, {
+		name,
+	})
+}
+
+export const deleteShelters = () => {
+	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/shelters`)
 }
 
 export const deleteShelterById = (shelterId: string) => {
