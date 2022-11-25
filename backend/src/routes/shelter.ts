@@ -52,7 +52,7 @@ export default async function Shelter(server: FastifyInstance) {
 			params: ParamsSchema,
 			body: ShelterRequestSchema,
 			response: {
-				200: ShelterResponseSchema,
+				200: MessageResponseSchema,
 			},
 		},
 		handler: controller.updateShelterById,

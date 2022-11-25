@@ -78,14 +78,11 @@ export const ShelterController = (server: FastifyInstance) => ({
 			const shelterId = request.params.id
 			const { name } = request.body
 
-			const [[result]] = (await server.mysql.query('UPDATE `Shelters` SET `name` = ? WHERE `id` = ?', [
-				name,
-				shelterId,
-			])) as [Shelter[], unknown]
+			await server.mysql.query('UPDATE `Shelters` SET `name` = ? WHERE `id` = ?', [name, shelterId])
 
 			reply.status(200)
 
-			return result
+			return { message: 'ok' }
 		} catch (error) {
 			reply.status(500)
 
