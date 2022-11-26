@@ -11,6 +11,7 @@ CREATE TABLE Shelters (
     id VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
     owner VARCHAR(255) NOT NULL,
+    published BOOLEAN NOT NULL DEFAULT 0,
     animals VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY (owner) REFERENCES Accounts(organizationId)
