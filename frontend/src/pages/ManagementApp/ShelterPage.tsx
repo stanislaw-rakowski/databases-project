@@ -11,12 +11,14 @@ const ShelterPage = () => {
 	const { id } = useParams()
 	const navigate = useNavigate()
 	const [showShelterEditForm, setShowShelterEditForm] = React.useState(false)
+	const [showAddAnimalForm, setShowAddAnimalForm] = React.useState(false)
 	const [shelterName, setShelterName] = React.useState('')
 	const [shelter, setShelter] = React.useState<Shelter | null>(null)
-
-	if (shelter === null) {
-		return null
-	}
+	const [animalName, setAnimalName] = React.useState('')
+	const [animalBirthDate, setAnimalBirthDate] = React.useState('')
+	const [animalSex, setAnimalSex] = React.useState('')
+	const [animalSpecies, setAnimalSpecies] = React.useState('')
+	const [animalDescription, setAnimalDescription] = React.useState('')
 
 	React.useEffect(() => {
 		const getShelter = async () => {
@@ -27,6 +29,10 @@ const ShelterPage = () => {
 
 		getShelter()
 	}, [])
+
+	if (shelter === null) {
+		return null
+	}
 
 	const handleShelterEdit = async (event: React.FormEvent) => {
 		event.preventDefault()
@@ -55,6 +61,8 @@ const ShelterPage = () => {
 		setShelter(null)
 		navigate('/app')
 	}
+
+	const handleAnimalAdd = async () => {}
 
 	return (
 		<AppWrapper>
@@ -91,6 +99,55 @@ const ShelterPage = () => {
 					<Button variant="primary" onClick={handleShelterPublish}>
 						{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
 					</Button>
+					<Button variant="primary" onClick={() => setShowAddAnimalForm((curr) => !curr)}>
+						Add animal
+					</Button>
+					{showAddAnimalForm && (
+						<StyledForm onSubmit={handleAnimalAdd}>
+							<InputField
+								label="Name"
+								type="text"
+								placeholder="Enter animal name"
+								value={animalName}
+								onChange={setAnimalName}
+								required
+							/>
+							<InputField
+								label="Birth date"
+								type="text"
+								placeholder="Enter birth date"
+								value={animalBirthDate}
+								onChange={setAnimalBirthDate}
+								required
+							/>
+							<InputField
+								label="Sex"
+								type="text"
+								placeholder="Enter animal sex"
+								value={animalSex}
+								onChange={setAnimalSex}
+								required
+							/>
+							<InputField
+								label="Species"
+								type="text"
+								placeholder="Enter animal species"
+								value={animalSpecies}
+								onChange={setAnimalSpecies}
+								required
+							/>
+							<InputField
+								label="Description"
+								type="text"
+								placeholder="Enter description"
+								value={animalDescription}
+								onChange={setAnimalDescription}
+								required
+							/>
+
+							<Button variant="submit">Add</Button>
+						</StyledForm>
+					)}
 				</div>
 			</AppContent>
 		</AppWrapper>
