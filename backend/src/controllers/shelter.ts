@@ -62,7 +62,10 @@ export const ShelterController = (server: FastifyInstance) => ({
 
 			reply.status(200)
 
-			return result
+			return {
+				shelterId: result.id,
+				name: result.name,
+			}
 		} catch (error) {
 			reply.status(500)
 

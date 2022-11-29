@@ -15,6 +15,10 @@ const Menu = styled.menu`
 	gap: 20px;
 	background-color: ${({ theme }) => theme.colors.sideBarSurface};
 	list-style: none;
+
+	li:last-of-type {
+		margin-top: auto;
+	}
 `
 
 const MenuItem = styled(Link)<{ $isSelected: boolean }>`
@@ -44,15 +48,14 @@ const SideBarMenu = () => {
 
 	return (
 		<Menu>
-			<Logo />
+			<li>
+				<Link to="/app">
+					<Logo />
+				</Link>
+			</li>
 			<li>
 				<MenuItem to="/app" $isSelected={pathname === '/app'}>
 					<FaHome />
-				</MenuItem>
-			</li>
-			<li>
-				<MenuItem to="/app/account" $isSelected={pathname === '/app/account'}>
-					<FaUser />
 				</MenuItem>
 			</li>
 			<li>
@@ -63,6 +66,11 @@ const SideBarMenu = () => {
 			<li>
 				<MenuItem to="/app/employees" $isSelected={pathname === '/app/employees'}>
 					<FaIdBadge />
+				</MenuItem>
+			</li>
+			<li>
+				<MenuItem to="/app/account" $isSelected={pathname === '/app/account'}>
+					<FaUser />
 				</MenuItem>
 			</li>
 		</Menu>

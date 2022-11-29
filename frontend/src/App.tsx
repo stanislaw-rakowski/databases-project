@@ -9,9 +9,10 @@ import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import BrowsePage from './pages/BrowsePage'
 import ManagementPage from './pages/ManagementApp/ManagementPage'
+import ShelterPage from './pages/ManagementApp/ShelterPage'
+import AnimalPage from './pages/ManagementApp/AnimalPage'
+import EmployeePage from './pages/ManagementApp/EmployeePage'
 import AccountPage from './pages/ManagementApp/AccountPage'
-import AnimalsPage from './pages/ManagementApp/AnimalsPage'
-import EmployeesPage from './pages/ManagementApp/EmployeesPage'
 
 const App = () => {
 	return (
@@ -25,9 +26,10 @@ const App = () => {
 				<Route path="/log-in" element={<LoginPage />} />
 				<Route element={<ProtectedRoute />}>
 					<Route path="/app" element={<ManagementPage />} />
+					<Route path="/app/shelter/:id" element={<ShelterPage />} />
+					<Route path="/app/animal/:id" element={<AnimalPage />} />
+					<Route path="/app/employee/:id" element={<EmployeePage />} />
 					<Route path="/app/account" element={<AccountPage />} />
-					<Route path="/app/animals" element={<AnimalsPage />} />
-					<Route path="/app/employees" element={<EmployeesPage />} />
 				</Route>
 			</Routes>
 		</ThemeProvider>
