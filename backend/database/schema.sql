@@ -10,7 +10,7 @@ CREATE TABLE Accounts (
 CREATE TABLE Shelters (
     id VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
-    owner VARCHAR(255) NOT NULL,
+    owner VARCHAR(255),
     published BOOLEAN NOT NULL DEFAULT false,
     PRIMARY KEY (id),
     FOREIGN KEY (owner) REFERENCES Accounts(organizationId) ON DELETE SET NULL
@@ -31,7 +31,9 @@ CREATE TABLE Animals (
     name VARCHAR(255),
     birthDate DATE,
     sex ENUM('male', 'female'),
+    species ENUM('dog', 'cat', 'other'),
     adopted BOOLEAN NOT NULL DEFAULT false,
+    adoptionDate DATE,
     description MEDIUMTEXT,
     shelter VARCHAR(255),
     organization VARCHAR(255),
