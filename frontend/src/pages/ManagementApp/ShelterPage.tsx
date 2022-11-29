@@ -31,7 +31,7 @@ const ShelterPage = () => {
 			return
 		}
 
-		await updateShelterById(shelter.shelterId, shelterName)
+		await updateShelterById(shelter)
 
 		setShelter({
 			...shelter,
@@ -40,10 +40,24 @@ const ShelterPage = () => {
 		setShowShelterEditForm(false)
 	}
 
-	const handleShelterDelete = async (shelterId: string) => {
-		await deleteShelterById(shelterId)
-		setShelter(null)
-		navigate('/app')
+	const handleShelterPublish = async () => {
+		if (shelter) {
+			const updatedShelter: Shelter = {
+				...shelter,
+				published: shelter.published === 0 ? 1 : 0,
+			}
+
+			setShelter(updatedShelter)
+			await updateShelterById(updatedShelter)
+		}
+	}
+
+	const handleShelterDelete = async () => {
+		if (shelter) {
+			await deleteShelterById(shelter.shelterId)
+			setShelter(null)
+			navigate('/app')
+		}
 	}
 
 	return (
@@ -76,8 +90,11 @@ const ShelterPage = () => {
 								<Button variant="submit">Edit</Button>
 							</StyledForm>
 						)}
-						<Button variant="destructive" onClick={() => handleShelterDelete(shelter.shelterId)}>
+						<Button variant="destructive" onClick={handleShelterDelete}>
 							Delete
+						</Button>
+						<Button variant="primary" onClick={handleShelterPublish}>
+							{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
 						</Button>
 					</div>
 				)}

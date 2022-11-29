@@ -42,12 +42,15 @@ export const getShelterById = (id: string) => {
 export const createShelter = (name: string) => {
 	return callApiEndpoint<ShelterRequest, Shelter>('POST', `${baseUrl}/shelters`, {
 		name,
+		published: 0,
 	})
 }
 
-export const updateShelterById = (id: string, name: string) => {
-	return callApiEndpoint<ShelterRequest, Shelter>('PATCH', `${baseUrl}/shelters/${id}`, {
+export const updateShelterById = (shelter: Shelter) => {
+	const { shelterId, name, published } = shelter
+	return callApiEndpoint<ShelterRequest, Shelter>('PATCH', `${baseUrl}/shelters/${shelterId}`, {
 		name,
+		published,
 	})
 }
 

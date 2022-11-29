@@ -8,11 +8,11 @@ CREATE TABLE Accounts (
 );
 
 CREATE TABLE Shelters (
-    id VARCHAR(255) NOT NULL UNIQUE,
+    shelterId VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
     owner VARCHAR(255),
     published BOOLEAN NOT NULL DEFAULT false,
-    PRIMARY KEY (id),
+    PRIMARY KEY (shelterId),
     FOREIGN KEY (owner) REFERENCES Accounts(organizationId) ON DELETE SET NULL
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE Employees (
     shelter VARCHAR(255),
     organization VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (shelter) REFERENCES Shelters(id) ON DELETE SET NULL,
+    FOREIGN KEY (shelter) REFERENCES Shelters(shelterId) ON DELETE SET NULL,
     FOREIGN KEY (organization) REFERENCES Accounts(organizationId) ON DELETE SET NULL
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE Animals (
     organization VARCHAR(255),
     employee VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (shelter) REFERENCES Shelters(id) ON DELETE SET NULL,
+    FOREIGN KEY (shelter) REFERENCES Shelters(shelterId) ON DELETE SET NULL,
     FOREIGN KEY (organization) REFERENCES Accounts(organizationId) ON DELETE SET NULL,
     FOREIGN KEY (employee) REFERENCES Employees(id) ON DELETE SET NULL
 );
