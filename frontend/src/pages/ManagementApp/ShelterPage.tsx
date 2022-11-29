@@ -14,6 +14,10 @@ const ShelterPage = () => {
 	const [shelterName, setShelterName] = React.useState('')
 	const [shelter, setShelter] = React.useState<Shelter | null>(null)
 
+	if (shelter === null) {
+		return null
+	}
+
 	React.useEffect(() => {
 		const getShelter = async () => {
 			if (id) {
@@ -27,10 +31,6 @@ const ShelterPage = () => {
 	const handleShelterEdit = async (event: React.FormEvent) => {
 		event.preventDefault()
 
-		if (shelter === null) {
-			return
-		}
-
 		await updateShelterById(shelter)
 
 		setShelter({
@@ -41,23 +41,19 @@ const ShelterPage = () => {
 	}
 
 	const handleShelterPublish = async () => {
-		if (shelter) {
-			const updatedShelter: Shelter = {
-				...shelter,
-				published: shelter.published === 0 ? 1 : 0,
-			}
-
-			setShelter(updatedShelter)
-			await updateShelterById(updatedShelter)
+		const updatedShelter: Shelter = {
+			...shelter,
+			published: shelter.published === 0 ? 1 : 0,
 		}
+
+		setShelter(updatedShelter)
+		await updateShelterById(updatedShelter)
 	}
 
 	const handleShelterDelete = async () => {
-		if (shelter) {
-			await deleteShelterById(shelter.shelterId)
-			setShelter(null)
-			navigate('/app')
-		}
+		await deleteShelterById(shelter.shelterId)
+		setShelter(null)
+		navigate('/app')
 	}
 
 	return (
@@ -65,39 +61,37 @@ const ShelterPage = () => {
 			<SideBarMenu />
 			<AppContent>
 				<h1>Shelter</h1>
-				{shelter && (
-					<div>
-						<h2>{shelter.name}</h2>
-						<Button
-							variant="primary"
-							onClick={() => {
-								setShowShelterEditForm((curr) => !curr)
-								setShelterName(shelter.name)
-							}}
-						>
-							Edit
-						</Button>
-						{showShelterEditForm && (
-							<StyledForm onSubmit={handleShelterEdit}>
-								<InputField
-									label="Name"
-									type="text"
-									placeholder="Enter shelter name"
-									value={shelterName}
-									onChange={setShelterName}
-									required
-								/>
-								<Button variant="submit">Edit</Button>
-							</StyledForm>
-						)}
-						<Button variant="destructive" onClick={handleShelterDelete}>
-							Delete
-						</Button>
-						<Button variant="primary" onClick={handleShelterPublish}>
-							{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
-						</Button>
-					</div>
-				)}
+				<div>
+					<h2>{shelter.name}</h2>
+					<Button
+						variant="primary"
+						onClick={() => {
+							setShowShelterEditForm((curr) => !curr)
+							setShelterName(shelter.name)
+						}}
+					>
+						Edit
+					</Button>
+					{showShelterEditForm && (
+						<StyledForm onSubmit={handleShelterEdit}>
+							<InputField
+								label="Name"
+								type="text"
+								placeholder="Enter shelter name"
+								value={shelterName}
+								onChange={setShelterName}
+								required
+							/>
+							<Button variant="submit">Edit</Button>
+						</StyledForm>
+					)}
+					<Button variant="destructive" onClick={handleShelterDelete}>
+						Delete
+					</Button>
+					<Button variant="primary" onClick={handleShelterPublish}>
+						{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
+					</Button>
+				</div>
 			</AppContent>
 		</AppWrapper>
 	)
