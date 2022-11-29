@@ -1,5 +1,5 @@
 import { fetcher } from './fetcher'
-import { AuthData, AuthRequest, ShelterRequest, Shelter } from '../types'
+import { AuthData, AuthRequest, ShelterRequest, Shelter, Animal, AnimalRequest } from '../types'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
 
@@ -60,4 +60,28 @@ export const deleteShelters = () => {
 
 export const deleteShelterById = (shelterId: string) => {
 	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/shelters/${shelterId}`)
+}
+
+export const getAnimals = (shelterId: string) => {
+	return callApiEndpoint<never, Animal[]>('GET', `${baseUrl}/animals/all/${shelterId}`)
+}
+
+export const getAnimalById = (id: string) => {
+	return callApiEndpoint<never, Animal>('GET', `${baseUrl}/animals/${id}`)
+}
+
+export const createAnimal = (shelterId: string, animal: AnimalRequest) => {
+	return callApiEndpoint<AnimalRequest, Animal>('POST', `${baseUrl}/animals/${shelterId}`, animal)
+}
+
+export const updateAnimalById = (id: string, animal: AnimalRequest) => {
+	return callApiEndpoint<AnimalRequest, Animal>('PATCH', `${baseUrl}/animals/${id}`, animal)
+}
+
+export const deleteAnimals = (shelterId: string) => {
+	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/animals/all/${shelterId}`)
+}
+
+export const deleteAnimalById = (id: string) => {
+	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/animals/${id}`)
 }
