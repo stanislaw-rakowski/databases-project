@@ -4,7 +4,6 @@ export const ShelterSchema = Type.Object({
 	id: Type.String({ format: 'uuid' }),
 	name: Type.String(),
 	owner: Type.String({ format: 'uuid' }),
-	animals: Type.Unknown(),
 })
 
 export type Shelter = Static<typeof ShelterSchema>
