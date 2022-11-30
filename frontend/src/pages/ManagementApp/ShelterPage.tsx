@@ -9,6 +9,7 @@ import {
 	updateShelterById,
 	createAnimal,
 	getAnimals as fetchAnimals,
+	deleteAnimals,
 } from '../../lib/api'
 import { Animal, AnimalRequest, Shelter } from '../../types'
 import Button from '../../components/Button'
@@ -103,6 +104,13 @@ const ShelterPage = () => {
 		setAnimals(animals ? [...animals, addedAnimal] : [addedAnimal])
 	}
 
+	const handleAllAnimalsDelete = async () => {
+		if (id) {
+			await deleteAnimals(id)
+			setAnimals(null)
+		}
+	}
+
 	return (
 		<AppWrapper>
 			<SideBarMenu />
@@ -142,6 +150,9 @@ const ShelterPage = () => {
 							</Button>
 							<Button variant="primary" onClick={() => setShowAddAnimalForm((curr) => !curr)}>
 								Add animal
+							</Button>
+							<Button variant="destructive" onClick={handleAllAnimalsDelete}>
+								Delete all animals
 							</Button>
 							{showAddAnimalForm && (
 								<StyledForm onSubmit={handleAnimalAdd}>
@@ -192,21 +203,28 @@ const ShelterPage = () => {
 						</div>
 					</>
 				) : shelters ? (
-					shelters.map(({ shelterId, name }) => (
-						<div key={shelterId}>
-							{name}
-							<Link to={`/app/shelter/${shelterId}`} variant="button" text="Details" />
+					<>
+						<h1>Your shelters</h1>
+						{shelters.map(({ shelterId, name }) => (
+							<div key={shelterId}>
+								{name}
+								<Link to={`/app/shelter/${shelterId}`} variant="button" text="Details" />
+							</div>
+						))}
+					</>
+				) : (
+					<p>Go to home page to create a shelter</p>
+				)}
+				{animals ? (
+					animals.map(({ id, name, birthDate, sex, species, description }) => (
+						<div key={id}>
+							{name} - {birthDate} - {sex} - {species} - {description}
+							<Link to={`/app/animal/${id}`} variant="button" text="Details" />
 						</div>
 					))
-				) : null}
-				{animals
-					? animals.map(({ id, name, birthDate, sex, species, description }) => (
-							<div key={id}>
-								{name} - {birthDate} - {sex} - {species} - {description}
-								<Link to={`/app/animal/${id}`} variant="button" text="Details" />
-							</div>
-					  ))
-					: null}
+				) : (
+					<p>You dont have any animals yet</p>
+				)}
 			</AppContent>
 		</AppWrapper>
 	)
