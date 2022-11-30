@@ -1,6 +1,13 @@
 import { FastifyInstance } from 'fastify'
 import { AnimalController } from '../controllers/animal'
-import { ParamsSchema, ShelterParamsSchema, AnimalSchema, AnimalsSchema, AnimalRequestSchema } from '../schemas/animal'
+import {
+	ParamsSchema,
+	ShelterParamsSchema,
+	AnimalSchema,
+	AnimalsSchema,
+	AnimalRequestSchema,
+	AnimalResponseSchema,
+} from '../schemas/animal'
 import { MessageResponseSchema } from '../schemas/common'
 
 export const autoPrefix = '/animals'
@@ -41,7 +48,7 @@ export default async function Animal(server: FastifyInstance) {
 			params: ShelterParamsSchema,
 			body: AnimalRequestSchema,
 			response: {
-				201: AnimalSchema,
+				201: AnimalResponseSchema,
 			},
 		},
 		handler: controller.createAnimal,

@@ -29,4 +29,6 @@ export const AnimalRequestSchema = Type.Omit(AnimalSchema, ['id', 'shelter', 'or
 
 export type AnimalRequestBody = Static<typeof AnimalRequestSchema>
 
+export const AnimalResponseSchema = Type.Omit(AnimalSchema, ['organization'])
+
 export const AnimalsSchema = Type.Array(AnimalSchema)

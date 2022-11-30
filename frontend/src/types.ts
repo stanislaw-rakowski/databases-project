@@ -30,6 +30,5 @@ export type Animal = AnimalRequest & {
 	adopted: 0 | 1
 	adoptionDate: string
 	shelter: string
-	organization: string
 	employee: string
 }

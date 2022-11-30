@@ -2,8 +2,15 @@ import React from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm } from '../../components/common'
-import { getShelters as fetchShelters, getShelterById, deleteShelterById, updateShelterById } from '../../lib/api'
-import { Shelter } from '../../types'
+import {
+	getShelters as fetchShelters,
+	getShelterById,
+	deleteShelterById,
+	updateShelterById,
+	createAnimal,
+	getAnimals as fetchAnimals,
+} from '../../lib/api'
+import { Animal, AnimalRequest, Shelter } from '../../types'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
 import Link from '../../components/Link'
@@ -22,6 +29,7 @@ const ShelterPage = () => {
 	const [animalSex, setAnimalSex] = React.useState('')
 	const [animalSpecies, setAnimalSpecies] = React.useState('')
 	const [animalDescription, setAnimalDescription] = React.useState('')
+	const [animals, setAnimals] = React.useState<Animal[] | null>(null)
 
 	React.useEffect(() => {
 		const getShelter = async () => {
@@ -34,8 +42,15 @@ const ShelterPage = () => {
 			setShelters(await fetchShelters())
 		}
 
+		const getAnimals = async () => {
+			if (id && id !== 'all') {
+				setAnimals(await fetchAnimals(id))
+			}
+		}
+
 		getShelter()
 		getShelters()
+		getAnimals()
 	}, [pathname])
 
 	const handleShelterEdit = async (event: React.FormEvent) => {
@@ -72,7 +87,21 @@ const ShelterPage = () => {
 		navigate('/app')
 	}
 
-	const handleAnimalAdd = async () => {}
+	const handleAnimalAdd = async (event: React.FormEvent) => {
+		event.preventDefault()
+
+		if (!id) return
+
+		const addedAnimal = await createAnimal(id, {
+			name: animalName,
+			birthDate: animalBirthDate,
+			sex: animalSex,
+			species: animalSpecies,
+			description: animalDescription,
+		} as AnimalRequest)
+
+		setAnimals(animals ? [...animals, addedAnimal] : [addedAnimal])
+	}
 
 	return (
 		<AppWrapper>
@@ -108,7 +137,7 @@ const ShelterPage = () => {
 							<Button variant="destructive" onClick={handleShelterDelete}>
 								Delete
 							</Button>
-							<Button variant="primary" onClick={handleShelterPublish}>
+							<Button variant="secondary" onClick={handleShelterPublish}>
 								{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
 							</Button>
 							<Button variant="primary" onClick={() => setShowAddAnimalForm((curr) => !curr)}>
@@ -170,6 +199,14 @@ const ShelterPage = () => {
 						</div>
 					))
 				) : null}
+				{animals
+					? animals.map(({ id, name, birthDate, sex, species, description }) => (
+							<div key={id}>
+								{name} - {birthDate} - {sex} - {species} - {description}
+								<Link to={`/app/animal/${id}`} variant="button" text="Details" />
+							</div>
+					  ))
+					: null}
 			</AppContent>
 		</AppWrapper>
 	)

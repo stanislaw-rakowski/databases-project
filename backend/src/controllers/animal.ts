@@ -18,7 +18,15 @@ export const AnimalController = (server: FastifyInstance) => ({
 
 			reply.status(201)
 
-			return { animalId, name }
+			return {
+				id: animalId,
+				shelter: shelterId,
+				name,
+				birthDate,
+				sex,
+				species,
+				description,
+			}
 		} catch (error) {
 			reply.status(500)
 
@@ -40,7 +48,7 @@ export const AnimalController = (server: FastifyInstance) => ({
 
 			reply.status(200)
 
-			return results.map(({ id, name }) => ({ animalId: id, name }))
+			return results
 		} catch (error) {
 			reply.status(500)
 
