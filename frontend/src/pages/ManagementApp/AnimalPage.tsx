@@ -1,11 +1,22 @@
 import React from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import styled from 'styled-components'
 import SideBarMenu from '../../components/SideBarMenu'
-import { AppWrapper, AppContent, StyledForm } from '../../components/common'
+import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading } from '../../components/common'
 import { getAnimalById, deleteAnimalById } from '../../lib/api'
 import { Animal } from '../../types'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
+
+const ButtonsSection = styled.div`
+	display: flex;
+	justify-content: space-between;
+
+	span {
+		display: flex;
+		gap: 1rem;
+	}
+`
 
 const AnimalPage = () => {
 	const { id } = useParams()
@@ -51,18 +62,28 @@ const AnimalPage = () => {
 			<AppContent>
 				{animal ? (
 					<>
-						<h1>Animal</h1>
-						<div>
-							<h2>{animal.name}</h2>
-							<p>
-								{animal.birthDate} - {animal.sex} - {animal.species} - {animal.description}
-							</p>
-							<Button variant="primary" onClick={() => setShowAnimalEditForm((curr) => !curr)}>
-								Edit
-							</Button>
-							{showAnimalEditForm && (
-								<StyledForm onSubmit={handleAnimalEdit}>
-									{/* <InputField
+						<TopSection>
+							<h2>Animal</h2>
+							<SubHeading>{animal.name}</SubHeading>
+							<ButtonsSection>
+								<Button variant="primary" onClick={() => setShowAnimalEditForm((curr) => !curr)}>
+									Edit
+								</Button>
+								<Button variant="destructive" onClick={handleAnimalDelete}>
+									Delete
+								</Button>
+							</ButtonsSection>
+						</TopSection>
+						<p>
+							{animal.birthDate} - {animal.sex} - {animal.species} - {animal.description}
+						</p>
+					</>
+				) : (
+					<p>Go to shelter section and select an animal</p>
+				)}
+				{showAnimalEditForm && (
+					<StyledForm onSubmit={handleAnimalEdit}>
+						{/* <InputField
 										label="Name"
 										type="text"
 										placeholder="Enter shelter name"
@@ -70,16 +91,8 @@ const AnimalPage = () => {
 										onChange={setShelterName}
 										required
 									/> */}
-									<Button variant="submit">Edit</Button>
-								</StyledForm>
-							)}
-							<Button variant="destructive" onClick={handleAnimalDelete}>
-								Delete
-							</Button>
-						</div>
-					</>
-				) : (
-					<p>Go to shelter section and select an animal</p>
+						<Button variant="submit">Edit</Button>
+					</StyledForm>
 				)}
 			</AppContent>
 		</AppWrapper>

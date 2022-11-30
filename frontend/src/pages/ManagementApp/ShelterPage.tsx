@@ -1,7 +1,10 @@
 import React from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
+import styled from 'styled-components'
+import { TbGenderMale, TbGenderFemale } from 'react-icons/tb'
+import { FaDog, FaCat, FaQuestionCircle } from 'react-icons/fa'
 import SideBarMenu from '../../components/SideBarMenu'
-import { AppWrapper, AppContent, StyledForm } from '../../components/common'
+import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../components/common'
 import {
 	getShelters as fetchShelters,
 	getShelterById,
@@ -14,7 +17,34 @@ import {
 import { Animal, AnimalRequest, Shelter } from '../../types'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
-import Link from '../../components/Link'
+
+const ButtonsSection = styled.div`
+	display: flex;
+	justify-content: space-between;
+
+	span {
+		display: flex;
+		gap: 1rem;
+	}
+`
+
+const AnimalRow = styled(Row)`
+	gap: 1rem;
+
+	span {
+		flex: 1;
+	}
+`
+
+const ShelterRow = styled(Row)`
+	span {
+		flex: 1;
+	}
+
+	span:nth-of-type(2) {
+		flex: 4;
+	}
+`
 
 const ShelterPage = () => {
 	const { id } = useParams()
@@ -111,119 +141,145 @@ const ShelterPage = () => {
 		}
 	}
 
+	const getIconBySpecies = (species: Animal['species']) => {
+		switch (species) {
+			case 'cat':
+				return <FaCat />
+			case 'dog':
+				return <FaDog />
+			case 'other':
+				return <FaQuestionCircle />
+		}
+	}
+
 	return (
 		<AppWrapper>
 			<SideBarMenu />
 			<AppContent>
 				{shelter ? (
 					<>
-						<h1>Shelter</h1>
-						<div>
-							<h2>{shelter.name}</h2>
-							<Button
-								variant="primary"
-								onClick={() => {
-									setShowShelterEditForm((curr) => !curr)
-									setShelterName(shelter.name)
-								}}
-							>
-								Edit
-							</Button>
-							{showShelterEditForm && (
-								<StyledForm onSubmit={handleShelterEdit}>
-									<InputField
-										label="Name"
-										type="text"
-										placeholder="Enter shelter name"
-										value={shelterName}
-										onChange={setShelterName}
-										required
-									/>
-									<Button variant="submit">Edit</Button>
-								</StyledForm>
-							)}
-							<Button variant="destructive" onClick={handleShelterDelete}>
-								Delete
-							</Button>
-							<Button variant="secondary" onClick={handleShelterPublish}>
-								{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
-							</Button>
-							<Button variant="primary" onClick={() => setShowAddAnimalForm((curr) => !curr)}>
-								Add animal
-							</Button>
-							<Button variant="destructive" onClick={handleAllAnimalsDelete}>
-								Delete all animals
-							</Button>
-							{showAddAnimalForm && (
-								<StyledForm onSubmit={handleAnimalAdd}>
-									<InputField
-										label="Name"
-										type="text"
-										placeholder="Enter animal name"
-										value={animalName}
-										onChange={setAnimalName}
-										required
-									/>
-									<InputField
-										label="Birth date"
-										type="text"
-										placeholder="Enter birth date"
-										value={animalBirthDate}
-										onChange={setAnimalBirthDate}
-										required
-									/>
-									<InputField
-										label="Sex"
-										type="text"
-										placeholder="Enter animal sex"
-										value={animalSex}
-										onChange={setAnimalSex}
-										required
-									/>
-									<InputField
-										label="Species"
-										type="text"
-										placeholder="Enter animal species"
-										value={animalSpecies}
-										onChange={setAnimalSpecies}
-										required
-									/>
-									<InputField
-										label="Description"
-										type="text"
-										placeholder="Enter description"
-										value={animalDescription}
-										onChange={setAnimalDescription}
-										required
-									/>
+						<TopSection>
+							<h2>Shelter</h2>
+							<SubHeading>{shelter.name}</SubHeading>
+							<ButtonsSection>
+								<span>
+									<Button variant="primary" onClick={() => setShowAddAnimalForm((curr) => !curr)}>
+										Add animal
+									</Button>
+									<Button
+										variant="primary"
+										onClick={() => {
+											setShowShelterEditForm((curr) => !curr)
+											setShelterName(shelter.name)
+										}}
+									>
+										Edit
+									</Button>
+									<Button variant="secondary" onClick={handleShelterPublish}>
+										{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
+									</Button>
+								</span>
+								<span>
+									<Button variant="destructive" onClick={handleShelterDelete}>
+										Delete
+									</Button>
+									<Button variant="destructive" onClick={handleAllAnimalsDelete}>
+										Delete all animals
+									</Button>
+								</span>
+							</ButtonsSection>
+						</TopSection>
+						{showShelterEditForm && (
+							<StyledForm onSubmit={handleShelterEdit}>
+								<InputField
+									label="Name"
+									type="text"
+									placeholder="Enter shelter name"
+									value={shelterName}
+									onChange={setShelterName}
+									required
+								/>
+								<Button variant="submit">Edit</Button>
+							</StyledForm>
+						)}
+						{showAddAnimalForm && (
+							<StyledForm onSubmit={handleAnimalAdd}>
+								<InputField
+									label="Name"
+									type="text"
+									placeholder="Enter animal name"
+									value={animalName}
+									onChange={setAnimalName}
+									required
+								/>
+								<InputField
+									label="Birth date"
+									type="text"
+									placeholder="Enter birth date"
+									value={animalBirthDate}
+									onChange={setAnimalBirthDate}
+									required
+								/>
+								<InputField
+									label="Sex"
+									type="text"
+									placeholder="Enter animal sex"
+									value={animalSex}
+									onChange={setAnimalSex}
+									required
+								/>
+								<InputField
+									label="Species"
+									type="text"
+									placeholder="Enter animal species"
+									value={animalSpecies}
+									onChange={setAnimalSpecies}
+									required
+								/>
+								<InputField
+									label="Description"
+									type="text"
+									placeholder="Enter description"
+									value={animalDescription}
+									onChange={setAnimalDescription}
+									required
+								/>
 
-									<Button variant="submit">Add</Button>
-								</StyledForm>
+								<Button variant="submit">Add</Button>
+							</StyledForm>
+						)}
+						<Results>
+							{animals ? (
+								animals.map(({ id, name, birthDate, sex, species }, index) => (
+									<AnimalRow key={id}>
+										<span>{index + 1}</span>
+										<span>{name}</span>
+										<span>{birthDate.split('T')[0]}</span>
+										<span>{sex === 'male' ? <TbGenderMale /> : <TbGenderFemale />}</span>
+										<span>{getIconBySpecies(species)}</span>
+										<Link to={`/app/animal/${id}`}>Details</Link>
+									</AnimalRow>
+								))
+							) : (
+								<p>You dont have any animals yet</p>
 							)}
-						</div>
+						</Results>
 					</>
 				) : shelters ? (
 					<>
 						<h1>Your shelters</h1>
-						{shelters.map(({ shelterId, name }) => (
-							<div key={shelterId}>
-								{name}
-								<Link to={`/app/shelter/${shelterId}`} variant="button" text="Details" />
-							</div>
-						))}
+						<Results>
+							{shelters.map(({ shelterId, name }, index) => (
+								<ShelterRow key={shelterId}>
+									<span>{index + 1}</span>
+									<span>{name}</span>
+									<Link to={`/app/shelter/${shelterId}`}>Details</Link>
+								</ShelterRow>
+							))}
+						</Results>
 					</>
 				) : (
 					<p>Go to home page to create a shelter</p>
-				)}
-				{animals ? (
-					animals.map(({ id, name, birthDate, sex, species, description }) => (
-						<div key={id}>
-							{name} - {birthDate} - {sex} - {species} - {description}
-							<Link to={`/app/animal/${id}`} variant="button" text="Details" />
-						</div>
-					))
-				) : (
-					<p>You dont have any animals yet</p>
 				)}
 			</AppContent>
 		</AppWrapper>
