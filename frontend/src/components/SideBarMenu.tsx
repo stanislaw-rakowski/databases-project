@@ -54,22 +54,22 @@ const SideBarMenu = () => {
 				</Link>
 			</li>
 			<li>
-				<MenuItem to="/app" $isSelected={pathname === '/app'}>
+				<MenuItem to="/app/shelter/all" $isSelected={pathname.includes('shelter')}>
 					<FaHome />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/app/animals" $isSelected={pathname === '/app/animals'}>
+				<MenuItem to="/app/animal/all" $isSelected={pathname.includes('animal')}>
 					<FaDog />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/app/employees" $isSelected={pathname === '/app/employees'}>
+				<MenuItem to="/app/employee/all" $isSelected={pathname.includes('employee')}>
 					<FaIdBadge />
 				</MenuItem>
 			</li>
 			<li>
-				<MenuItem to="/app/account" $isSelected={pathname === '/app/account'}>
+				<MenuItem to="/app/account" $isSelected={pathname.includes('account')}>
 					<FaUser />
 				</MenuItem>
 			</li>
