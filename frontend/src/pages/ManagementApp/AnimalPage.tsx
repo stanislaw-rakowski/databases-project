@@ -1,13 +1,14 @@
 import React from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading } from '../../components/common'
 import { getAnimalById, deleteAnimalById } from '../../lib/api'
 import { Animal, AnimalForm, AnimalData } from '../../types'
+import { updateAnimalById } from '../../lib/api'
+import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
-import { updateAnimalById } from '../../lib/api'
+import Modal from '../../components/Modal'
 
 const ButtonsSection = styled.div`
 	display: flex;
@@ -109,49 +110,51 @@ const AnimalPage = () => {
 					<p>Go to shelter section and select an animal</p>
 				)}
 				{showAnimalEditForm && (
-					<StyledForm onSubmit={handleAnimalEdit}>
-						<InputField
-							label="Name"
-							type="text"
-							placeholder="Enter animal name"
-							value={animalFormData.name}
-							onChange={handleInputValueChange('name')}
-							required
-						/>
-						<InputField
-							label="Birth date"
-							type="text"
-							placeholder="Enter birth date"
-							value={animalFormData.birthDate}
-							onChange={handleInputValueChange('birthDate')}
-							required
-						/>
-						<InputField
-							label="Sex"
-							type="text"
-							placeholder="Enter animal sex"
-							value={animalFormData.sex}
-							onChange={handleInputValueChange('sex')}
-							required
-						/>
-						<InputField
-							label="Species"
-							type="text"
-							placeholder="Enter animal species"
-							value={animalFormData.species}
-							onChange={handleInputValueChange('species')}
-							required
-						/>
-						<InputField
-							label="Description"
-							type="text"
-							placeholder="Enter description"
-							value={animalFormData.description}
-							onChange={handleInputValueChange('description')}
-							required
-						/>
-						<Button variant="submit">Edit</Button>
-					</StyledForm>
+					<Modal title="Edit animal" onClose={() => setShowAnimalEditForm(false)}>
+						<StyledForm onSubmit={handleAnimalEdit}>
+							<InputField
+								label="Name"
+								type="text"
+								placeholder="Enter animal name"
+								value={animalFormData.name}
+								onChange={handleInputValueChange('name')}
+								required
+							/>
+							<InputField
+								label="Birth date"
+								type="text"
+								placeholder="Enter birth date"
+								value={animalFormData.birthDate}
+								onChange={handleInputValueChange('birthDate')}
+								required
+							/>
+							<InputField
+								label="Sex"
+								type="text"
+								placeholder="Enter animal sex"
+								value={animalFormData.sex}
+								onChange={handleInputValueChange('sex')}
+								required
+							/>
+							<InputField
+								label="Species"
+								type="text"
+								placeholder="Enter animal species"
+								value={animalFormData.species}
+								onChange={handleInputValueChange('species')}
+								required
+							/>
+							<InputField
+								label="Description"
+								type="text"
+								placeholder="Enter description"
+								value={animalFormData.description}
+								onChange={handleInputValueChange('description')}
+								required
+							/>
+							<Button variant="submit">Edit</Button>
+						</StyledForm>
+					</Modal>
 				)}
 			</AppContent>
 		</AppWrapper>
