@@ -9,6 +9,7 @@ import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
 import Modal from '../../components/Modal'
+import ActionModal from '../../components/ActionModal'
 
 const ButtonsSection = styled.div`
 	display: flex;
@@ -25,7 +26,8 @@ const AnimalPage = () => {
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
 	const [animal, setAnimal] = React.useState<Animal | null>(null)
-	const [showAnimalEditForm, setShowAnimalEditForm] = React.useState(false)
+	const [showEditModal, setShowEditModal] = React.useState(false)
+	const [showDeleteModal, setShowDeleteModal] = React.useState(false)
 	const [animalFormData, setAnimalFormData] = React.useState<AnimalForm>({
 		name: '',
 		species: '',
@@ -72,7 +74,7 @@ const AnimalPage = () => {
 		await updateAnimalById(id, editedAnimal)
 
 		setAnimal({ ...animal, ...editedAnimal })
-		setShowAnimalEditForm(false)
+		setShowEditModal(false)
 	}
 
 	const handleAnimalDelete = async () => {
@@ -94,10 +96,10 @@ const AnimalPage = () => {
 							<h2>Animal</h2>
 							<SubHeading>{animal.name}</SubHeading>
 							<ButtonsSection>
-								<Button variant="primary" onClick={() => setShowAnimalEditForm((curr) => !curr)}>
+								<Button variant="primary" onClick={() => setShowEditModal((curr) => !curr)}>
 									Edit
 								</Button>
-								<Button variant="destructive" onClick={handleAnimalDelete}>
+								<Button variant="destructive" onClick={() => setShowDeleteModal(true)}>
 									Delete
 								</Button>
 							</ButtonsSection>
@@ -109,8 +111,18 @@ const AnimalPage = () => {
 				) : (
 					<p>Go to shelter section and select an animal</p>
 				)}
-				{showAnimalEditForm && (
-					<Modal title="Edit animal" onClose={() => setShowAnimalEditForm(false)}>
+				{showDeleteModal && (
+					<ActionModal
+						text="Are you sure?"
+						subText="This action will irreversibly delete this animal"
+						acceptCta="Yes, delete"
+						onAccept={handleAnimalDelete}
+						cancelCta="No, go back"
+						onClose={() => setShowDeleteModal(false)}
+					/>
+				)}
+				{showEditModal && (
+					<Modal title="Edit animal" onClose={() => setShowEditModal(false)}>
 						<StyledForm onSubmit={handleAnimalEdit}>
 							<InputField
 								label="Name"

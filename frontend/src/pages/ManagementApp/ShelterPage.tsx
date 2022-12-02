@@ -3,7 +3,6 @@ import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { TbGenderMale, TbGenderFemale } from 'react-icons/tb'
 import { FaDog, FaCat, FaQuestionCircle } from 'react-icons/fa'
-import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../components/common'
 import {
 	getShelters as fetchShelters,
@@ -15,9 +14,11 @@ import {
 	deleteAnimals,
 } from '../../lib/api'
 import { Animal, AnimalData, AnimalForm, Shelter } from '../../types'
+import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
 import Modal from '../../components/Modal'
+import ActionModal from '../../components/ActionModal'
 
 const ButtonsSection = styled.div`
 	display: flex;
@@ -51,8 +52,11 @@ const ShelterPage = () => {
 	const { id } = useParams()
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
-	const [showShelterEditForm, setShowShelterEditForm] = React.useState(false)
-	const [showAddAnimalForm, setShowAddAnimalForm] = React.useState(false)
+	const [showShelterEditModal, setShowShelterEditModal] = React.useState(false)
+	const [showAddAnimalModal, setShowAddAnimalModal] = React.useState(false)
+	const [showDeleteShelterModal, setShowDeleteShelterModal] = React.useState(false)
+	const [showDeleteAnimalsModal, setShowDeleteAnimalsModal] = React.useState(false)
+	const [showPublishShelterModal, setShowPublishShelterModal] = React.useState(false)
 	const [shelterName, setShelterName] = React.useState('')
 	const [shelter, setShelter] = React.useState<Shelter | null>(null)
 	const [shelters, setShelters] = React.useState<Shelter[] | null>(null)
@@ -78,7 +82,8 @@ const ShelterPage = () => {
 
 		const getAnimals = async () => {
 			if (id && id !== 'all') {
-				setAnimals(await fetchAnimals(id))
+				const data = await fetchAnimals(id)
+				setAnimals(data.length !== 0 ? data : null)
 			}
 		}
 
@@ -98,7 +103,7 @@ const ShelterPage = () => {
 			...shelter,
 			name: shelterName,
 		})
-		setShowShelterEditForm(false)
+		setShowShelterEditModal(false)
 	}
 
 	const handleShelterPublish = async () => {
@@ -146,6 +151,7 @@ const ShelterPage = () => {
 			birthDate: '',
 			description: '',
 		})
+		setShowAddAnimalModal(false)
 	}
 
 	const handleAllAnimalsDelete = async () => {
@@ -177,34 +183,66 @@ const ShelterPage = () => {
 							<SubHeading>{shelter.name}</SubHeading>
 							<ButtonsSection>
 								<span>
-									<Button variant="primary" onClick={() => setShowAddAnimalForm((curr) => !curr)}>
+									<Button variant="primary" onClick={() => setShowAddAnimalModal((curr) => !curr)}>
 										Add animal
 									</Button>
 									<Button
 										variant="primary"
 										onClick={() => {
-											setShowShelterEditForm((curr) => !curr)
+											setShowShelterEditModal((curr) => !curr)
 											setShelterName(shelter.name)
 										}}
 									>
 										Edit
 									</Button>
-									<Button variant="secondary" onClick={handleShelterPublish}>
+									<Button variant="secondary" onClick={() => setShowPublishShelterModal(true)}>
 										{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
 									</Button>
 								</span>
 								<span>
-									<Button variant="destructive" onClick={handleShelterDelete}>
+									<Button variant="destructive" onClick={() => setShowDeleteShelterModal(true)}>
 										Delete
 									</Button>
-									<Button variant="destructive" onClick={handleAllAnimalsDelete}>
+									<Button variant="destructive" onClick={() => setShowDeleteAnimalsModal(true)}>
 										Delete all animals
 									</Button>
 								</span>
 							</ButtonsSection>
 						</TopSection>
-						{showShelterEditForm && (
-							<Modal title="Edit shelter" onClose={() => setShowShelterEditForm(false)}>
+						{showPublishShelterModal && (
+							<ActionModal
+								text="Are you sure?"
+								subText={`This action will ${Boolean(shelter.published) ? 'unpublish' : 'publish'} your shelter and ${
+									Boolean(shelter.published) ? 'hide it from' : "make it visible with all it's animals on"
+								} our public page`}
+								acceptCta={`Yes, ${Boolean(shelter.published) ? 'unpublish' : 'publish'}`}
+								onAccept={handleShelterPublish}
+								cancelCta="No, go back"
+								onClose={() => setShowPublishShelterModal(false)}
+							/>
+						)}
+						{showDeleteShelterModal && (
+							<ActionModal
+								text="Are you sure?"
+								subText="This action will irreversibly delete your shelter"
+								acceptCta="Yes, delete"
+								onAccept={handleShelterDelete}
+								cancelCta="No, go back"
+								onClose={() => setShowDeleteShelterModal(false)}
+							/>
+						)}
+						{showDeleteAnimalsModal && (
+							<ActionModal
+								text="Are you sure?"
+								subText="This action will irreversibly delete all your animals in this shelter"
+								acceptCta="Yes, delete"
+								onAccept={handleAllAnimalsDelete}
+								cancelCta="No, go back"
+								onClose={() => setShowDeleteAnimalsModal(false)}
+							/>
+						)}
+						{showShelterEditModal && (
+							<Modal title="Edit shelter" onClose={() => setShowShelterEditModal(false)}>
 								<StyledForm onSubmit={handleShelterEdit}>
 									<InputField
 										label="Name"
@@ -218,8 +256,8 @@ const ShelterPage = () => {
 								</StyledForm>
 							</Modal>
 						)}
-						{showAddAnimalForm && (
-							<Modal title="Add animal" onClose={() => setShowAddAnimalForm(false)}>
+						{showAddAnimalModal && (
+							<Modal title="Add animal" onClose={() => setShowAddAnimalModal(false)}>
 								<StyledForm onSubmit={handleAnimalAdd}>
 									<InputField
 										label="Name"
@@ -278,7 +316,7 @@ const ShelterPage = () => {
 									</AnimalRow>
 								))
 							) : (
-								<p>You dont have any animals yet</p>
+								<p>{`You don't have any animals yet. Go to shelter page and add them!`}</p>
 							)}
 						</Results>
 					</>

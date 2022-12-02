@@ -1,11 +1,14 @@
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent } from '../../components/common'
 import { removeAuth } from '../../lib/auth'
 import { deleteAccount } from '../../lib/api'
+import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
+import ActionModal from '../../components/ActionModal'
 
 const AccountPage = () => {
+	const [showDeleteAccountModal, setShowDeleteAccountModal] = React.useState(false)
 	const navigate = useNavigate()
 
 	const handleLogOut = () => {
@@ -31,9 +34,19 @@ const AccountPage = () => {
 				<Button variant="frame" onClick={handleLogOut}>
 					Log out
 				</Button>
-				<Button variant="destructive" onClick={handleAccountDelete}>
+				<Button variant="destructive" onClick={() => setShowDeleteAccountModal(true)}>
 					Delete account
 				</Button>
+				{showDeleteAccountModal && (
+					<ActionModal
+						text="Are you sure?"
+						subText="This action will irreversibly delete your account with all of your shelters, employees and animals"
+						acceptCta="Yes, delete"
+						onAccept={handleAccountDelete}
+						cancelCta="No, go back"
+						onClose={() => setShowDeleteAccountModal(false)}
+					/>
+				)}
 			</AppContent>
 		</AppWrapper>
 	)

@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaLock, FaLockOpen } from 'react-icons/fa'
-import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../components/common'
-import Button from '../../components/Button'
-import InputField from '../../components/InputField'
 import { createShelter, getShelters, deleteShelters } from '../../lib/api'
 import { Shelter } from '../../types'
+import SideBarMenu from '../../components/SideBarMenu'
+import Button from '../../components/Button'
+import InputField from '../../components/InputField'
+import Modal from '../../components/Modal'
+import ActionModal from '../../components/ActionModal'
 
 const ButtonsSection = styled.div`
 	display: flex;
@@ -25,7 +27,8 @@ const ResultRow = styled(Row)`
 `
 
 const ManagementPage = () => {
-	const [showShelterCreationForm, setShowShelterCreationForm] = React.useState(false)
+	const [showShelterCreationModal, setShowShelterCreationModal] = React.useState(false)
+	const [showDeleteSheltersModal, setShowDeleteSheltersModal] = React.useState(false)
 	const [shelterName, setShelterName] = React.useState('')
 	const [shelters, setShelters] = React.useState<Shelter[]>([])
 
@@ -43,6 +46,7 @@ const ManagementPage = () => {
 		const response = await createShelter(shelterName)
 		setShelters((current) => [...current, response])
 		setShelterName('')
+		setShowShelterCreationModal(false)
 	}
 
 	const handleAllSheltersDelete = async () => {
@@ -59,26 +63,38 @@ const ManagementPage = () => {
 				<TopSection>
 					<SubHeading>Manage your shelters</SubHeading>
 					<ButtonsSection>
-						<Button variant="primary" onClick={() => setShowShelterCreationForm(true)}>
+						<Button variant="primary" onClick={() => setShowShelterCreationModal(true)}>
 							Create shelter
 						</Button>
-						<Button variant="destructive" onClick={handleAllSheltersDelete}>
+						<Button variant="destructive" onClick={() => setShowDeleteSheltersModal(true)}>
 							Delete shelters
 						</Button>
 					</ButtonsSection>
 				</TopSection>
-				{showShelterCreationForm && (
-					<StyledForm onSubmit={handleShelterCreate}>
-						<InputField
-							label="Name"
-							type="text"
-							placeholder="Enter shelter name"
-							value={shelterName}
-							onChange={setShelterName}
-							required
-						/>
-						<Button variant="submit">Create</Button>
-					</StyledForm>
+				{showDeleteSheltersModal && (
+					<ActionModal
+						text="Are you sure?"
+						subText="This action will irreversibly delete all your shelters"
+						acceptCta="Yes, delete"
+						onAccept={handleAllSheltersDelete}
+						cancelCta="No, go back"
+						onClose={() => setShowDeleteSheltersModal(false)}
+					/>
+				)}
+				{showShelterCreationModal && (
+					<Modal title="Create shelter" onClose={() => setShowShelterCreationModal(false)}>
+						<StyledForm onSubmit={handleShelterCreate}>
+							<InputField
+								label="Name"
+								type="text"
+								placeholder="Enter shelter name"
+								value={shelterName}
+								onChange={setShelterName}
+								required
+							/>
+							<Button variant="submit">Create</Button>
+						</StyledForm>
+					</Modal>
 				)}
 				<Results>
 					{shelters.map(({ shelterId, name, published }, index) => (
