@@ -14,7 +14,7 @@ import {
 	getAnimals as fetchAnimals,
 	deleteAnimals,
 } from '../../lib/api'
-import { Animal, AnimalRequest, Shelter } from '../../types'
+import { Animal, AnimalData, AnimalForm, Shelter } from '../../types'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
 
@@ -55,11 +55,13 @@ const ShelterPage = () => {
 	const [shelterName, setShelterName] = React.useState('')
 	const [shelter, setShelter] = React.useState<Shelter | null>(null)
 	const [shelters, setShelters] = React.useState<Shelter[] | null>(null)
-	const [animalName, setAnimalName] = React.useState('')
-	const [animalBirthDate, setAnimalBirthDate] = React.useState('')
-	const [animalSex, setAnimalSex] = React.useState('')
-	const [animalSpecies, setAnimalSpecies] = React.useState('')
-	const [animalDescription, setAnimalDescription] = React.useState('')
+	const [animalFormData, setAnimalFormData] = React.useState<AnimalForm>({
+		name: '',
+		species: '',
+		sex: '',
+		birthDate: '',
+		description: '',
+	})
 	const [animals, setAnimals] = React.useState<Animal[] | null>(null)
 
 	React.useEffect(() => {
@@ -118,18 +120,22 @@ const ShelterPage = () => {
 		navigate('/app')
 	}
 
+	const handleInputValueChange = (key: keyof AnimalForm) => (value: AnimalForm[typeof key]) => {
+		setAnimalFormData({ ...animalFormData, [key]: value })
+	}
+
 	const handleAnimalAdd = async (event: React.FormEvent) => {
 		event.preventDefault()
 
 		if (!id) return
 
 		const addedAnimal = await createAnimal(id, {
-			name: animalName,
-			birthDate: animalBirthDate,
-			sex: animalSex,
-			species: animalSpecies,
-			description: animalDescription,
-		} as AnimalRequest)
+			name: animalFormData.name,
+			birthDate: animalFormData.birthDate,
+			sex: animalFormData.sex,
+			species: animalFormData.species,
+			description: animalFormData.description,
+		} as AnimalData)
 
 		setAnimals(animals ? [...animals, addedAnimal] : [addedAnimal])
 	}
@@ -208,40 +214,40 @@ const ShelterPage = () => {
 									label="Name"
 									type="text"
 									placeholder="Enter animal name"
-									value={animalName}
-									onChange={setAnimalName}
+									value={animalFormData.name}
+									onChange={handleInputValueChange('name')}
 									required
 								/>
 								<InputField
 									label="Birth date"
 									type="text"
 									placeholder="Enter birth date"
-									value={animalBirthDate}
-									onChange={setAnimalBirthDate}
+									value={animalFormData.birthDate}
+									onChange={handleInputValueChange('birthDate')}
 									required
 								/>
 								<InputField
 									label="Sex"
 									type="text"
 									placeholder="Enter animal sex"
-									value={animalSex}
-									onChange={setAnimalSex}
+									value={animalFormData.sex}
+									onChange={handleInputValueChange('sex')}
 									required
 								/>
 								<InputField
 									label="Species"
 									type="text"
 									placeholder="Enter animal species"
-									value={animalSpecies}
-									onChange={setAnimalSpecies}
+									value={animalFormData.species}
+									onChange={handleInputValueChange('species')}
 									required
 								/>
 								<InputField
 									label="Description"
 									type="text"
 									placeholder="Enter description"
-									value={animalDescription}
-									onChange={setAnimalDescription}
+									value={animalFormData.description}
+									onChange={handleInputValueChange('description')}
 									required
 								/>
 

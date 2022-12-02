@@ -17,7 +17,7 @@ export type Shelter = {
 
 export type ShelterRequest = Omit<Shelter, 'shelterId'>
 
-export type AnimalRequest = {
+export type AnimalData = {
 	name: string
 	birthDate: string
 	sex: 'male' | 'female'
@@ -25,10 +25,14 @@ export type AnimalRequest = {
 	description: string
 }
 
-export type Animal = AnimalRequest & {
+export type Animal = AnimalData & {
 	id: string
 	adopted: 0 | 1
 	adoptionDate: string
 	shelter: string
 	employee: string
+}
+
+export type AnimalForm = {
+	[K in keyof AnimalData]: K extends 'sex' | 'species' ? AnimalData[K] | '' : AnimalData[K]
 }
