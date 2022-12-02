@@ -138,6 +138,13 @@ const ShelterPage = () => {
 		} as AnimalData)
 
 		setAnimals(animals ? [...animals, addedAnimal] : [addedAnimal])
+		setAnimalFormData({
+			name: '',
+			species: '',
+			sex: '',
+			birthDate: '',
+			description: '',
+		})
 	}
 
 	const handleAllAnimalsDelete = async () => {
@@ -250,7 +257,6 @@ const ShelterPage = () => {
 									onChange={handleInputValueChange('description')}
 									required
 								/>
-
 								<Button variant="submit">Add</Button>
 							</StyledForm>
 						)}

@@ -4,9 +4,10 @@ import styled from 'styled-components'
 import SideBarMenu from '../../components/SideBarMenu'
 import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading } from '../../components/common'
 import { getAnimalById, deleteAnimalById } from '../../lib/api'
-import { Animal } from '../../types'
+import { Animal, AnimalForm, AnimalData } from '../../types'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
+import { updateAnimalById } from '../../lib/api'
 
 const ButtonsSection = styled.div`
 	display: flex;
@@ -24,34 +25,60 @@ const AnimalPage = () => {
 	const navigate = useNavigate()
 	const [animal, setAnimal] = React.useState<Animal | null>(null)
 	const [showAnimalEditForm, setShowAnimalEditForm] = React.useState(false)
+	const [animalFormData, setAnimalFormData] = React.useState<AnimalForm>({
+		name: '',
+		species: '',
+		sex: '',
+		birthDate: '',
+		description: '',
+	})
 
 	React.useEffect(() => {
 		const getAnimal = async () => {
 			if (id && id !== 'all') {
-				setAnimal(await getAnimalById(id))
+				const data = await getAnimalById(id)
+				setAnimal(data)
+				setAnimalFormData({
+					name: data.name,
+					species: data.species,
+					sex: data.sex,
+					birthDate: data.birthDate,
+					description: data.description,
+				})
 			}
 		}
 
 		getAnimal()
 	}, [pathname])
 
+	const handleInputValueChange = (key: keyof AnimalForm) => (value: AnimalForm[typeof key]) => {
+		setAnimalFormData({ ...animalFormData, [key]: value })
+	}
+
 	const handleAnimalEdit = async (event: React.FormEvent) => {
 		event.preventDefault()
 
-		// if (!shelter) return
+		if (!id || !animal) return
 
-		// await updateShelterById(shelter)
+		const editedAnimal = {
+			name: animalFormData.name,
+			birthDate: animalFormData.birthDate,
+			sex: animalFormData.sex,
+			species: animalFormData.species,
+			description: animalFormData.description,
+		} as AnimalData
 
-		// setShelter({
-		// 	...shelter,
-		// 	name: shelterName,
-		// })
-		// setShowShelterEditForm(false)
+		await updateAnimalById(id, editedAnimal)
+
+		setAnimal({ ...animal, ...editedAnimal })
+		setShowAnimalEditForm(false)
 	}
 
 	const handleAnimalDelete = async () => {
-		if (!animal) return
-		await deleteAnimalById(animal.id)
+		if (!id) return
+
+		await deleteAnimalById(id)
+
 		setAnimal(null)
 		navigate('/app')
 	}
@@ -83,14 +110,46 @@ const AnimalPage = () => {
 				)}
 				{showAnimalEditForm && (
 					<StyledForm onSubmit={handleAnimalEdit}>
-						{/* <InputField
-										label="Name"
-										type="text"
-										placeholder="Enter shelter name"
-										value={shelterName}
-										onChange={setShelterName}
-										required
-									/> */}
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter animal name"
+							value={animalFormData.name}
+							onChange={handleInputValueChange('name')}
+							required
+						/>
+						<InputField
+							label="Birth date"
+							type="text"
+							placeholder="Enter birth date"
+							value={animalFormData.birthDate}
+							onChange={handleInputValueChange('birthDate')}
+							required
+						/>
+						<InputField
+							label="Sex"
+							type="text"
+							placeholder="Enter animal sex"
+							value={animalFormData.sex}
+							onChange={handleInputValueChange('sex')}
+							required
+						/>
+						<InputField
+							label="Species"
+							type="text"
+							placeholder="Enter animal species"
+							value={animalFormData.species}
+							onChange={handleInputValueChange('species')}
+							required
+						/>
+						<InputField
+							label="Description"
+							type="text"
+							placeholder="Enter description"
+							value={animalFormData.description}
+							onChange={handleInputValueChange('description')}
+							required
+						/>
 						<Button variant="submit">Edit</Button>
 					</StyledForm>
 				)}

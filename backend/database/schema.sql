@@ -29,11 +29,11 @@ CREATE TABLE Employees (
 CREATE TABLE Animals (
     id VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255),
-    birthDate DATE,
+    birthDate VARCHAR(255),
     sex ENUM('male', 'female'),
     species ENUM('dog', 'cat', 'other'),
     adopted BOOLEAN NOT NULL DEFAULT false,
-    adoptionDate DATE,
+    adoptionDate VARCHAR(255),
     description MEDIUMTEXT,
     shelter VARCHAR(255),
     organization VARCHAR(255),
