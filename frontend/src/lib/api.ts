@@ -1,5 +1,5 @@
 import { fetcher } from './fetcher'
-import { AuthData, AuthRequest, ShelterRequest, Shelter, Animal, AnimalData } from '../types'
+import { AuthData, AuthRequest, ShelterData, Shelter, Animal, AnimalData, Employee, EmployeeData } from '../types'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
 
@@ -19,6 +19,8 @@ const callApiEndpoint = <D, R>(method: Method, url: string, data?: D): Promise<R
 	})
 }
 
+/* Account */
+
 export const requestLogin = (data: AuthRequest) => {
 	return callApiEndpoint<AuthRequest, AuthData>('POST', `${baseUrl}/account/login`, data)
 }
@@ -31,6 +33,8 @@ export const deleteAccount = () => {
 	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/account`)
 }
 
+/* Shelter */
+
 export const getShelters = () => {
 	return callApiEndpoint<never, Shelter[]>('GET', `${baseUrl}/shelters`)
 }
@@ -40,7 +44,7 @@ export const getShelterById = (id: string) => {
 }
 
 export const createShelter = (name: string) => {
-	return callApiEndpoint<ShelterRequest, Shelter>('POST', `${baseUrl}/shelters`, {
+	return callApiEndpoint<ShelterData, Shelter>('POST', `${baseUrl}/shelters`, {
 		name,
 		published: 0,
 	})
@@ -48,7 +52,7 @@ export const createShelter = (name: string) => {
 
 export const updateShelterById = (shelter: Shelter) => {
 	const { shelterId, name, published } = shelter
-	return callApiEndpoint<ShelterRequest, Shelter>('PATCH', `${baseUrl}/shelters/${shelterId}`, {
+	return callApiEndpoint<ShelterData, Shelter>('PATCH', `${baseUrl}/shelters/${shelterId}`, {
 		name,
 		published,
 	})
@@ -61,6 +65,8 @@ export const deleteShelters = () => {
 export const deleteShelterById = (shelterId: string) => {
 	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/shelters/${shelterId}`)
 }
+
+/* Animal */
 
 export const getAnimals = (shelterId: string) => {
 	return callApiEndpoint<never, Animal[]>('GET', `${baseUrl}/animals/all/${shelterId}`)
@@ -84,4 +90,44 @@ export const deleteAnimals = (shelterId: string) => {
 
 export const deleteAnimalById = (id: string) => {
 	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/animals/${id}`)
+}
+
+/* Employee */
+
+export const getEmployees = (shelterId: string) => {
+	return callApiEndpoint<never, Employee[]>('GET', `${baseUrl}/employees/all/${shelterId}`)
+}
+
+export const getEmployeeById = (id: string) => {
+	return callApiEndpoint<never, Employee>('GET', `${baseUrl}/employees/${id}`)
+}
+
+export const createEmployee = (shelterId: string, employee: EmployeeData) => {
+	return callApiEndpoint<EmployeeData, Employee>('POST', `${baseUrl}/employees/${shelterId}`, employee)
+}
+
+export const updateEmployeeById = (id: string, employee: EmployeeData) => {
+	return callApiEndpoint<EmployeeData, Employee>('PATCH', `${baseUrl}/employees/${id}`, employee)
+}
+
+export const deleteEmployees = (shelterId: string) => {
+	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/employees/all/${shelterId}`)
+}
+
+export const deleteEmployeeById = (id: string) => {
+	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/employees/${id}`)
+}
+
+/* Public */
+
+export const getPublicShelters = () => {
+	return callApiEndpoint<never, Shelter[]>('GET', `${baseUrl}/public/shelters`)
+}
+
+export const getPublicAnimals = () => {
+	return callApiEndpoint<never, Animal[]>('GET', `${baseUrl}/public/animals`)
+}
+
+export const getPublicAnimalById = (id: string) => {
+	return callApiEndpoint<never, Animal>('GET', `${baseUrl}/public/animals/${id}`)
 }
