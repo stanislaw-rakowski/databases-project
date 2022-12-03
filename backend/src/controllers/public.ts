@@ -9,7 +9,7 @@ export const PublicController = (server: FastifyInstance) => ({
                 SELECT * 
                 FROM Animals 
                 WHERE shelter IN (
-                    SELECT shelter
+                    SELECT shelterId
                     FROM Shelters
                     WHERE published = true
                 )
