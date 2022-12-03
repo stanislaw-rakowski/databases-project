@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { Animal } from '../schemas/animal'
+import { Shelter } from '../schemas/shelter'
 
 export const PublicController = (server: FastifyInstance) => ({
 	async getAnimals(request: FastifyRequest, reply: FastifyReply) {
@@ -33,7 +34,7 @@ export const PublicController = (server: FastifyInstance) => ({
                 SELECT *
                 FROM Shelters
                 WHERE published = true
-            `)) as [Animal[], unknown]
+            `)) as [Shelter[], unknown]
 
 			reply.status(200)
 
