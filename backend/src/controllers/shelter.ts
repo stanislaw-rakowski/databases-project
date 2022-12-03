@@ -10,11 +10,11 @@ export const ShelterController = (server: FastifyInstance) => ({
 
 			const shelterId = uuid()
 
-			await server.mysql.query('INSERT INTO `Shelters` (`shelterId`, `name`, `owner`) VALUES (?, ?, ?)', [
-				shelterId,
-				name,
-				organizationId,
-			])
+			await server.mysql.query(
+				`INSERT INTO Shelters (shelterId, name, owner) 
+				VALUES (?, ?, ?)`,
+				[shelterId, name, organizationId],
+			)
 
 			reply.status(201)
 
@@ -33,10 +33,12 @@ export const ShelterController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 
-			const [results] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `owner` = ?', [organizationId])) as [
-				Shelter[],
-				unknown,
-			]
+			const [results] = (await server.mysql.query(
+				`SELECT * 
+				FROM Shelters 
+				WHERE owner = ?`,
+				[organizationId],
+			)) as [Shelter[], unknown]
 
 			reply.status(200)
 
@@ -55,10 +57,12 @@ export const ShelterController = (server: FastifyInstance) => ({
 		try {
 			const shelterId = request.params.id
 
-			const [[result]] = (await server.mysql.query('SELECT * FROM `Shelters` WHERE `shelterId` = ?', [shelterId])) as [
-				Shelter[],
-				unknown,
-			]
+			const [[result]] = (await server.mysql.query(
+				`SELECT * 
+				FROM Shelters 
+				WHERE shelterId = ?`,
+				[shelterId],
+			)) as [Shelter[], unknown]
 
 			reply.status(200)
 
@@ -78,11 +82,14 @@ export const ShelterController = (server: FastifyInstance) => ({
 			const shelterId = request.params.id
 			const { name, published } = request.body
 
-			await server.mysql.query('UPDATE `Shelters` SET `name` = ?, `published` = ? WHERE `shelterId` = ?', [
-				name,
-				published,
-				shelterId,
-			])
+			await server.mysql.query(
+				`UPDATE Shelters 
+				SET 
+					name = ?, 
+					published = ? 
+				WHERE shelterId = ?`,
+				[name, published, shelterId],
+			)
 
 			reply.status(200)
 
@@ -101,7 +108,11 @@ export const ShelterController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 
-			await server.mysql.query('DELETE FROM `Shelters` WHERE `owner` = ?', [organizationId])
+			await server.mysql.query(
+				`DELETE FROM Shelters 
+				WHERE owner = ?`,
+				[organizationId],
+			)
 
 			reply.status(200)
 
@@ -121,10 +132,11 @@ export const ShelterController = (server: FastifyInstance) => ({
 			const organizationId = request.auth.organizationId
 			const shelterId = request.params.id
 
-			await server.mysql.query('DELETE FROM `Shelters` WHERE `shelterId` = ? AND `owner` = ?', [
-				shelterId,
-				organizationId,
-			])
+			await server.mysql.query(
+				`DELETE FROM Shelters 
+				WHERE shelterId = ? AND owner = ?`,
+				[shelterId, organizationId],
+			)
 
 			reply.status(200)
 

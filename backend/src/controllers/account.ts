@@ -9,10 +9,13 @@ export const AccountController = (server: FastifyInstance) => ({
 		try {
 			const { email, password } = request.body
 
-			const [accounts] = (await server.mysql.query('SELECT * FROM `Accounts` WHERE `email` = ?', [email])) as [
-				Account[],
-				unknown,
-			]
+			const [accounts] = (await server.mysql.query(
+				`SELECT * 
+				FROM Accounts 
+				WHERE email = ?
+			`,
+				[email],
+			)) as [Account[], unknown]
 
 			if (accounts.length > 0) {
 				reply.status(403)
@@ -27,7 +30,8 @@ export const AccountController = (server: FastifyInstance) => ({
 			const organizationId = uuid()
 
 			await server.mysql.query(
-				'INSERT INTO `Accounts` (`organizationId`, `email`, `password`, `salt`) VALUES (?, ?, ?, ?)',
+				`INSERT INTO Accounts (organizationId, email, password, salt) 
+				VALUES (?, ?, ?, ?)`,
 				[organizationId, email, hash, salt],
 			)
 
@@ -52,10 +56,12 @@ export const AccountController = (server: FastifyInstance) => ({
 		try {
 			const { email, password } = request.body
 
-			const [accounts] = (await server.mysql.query('SELECT * FROM `Accounts` WHERE `email` = ?', [email])) as [
-				Account[],
-				unknown,
-			]
+			const [accounts] = (await server.mysql.query(
+				`SELECT * 
+				FROM Accounts 
+				WHERE email = ?`,
+				[email],
+			)) as [Account[], unknown]
 
 			if (accounts.length === 0) {
 				reply.status(404)
@@ -107,7 +113,11 @@ export const AccountController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 
-			await server.mysql.query('DELETE FROM `Accounts` WHERE `organizationId` = ?', [organizationId])
+			await server.mysql.query(
+				`DELETE FROM Accounts 
+				WHERE organizationId = ?`,
+				[organizationId],
+			)
 
 			reply.status(200)
 

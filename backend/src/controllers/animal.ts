@@ -12,7 +12,8 @@ export const AnimalController = (server: FastifyInstance) => ({
 			const animalId = uuid()
 
 			await server.mysql.query(
-				'INSERT INTO Animals (`id`, `name`, `birthDate`, `sex`, `species`, `description`, `shelter`, `organization`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+				`INSERT INTO Animals (id, name, birthDate, sex, species, description, shelter, organization) 
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 				[animalId, name, birthDate, sex, species, description, shelterId, organizationId],
 			)
 
@@ -41,10 +42,12 @@ export const AnimalController = (server: FastifyInstance) => ({
 		try {
 			const { shelterId } = request.params
 
-			const [results] = (await server.mysql.query('SELECT * FROM `Animals` WHERE `shelter` = ?', [shelterId])) as [
-				Animal[],
-				unknown,
-			]
+			const [results] = (await server.mysql.query(
+				`SELECT * 
+				FROM Animals 
+				WHERE shelter = ?`,
+				[shelterId],
+			)) as [Animal[], unknown]
 
 			reply.status(200)
 
@@ -63,10 +66,12 @@ export const AnimalController = (server: FastifyInstance) => ({
 		try {
 			const { id } = request.params
 
-			const [[result]] = (await server.mysql.query('SELECT * FROM `Animals` WHERE `id` = ?', [id])) as [
-				Animal[],
-				unknown,
-			]
+			const [[result]] = (await server.mysql.query(
+				`SELECT * 
+				FROM Animals 
+				WHERE id = ?`,
+				[id],
+			)) as [Animal[], unknown]
 
 			reply.status(200)
 
@@ -87,7 +92,14 @@ export const AnimalController = (server: FastifyInstance) => ({
 			const { name, birthDate, sex, species, description } = request.body
 
 			await server.mysql.query(
-				'UPDATE `Animals` SET `name` = ?, `birthDate` = ?, `sex` = ?, `species` = ?, `description` = ? WHERE `id` = ?',
+				`UPDATE Animals 
+				SET 
+					name = ?, 
+					birthDate = ?, 
+					sex = ?, 
+					species = ?, 
+					description = ? 
+				WHERE id = ?`,
 				[name, birthDate, sex, species, description, id],
 			)
 
@@ -108,7 +120,11 @@ export const AnimalController = (server: FastifyInstance) => ({
 		try {
 			const { shelterId } = request.params
 
-			await server.mysql.query('DELETE FROM `Animals` WHERE `shelter` = ?', [shelterId])
+			await server.mysql.query(
+				`DELETE FROM Animals 
+				WHERE shelter = ?`,
+				[shelterId],
+			)
 
 			reply.status(200)
 
@@ -127,7 +143,11 @@ export const AnimalController = (server: FastifyInstance) => ({
 		try {
 			const { id } = request.params
 
-			await server.mysql.query('DELETE FROM `Animals` WHERE `id` = ?', [id])
+			await server.mysql.query(
+				`DELETE FROM Animals 
+				WHERE id = ?`,
+				[id],
+			)
 
 			reply.status(200)
 
