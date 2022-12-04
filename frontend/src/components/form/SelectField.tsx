@@ -3,16 +3,23 @@ import Field from './Field'
 import Label from './Label'
 import Select from './Select'
 
-type Props = {
+type Props<T extends string> = {
 	label: string
 	placeholder: string
-	value: string
-	options: string[]
+	value: T
+	options: T[]
 	onChange: (value: string) => void
 	required?: boolean
 }
 
-const SelectField = ({ label, placeholder, value, options, onChange, required = false }: Props) => {
+const SelectField = <T extends string>({
+	label,
+	placeholder,
+	value,
+	options,
+	onChange,
+	required = false,
+}: Props<T>) => {
 	const id = React.useId()
 
 	return (
