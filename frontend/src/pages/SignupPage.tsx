@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { requestSignup } from '../lib/api'
-import InputField from '../components/InputField'
+import InputField from '../components/form/InputField'
 import Button from '../components/Button'
 import LandingNav from '../components/LandingNav'
 

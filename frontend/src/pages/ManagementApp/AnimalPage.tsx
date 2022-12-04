@@ -7,7 +7,9 @@ import { Animal, AnimalForm, AnimalData } from '../../types'
 import { updateAnimalById } from '../../lib/api'
 import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
-import InputField from '../../components/InputField'
+import InputField from '../../components/form/InputField'
+import SelectField from '../../components/form/SelectField'
+import TextAreaField from '../../components/form/TextAreaField'
 import Modal from '../../components/Modal'
 import ActionModal from '../../components/ActionModal'
 
@@ -134,31 +136,30 @@ const AnimalPage = () => {
 							/>
 							<InputField
 								label="Birth date"
-								type="text"
+								type="date"
 								placeholder="Enter birth date"
 								value={animalFormData.birthDate}
 								onChange={handleInputValueChange('birthDate')}
 								required
 							/>
-							<InputField
-								label="gender"
-								type="text"
+							<SelectField
+								label="Gender"
 								placeholder="Enter animal gender"
 								value={animalFormData.gender}
+								options={['male', 'female']}
 								onChange={handleInputValueChange('gender')}
 								required
 							/>
-							<InputField
+							<SelectField
 								label="Species"
-								type="text"
 								placeholder="Enter animal species"
 								value={animalFormData.species}
+								options={['dog', 'cat', 'other']}
 								onChange={handleInputValueChange('species')}
 								required
 							/>
-							<InputField
+							<TextAreaField
 								label="Description"
-								type="text"
 								placeholder="Enter description"
 								value={animalFormData.description}
 								onChange={handleInputValueChange('description')}

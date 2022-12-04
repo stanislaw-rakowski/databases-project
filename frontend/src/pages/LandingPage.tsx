@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import LandingNav from '../components/LandingNav'
-import Input from '../components/Input'
+import Input from '../components/form/Input'
 import Button from '../components/Button'
 
 const Wrapper = styled.div`

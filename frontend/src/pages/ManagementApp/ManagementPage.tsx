@@ -7,7 +7,7 @@ import { createShelter, getShelters, deleteShelters } from '../../lib/api'
 import { Shelter } from '../../types'
 import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
-import InputField from '../../components/InputField'
+import InputField from '../../components/form/InputField'
 import Modal from '../../components/Modal'
 import ActionModal from '../../components/ActionModal'
 

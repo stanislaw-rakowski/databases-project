@@ -1,20 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import Input from './Input'
-
-const Field = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-	gap: 4px;
-`
-
-const Label = styled.label`
-	font-size: 1rem;
-	margin-bottom: 5px;
-`
+import Field from './Field'
+import Label from './Label'
 
 type Props = {
 	label: string

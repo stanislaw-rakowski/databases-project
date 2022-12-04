@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { setAuth, getAuth } from '../lib/auth'
 import { requestLogin } from '../lib/api'
-import InputField from '../components/InputField'
+import InputField from '../components/form/InputField'
 import Button from '../components/Button'
 import LandingNav from '../components/LandingNav'
 

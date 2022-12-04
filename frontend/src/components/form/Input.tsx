@@ -9,6 +9,7 @@ const Input = styled.input`
 	background-color: inherit;
 	font-size: 16px;
 	color: ${({ theme }) => theme.colors.primaryFontColor};
+	font-family: inherit;
 
 	&:focus {
 		outline: 1px solid ${({ theme }) => theme.colors.accentFontColor};
