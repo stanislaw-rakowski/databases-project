@@ -1,9 +1,6 @@
 import React from 'react'
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { TbGenderMale, TbGenderFemale } from 'react-icons/tb'
-import { FaDog, FaCat, FaQuestionCircle } from 'react-icons/fa'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../components/common'
 import {
 	getShelters as fetchShelters,
 	getShelterById,
@@ -14,6 +11,8 @@ import {
 	deleteAnimals,
 } from '../../lib/api'
 import { Animal, AnimalData, AnimalForm, Shelter } from '../../types'
+import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../components/common'
+import { SpeciesIcon, GenderIcon } from '../../components/icons'
 import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
 import InputField from '../../components/InputField'
@@ -63,7 +62,7 @@ const ShelterPage = () => {
 	const [animalFormData, setAnimalFormData] = React.useState<AnimalForm>({
 		name: '',
 		species: '',
-		sex: '',
+		gender: '',
 		birthDate: '',
 		description: '',
 	})
@@ -138,7 +137,7 @@ const ShelterPage = () => {
 		const addedAnimal = await createAnimal(id, {
 			name: animalFormData.name,
 			birthDate: animalFormData.birthDate,
-			sex: animalFormData.sex,
+			gender: animalFormData.gender,
 			species: animalFormData.species,
 			description: animalFormData.description,
 		} as AnimalData)
@@ -147,7 +146,7 @@ const ShelterPage = () => {
 		setAnimalFormData({
 			name: '',
 			species: '',
-			sex: '',
+			gender: '',
 			birthDate: '',
 			description: '',
 		})
@@ -158,17 +157,6 @@ const ShelterPage = () => {
 		if (id) {
 			await deleteAnimals(id)
 			setAnimals(null)
-		}
-	}
-
-	const getIconBySpecies = (species: Animal['species']) => {
-		switch (species) {
-			case 'cat':
-				return <FaCat />
-			case 'dog':
-				return <FaDog />
-			case 'other':
-				return <FaQuestionCircle />
 		}
 	}
 
@@ -276,11 +264,11 @@ const ShelterPage = () => {
 										required
 									/>
 									<InputField
-										label="Sex"
+										label="gender"
 										type="text"
-										placeholder="Enter animal sex"
-										value={animalFormData.sex}
-										onChange={handleInputValueChange('sex')}
+										placeholder="Enter animal gender"
+										value={animalFormData.gender}
+										onChange={handleInputValueChange('gender')}
 										required
 									/>
 									<InputField
@@ -305,13 +293,17 @@ const ShelterPage = () => {
 						)}
 						<Results>
 							{animals ? (
-								animals.map(({ id, name, birthDate, sex, species }, index) => (
+								animals.map(({ id, name, birthDate, gender, species }, index) => (
 									<AnimalRow key={id}>
 										<span>{index + 1}</span>
 										<span>{name}</span>
 										<span>{birthDate.split('T')[0]}</span>
-										<span>{sex === 'male' ? <TbGenderMale /> : <TbGenderFemale />}</span>
-										<span>{getIconBySpecies(species)}</span>
+										<span>
+											<GenderIcon gender={gender} />
+										</span>
+										<span>
+											<SpeciesIcon species={species} />
+										</span>
 										<Link to={`/app/animal/${id}`}>Details</Link>
 									</AnimalRow>
 								))

@@ -7,14 +7,14 @@ export const AnimalController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 			const { shelterId } = request.params
-			const { name, birthDate, sex, species, description } = request.body
+			const { name, birthDate, gender, species, description } = request.body
 
 			const animalId = uuid()
 
 			await server.mysql.query(
-				`INSERT INTO Animals (id, name, birthDate, sex, species, description, shelter, organization) 
+				`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, organization) 
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-				[animalId, name, birthDate, sex, species, description, shelterId, organizationId],
+				[animalId, name, birthDate, gender, species, description, shelterId, organizationId],
 			)
 
 			reply.status(201)
@@ -24,7 +24,7 @@ export const AnimalController = (server: FastifyInstance) => ({
 				shelter: shelterId,
 				name,
 				birthDate,
-				sex,
+				gender,
 				species,
 				description,
 			}
@@ -89,18 +89,18 @@ export const AnimalController = (server: FastifyInstance) => ({
 	async updateAnimalById(request: FastifyRequest<{ Params: Params; Body: AnimalRequestBody }>, reply: FastifyReply) {
 		try {
 			const { id } = request.params
-			const { name, birthDate, sex, species, description } = request.body
+			const { name, birthDate, gender, species, description } = request.body
 
 			await server.mysql.query(
 				`UPDATE Animals 
 				SET 
 					name = ?, 
 					birthDate = ?, 
-					sex = ?, 
+					gender = ?, 
 					species = ?, 
 					description = ? 
 				WHERE id = ?`,
-				[name, birthDate, sex, species, description, id],
+				[name, birthDate, gender, species, description, id],
 			)
 
 			reply.status(200)

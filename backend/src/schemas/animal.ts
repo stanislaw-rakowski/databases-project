@@ -4,7 +4,7 @@ export const AnimalSchema = Type.Object({
 	id: Type.String({ format: 'uuid' }),
 	name: Type.String(),
 	birthDate: Type.String(),
-	sex: Type.Union([Type.Literal('male'), Type.Literal('female')]),
+	gender: Type.Union([Type.Literal('male'), Type.Literal('female')]),
 	species: Type.Union([Type.Literal('dog'), Type.Literal('cat'), Type.Literal('other')]),
 	description: Type.String(),
 	shelter: Type.String({ format: 'uuid' }),

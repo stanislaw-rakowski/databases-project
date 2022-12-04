@@ -30,7 +30,7 @@ CREATE TABLE Animals (
     id VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255),
     birthDate VARCHAR(255),
-    sex ENUM('male', 'female'),
+    gender ENUM('male', 'female'),
     species ENUM('dog', 'cat', 'other'),
     adopted BOOLEAN NOT NULL DEFAULT false,
     adoptionDate VARCHAR(255),

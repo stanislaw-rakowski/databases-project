@@ -31,7 +31,7 @@ const AnimalPage = () => {
 	const [animalFormData, setAnimalFormData] = React.useState<AnimalForm>({
 		name: '',
 		species: '',
-		sex: '',
+		gender: '',
 		birthDate: '',
 		description: '',
 	})
@@ -44,7 +44,7 @@ const AnimalPage = () => {
 				setAnimalFormData({
 					name: data.name,
 					species: data.species,
-					sex: data.sex,
+					gender: data.gender,
 					birthDate: data.birthDate,
 					description: data.description,
 				})
@@ -66,7 +66,7 @@ const AnimalPage = () => {
 		const editedAnimal = {
 			name: animalFormData.name,
 			birthDate: animalFormData.birthDate,
-			sex: animalFormData.sex,
+			gender: animalFormData.gender,
 			species: animalFormData.species,
 			description: animalFormData.description,
 		} as AnimalData
@@ -105,7 +105,7 @@ const AnimalPage = () => {
 							</ButtonsSection>
 						</TopSection>
 						<p>
-							{animal.birthDate} - {animal.sex} - {animal.species} - {animal.description}
+							{animal.birthDate} - {animal.gender} - {animal.species} - {animal.description}
 						</p>
 					</>
 				) : (
@@ -141,11 +141,11 @@ const AnimalPage = () => {
 								required
 							/>
 							<InputField
-								label="Sex"
+								label="gender"
 								type="text"
-								placeholder="Enter animal sex"
-								value={animalFormData.sex}
-								onChange={handleInputValueChange('sex')}
+								placeholder="Enter animal gender"
+								value={animalFormData.gender}
+								onChange={handleInputValueChange('gender')}
 								required
 							/>
 							<InputField
