@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid'
 import { sign } from 'jsonwebtoken'
 import { hashPassword, verifyPassword } from '../utils/hash'
 import { Account } from '../schemas/account'
+import { shelters, employees, animals } from '../utils/data'
 
 export const AccountController = (server: FastifyInstance) => ({
 	async createAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
@@ -129,6 +130,52 @@ export const AccountController = (server: FastifyInstance) => ({
 
 			return {
 				message: 'Account deletion failed',
+				error,
+			}
+		}
+	},
+
+	async seedDatabase(request: FastifyRequest, reply: FastifyReply) {
+		try {
+			const organizationId = request.auth.organizationId
+
+			shelters.forEach(async ({ id, name, published }) => {
+				await server.mysql.query(
+					`INSERT INTO Shelters (shelterId, name, owner, published)
+					VALUES (?, ?, ?, ?)
+					`,
+					[id, name, organizationId, published],
+				)
+			})
+
+			employees.forEach(async ({ id, name, shelter }) => {
+				await server.mysql.query(
+					`INSERT INTO Employees (id, name, shelter, organization)
+					VALUES (?, ?, ?, ?)
+					`,
+					[id, name, shelter, organizationId],
+				)
+			})
+
+			animals.forEach(async ({ id, name, birthDate, gender, species, description, shelter, employee }) => {
+				await server.mysql.query(
+					`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, employee,organization)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+					`,
+					[id, name, birthDate, gender, species, description, shelter, employee, organizationId],
+				)
+			})
+
+			reply.status(200)
+
+			return {
+				message: 'ok',
+			}
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Database seed failed',
 				error,
 			}
 		}

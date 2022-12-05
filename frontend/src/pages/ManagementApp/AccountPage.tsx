@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppWrapper, AppContent } from '../../components/common'
 import { removeAuth } from '../../lib/auth'
-import { deleteAccount } from '../../lib/api'
+import { deleteAccount, seedAccountDatabase } from '../../lib/api'
 import SideBarMenu from '../../components/SideBarMenu'
 import Button from '../../components/Button'
 import ActionModal from '../../components/ActionModal'
@@ -33,6 +33,9 @@ const AccountPage = () => {
 				<h1>Account</h1>
 				<Button variant="frame" onClick={handleLogOut}>
 					Log out
+				</Button>
+				<Button variant="secondary" onClick={seedAccountDatabase}>
+					Seed database
 				</Button>
 				<Button variant="destructive" onClick={() => setShowDeleteAccountModal(true)}>
 					Delete account

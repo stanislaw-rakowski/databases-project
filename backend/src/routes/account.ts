@@ -43,4 +43,16 @@ export default async function Account(server: FastifyInstance) {
 		preHandler: server.verifyBearerAuth,
 		handler: controller.deleteAccount,
 	})
+
+	server.route({
+		url: '/seed',
+		method: 'GET',
+		schema: {
+			response: {
+				200: MessageResponseSchema,
+			},
+		},
+		preHandler: server.verifyBearerAuth,
+		handler: controller.seedDatabase,
+	})
 }

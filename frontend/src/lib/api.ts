@@ -33,6 +33,10 @@ export const deleteAccount = () => {
 	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/account`)
 }
 
+export const seedAccountDatabase = () => {
+	return callApiEndpoint<never, { message: string }>('GET', `${baseUrl}/account/seed`)
+}
+
 /* Shelter */
 
 export const getShelters = () => {

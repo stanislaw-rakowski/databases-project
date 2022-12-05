@@ -4,6 +4,10 @@ export type AuthData = {
 	token: string
 }
 
+export type AuthStorage = AuthData & {
+	expires: number
+}
+
 export type AuthRequest = {
 	email: string
 	password: string
