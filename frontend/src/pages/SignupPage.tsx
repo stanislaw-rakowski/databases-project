@@ -1,20 +1,11 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { requestSignup } from '../lib/api'
 import InputField from '../components/form/InputField'
 import Button from '../components/Button'
 import LandingNav from '../components/LandingNav'
-
-const ErrorMessage = styled.span`
-	font-size: small;
-	color: red;
-`
-
-const SuccessMessage = styled.span`
-	color: lightgreen;
-`
+import Toast from '../components/Toast'
 
 const SignupPage = () => {
 	const [email, setEmail] = React.useState('')
@@ -37,8 +28,10 @@ const SignupPage = () => {
 			await requestSignup({ email, password })
 			setError(null)
 			setSuccess(`You've been successfuly signed up`)
+			setTimeout(() => setSuccess(null), 7000)
 		} catch (error: any) {
 			setError(error.data.message)
+			setTimeout(() => setError(null), 7000)
 		}
 	}
 
@@ -68,11 +61,11 @@ const SignupPage = () => {
 							onChange={setPassword}
 							required
 						/>
-						{error && <ErrorMessage>{error}</ErrorMessage>}
+						{error && <Toast variant="error" message={error} />}
 						<Button variant="submit">Sign up</Button>
 					</StyledForm>
 				</FormIsland>
-				{success && <SuccessMessage>{success}</SuccessMessage>}
+				{success && <Toast variant="success" message={success} />}
 			</Content>
 		</Wrapper>
 	)

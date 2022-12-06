@@ -1,17 +1,12 @@
 import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { Wrapper, Content, FormIsland, StyledForm } from '../components/common'
 import { setAuth, getAuth } from '../lib/auth'
 import { requestLogin } from '../lib/api'
 import InputField from '../components/form/InputField'
 import Button from '../components/Button'
 import LandingNav from '../components/LandingNav'
-
-const ErrorMessage = styled.span`
-	font-size: small;
-	color: red;
-`
+import Toast from '../components/Toast'
 
 const LoginPage = () => {
 	const [email, setEmail] = React.useState('')
@@ -43,6 +38,7 @@ const LoginPage = () => {
 			navigate('/app')
 		} catch (error: any) {
 			setError(error.data.message)
+			setTimeout(() => setError(null), 7000)
 		}
 	}
 
@@ -69,7 +65,7 @@ const LoginPage = () => {
 							onChange={setPassword}
 							required
 						/>
-						{error && <ErrorMessage>{error}</ErrorMessage>}
+						{error && <Toast variant="error" message={error} />}
 						<Button variant="submit">Log in</Button>
 					</StyledForm>
 				</FormIsland>

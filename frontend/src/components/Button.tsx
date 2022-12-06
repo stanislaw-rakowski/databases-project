@@ -30,11 +30,11 @@ const SecondaryButton = styled(BaseButton)`
 `
 
 const DestructiveButton = styled(BaseButton)`
-	background-color: ${({ theme }) => theme.colors.destructiveButtonBackground};
+	background-color: ${({ theme }) => theme.colors.destructiveBackground};
 	transition: background-color 200ms ease;
 
 	&:hover {
-		background-color: ${({ theme }) => theme.colors.destructiveButtonBackgroundHover};
+		background-color: ${({ theme }) => theme.colors.destructiveBackgroundHover};
 	}
 `
 
