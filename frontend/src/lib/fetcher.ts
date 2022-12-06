@@ -15,7 +15,6 @@ export const fetcher = async <T>(url: string, options?: RequestInit): Promise<T>
 			...(token && { Authorization: `Bearer ${token}` }),
 			...(options?.body && { 'Content-Type': 'application/json' }),
 		},
-		...(token && { credentials: 'include' }),
 	})
 
 	let data = {}

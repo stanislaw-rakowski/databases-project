@@ -159,7 +159,7 @@ export const AccountController = (server: FastifyInstance) => ({
 
 			animals.forEach(async ({ id, name, birthDate, gender, species, description, shelter, employee }) => {
 				await server.mysql.query(
-					`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, employee,organization)
+					`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, employee, organization)
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 					`,
 					[id, name, birthDate, gender, species, description, shelter, employee, organizationId],
