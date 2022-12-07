@@ -35,7 +35,7 @@ const EmployeePage = () => {
 	const [shelters, setShelters] = React.useState<Shelter[]>([])
 
 	React.useEffect(() => {
-		const getAllEmployees = async () => {
+		const getData = async () => {
 			const [employeesData, sheltersData] = await Promise.all([getEmployees(), getShelters()])
 
 			setEmployees(employeesData)
@@ -43,7 +43,7 @@ const EmployeePage = () => {
 			setSelectedShelter(sheltersData[0].name)
 		}
 
-		getAllEmployees()
+		getData()
 	}, [])
 
 	const shelterOptions = React.useMemo(() => [...new Set(shelters.map(({ name }) => name))], [shelters.length])
