@@ -1,12 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { EmployeeController } from '../controllers/employee'
-import {
-	ParamsSchema,
-	ShelterParamsSchema,
-	EmployeeSchema,
-	EmployeesSchema,
-	EmployeeRequestSchema,
-} from '../schemas/employee'
+import { ParamsSchema, EmployeeSchema, EmployeesSchema, EmployeeRequestSchema } from '../schemas/employee'
 import { MessageResponseSchema } from '../schemas/common'
 
 export const autoPrefix = '/employees'
@@ -17,10 +11,9 @@ export default async function Employee(server: FastifyInstance) {
 	server.addHook('preHandler', server.verifyBearerAuth)
 
 	server.route({
-		url: '/all/:shelterId',
+		url: '/',
 		method: 'GET',
 		schema: {
-			params: ShelterParamsSchema,
 			response: {
 				200: EmployeesSchema,
 			},
@@ -41,10 +34,9 @@ export default async function Employee(server: FastifyInstance) {
 	})
 
 	server.route({
-		url: '/:shelterId',
+		url: '/',
 		method: 'POST',
 		schema: {
-			params: ShelterParamsSchema,
 			body: EmployeeRequestSchema,
 			response: {
 				201: EmployeeSchema,
@@ -67,10 +59,9 @@ export default async function Employee(server: FastifyInstance) {
 	})
 
 	server.route({
-		url: '/all/:shelterId',
+		url: '/',
 		method: 'DELETE',
 		schema: {
-			params: ShelterParamsSchema,
 			response: {
 				200: MessageResponseSchema,
 			},

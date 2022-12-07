@@ -98,24 +98,24 @@ export const deleteAnimalById = (id: string) => {
 
 /* Employee */
 
-export const getEmployees = (shelterId: string) => {
-	return callApiEndpoint<never, Employee[]>('GET', `${baseUrl}/employees/all/${shelterId}`)
+export const getEmployees = () => {
+	return callApiEndpoint<never, Employee[]>('GET', `${baseUrl}/employees`)
 }
 
 export const getEmployeeById = (id: string) => {
 	return callApiEndpoint<never, Employee>('GET', `${baseUrl}/employees/${id}`)
 }
 
-export const createEmployee = (shelterId: string, employee: EmployeeData) => {
-	return callApiEndpoint<EmployeeData, Employee>('POST', `${baseUrl}/employees/${shelterId}`, employee)
+export const createEmployee = (employee: EmployeeData) => {
+	return callApiEndpoint<EmployeeData, Employee>('POST', `${baseUrl}/employees`, employee)
 }
 
 export const updateEmployeeById = (id: string, employee: EmployeeData) => {
 	return callApiEndpoint<EmployeeData, Employee>('PATCH', `${baseUrl}/employees/${id}`, employee)
 }
 
-export const deleteEmployees = (shelterId: string) => {
-	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/employees/all/${shelterId}`)
+export const deleteEmployees = () => {
+	return callApiEndpoint<never, { message: string }>('DELETE', `${baseUrl}/employees`)
 }
 
 export const deleteEmployeeById = (id: string) => {

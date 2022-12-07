@@ -48,4 +48,4 @@ export type Employee = {
 	organization: string
 }
 
-export type EmployeeData = Pick<Employee, 'name'>
+export type EmployeeData = Omit<Employee, 'id' | 'organization'>

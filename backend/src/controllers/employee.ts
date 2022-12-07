@@ -1,23 +1,19 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { EmployeeRequestBody, Params, ShelterParams, Employee } from '../schemas/employee'
+import { EmployeeRequestBody, Params, Employee } from '../schemas/employee'
 
 export const EmployeeController = (server: FastifyInstance) => ({
-	async createEmployee(
-		request: FastifyRequest<{ Params: ShelterParams; Body: EmployeeRequestBody }>,
-		reply: FastifyReply,
-	) {
+	async createEmployee(request: FastifyRequest<{ Body: EmployeeRequestBody }>, reply: FastifyReply) {
 		try {
 			const organizationId = request.auth.organizationId
-			const { shelterId } = request.params
-			const { name } = request.body
+			const { name, shelter } = request.body
 
 			const employeeId = uuid()
 
 			await server.mysql.query(
 				`INSERT INTO Employees (id, name, shelter, organization) 
 				VALUES (?, ?, ?, ?)`,
-				[employeeId, name, shelterId, organizationId],
+				[employeeId, name, shelter, organizationId],
 			)
 
 			reply.status(201)
@@ -25,7 +21,7 @@ export const EmployeeController = (server: FastifyInstance) => ({
 			return {
 				id: employeeId,
 				name,
-				shelter: shelterId,
+				shelter,
 				organization: organizationId,
 			}
 		} catch (error) {
@@ -38,15 +34,15 @@ export const EmployeeController = (server: FastifyInstance) => ({
 		}
 	},
 
-	async getEmployees(request: FastifyRequest<{ Params: ShelterParams }>, reply: FastifyReply) {
+	async getEmployees(request: FastifyRequest, reply: FastifyReply) {
 		try {
-			const { shelterId } = request.params
+			const organizationId = request.auth.organizationId
 
 			const [results] = (await server.mysql.query(
 				`SELECT * 
 				FROM Employees
-				WHERE shelter = ?`,
-				[shelterId],
+				WHERE organization = ?`,
+				[organizationId],
 			)) as [Employee[], unknown]
 
 			reply.status(200)
@@ -114,14 +110,14 @@ export const EmployeeController = (server: FastifyInstance) => ({
 		}
 	},
 
-	async deleteEmployees(request: FastifyRequest<{ Params: ShelterParams }>, reply: FastifyReply) {
+	async deleteEmployees(request: FastifyRequest, reply: FastifyReply) {
 		try {
-			const { shelterId } = request.params
+			const organizationId = request.auth.organizationId
 
 			await server.mysql.query(
 				`DELETE FROM Employees 
-				WHERE shelter = ?`,
-				[shelterId],
+				WHERE organization = ?`,
+				[organizationId],
 			)
 
 			reply.status(200)
