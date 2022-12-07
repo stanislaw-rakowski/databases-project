@@ -45,7 +45,7 @@ export type Employee = {
 	id: string
 	name: string
 	shelter: string
-	organization: string
+	shelterName: string
 }
 
-export type EmployeeData = Omit<Employee, 'id' | 'organization'>
+export type EmployeeData = Omit<Employee, 'id' | 'shelterName'>
