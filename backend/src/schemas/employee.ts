@@ -20,3 +20,5 @@ export const EmployeeRequestSchema = Type.Omit(EmployeeSchema, ['id', 'shelterNa
 export type EmployeeRequestBody = Static<typeof EmployeeRequestSchema>
 
 export const EmployeesSchema = Type.Array(EmployeeSchema)
+
+export const EmployeeCreationResponseSchema = Type.Omit(EmployeeSchema, ['shelterName'])

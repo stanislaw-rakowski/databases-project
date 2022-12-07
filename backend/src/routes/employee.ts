@@ -1,6 +1,12 @@
 import { FastifyInstance } from 'fastify'
 import { EmployeeController } from '../controllers/employee'
-import { ParamsSchema, EmployeeSchema, EmployeesSchema, EmployeeRequestSchema } from '../schemas/employee'
+import {
+	ParamsSchema,
+	EmployeeSchema,
+	EmployeesSchema,
+	EmployeeRequestSchema,
+	EmployeeCreationResponseSchema,
+} from '../schemas/employee'
 import { MessageResponseSchema } from '../schemas/common'
 
 export const autoPrefix = '/employees'
@@ -39,7 +45,7 @@ export default async function Employee(server: FastifyInstance) {
 		schema: {
 			body: EmployeeRequestSchema,
 			response: {
-				201: EmployeeSchema,
+				201: EmployeeCreationResponseSchema,
 			},
 		},
 		handler: controller.createEmployee,

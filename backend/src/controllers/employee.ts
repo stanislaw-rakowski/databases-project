@@ -22,7 +22,6 @@ export const EmployeeController = (server: FastifyInstance) => ({
 				id: employeeId,
 				name,
 				shelter,
-				organization: organizationId,
 			}
 		} catch (error) {
 			reply.status(500)
