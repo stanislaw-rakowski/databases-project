@@ -39,9 +39,10 @@ export const EmployeeController = (server: FastifyInstance) => ({
 			const organizationId = request.auth.organizationId
 
 			const [results] = (await server.mysql.query(
-				`SELECT * 
+				`SELECT Employees.id, Employees.name, Employees.shelter, Shelters.name as shelterName
 				FROM Employees
-				WHERE organization = ?`,
+				JOIN Shelters ON Employees.shelter = Shelters.shelterId
+				AND Employees.organization = ?`,
 				[organizationId],
 			)) as [Employee[], unknown]
 
@@ -63,9 +64,10 @@ export const EmployeeController = (server: FastifyInstance) => ({
 			const { id } = request.params
 
 			const [[result]] = (await server.mysql.query(
-				`SELECT * 
-				FROM Employees 
-				WHERE id = ?`,
+				`SELECT Employees.id, Employees.name, Employees.shelter, Shelters.name as shelterName
+				FROM Employees
+				JOIN Shelters ON Employees.shelter = Shelters.shelterId
+				AND Employees.id = ?`,
 				[id],
 			)) as [Employee[], unknown]
 
