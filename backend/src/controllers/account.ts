@@ -139,32 +139,35 @@ export const AccountController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 
-			shelters.forEach(async ({ id, name, published }) => {
-				await server.mysql.query(
-					`INSERT INTO Shelters (shelterId, name, owner, published)
-					VALUES (?, ?, ?, ?)
-					`,
-					[id, name, organizationId, published],
-				)
-			})
+			await Promise.all(
+				shelters.map(({ id, name, published }) => {
+					server.mysql.query(
+						`INSERT INTO Shelters (shelterId, name, owner, published)
+						VALUES (?, ?, ?, ?)`,
+						[id, name, organizationId, published],
+					)
+				}),
+			)
 
-			employees.forEach(async ({ id, name, shelter }) => {
-				await server.mysql.query(
-					`INSERT INTO Employees (id, name, shelter, organization)
-					VALUES (?, ?, ?, ?)
-					`,
-					[id, name, shelter, organizationId],
-				)
-			})
+			await Promise.all(
+				employees.map(({ id, name, shelter }) => {
+					server.mysql.query(
+						`INSERT INTO Employees (id, name, shelter, organization)
+						VALUES (?, ?, ?, ?)`,
+						[id, name, shelter, organizationId],
+					)
+				}),
+			)
 
-			animals.forEach(async ({ id, name, birthDate, gender, species, description, shelter, employee }) => {
-				await server.mysql.query(
-					`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, employee, organization)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-					`,
-					[id, name, birthDate, gender, species, description, shelter, employee, organizationId],
-				)
-			})
+			await Promise.all(
+				animals.map(({ id, name, birthDate, gender, species, description, shelter, employee }) => {
+					server.mysql.query(
+						`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, employee, organization)
+						VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+						[id, name, birthDate, gender, species, description, shelter, employee, organizationId],
+					)
+				}),
+			)
 
 			reply.status(200)
 
