@@ -26,6 +26,13 @@ Enter backend app folder:
 
 `cd backend`
 
+Create `.env` file at the root of directory and fill it with:
+
+```
+DATABASE_URL=
+PRIVATE_KEY=
+```
+
 Install the dependencies:
 
 `npm i`
