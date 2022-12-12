@@ -23,6 +23,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
         color: ${({ theme }) => theme.colors.primaryFontColor};
         margin: 0;
         padding: 0;
+        color-scheme: dark;
     }
 `
 

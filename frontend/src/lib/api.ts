@@ -14,7 +14,6 @@ const callApiEndpoint = <D, R>(method: Method, url: string, data?: D): Promise<R
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 			},
-			mode: 'cors',
 		}),
 	})
 }
