@@ -3,7 +3,7 @@ import fp from 'fastify-plugin'
 import { createPool } from 'mysql2/promise'
 
 async function MySql(server: FastifyInstance) {
-	const connection = await createPool({
+	const connection = createPool({
 		host: 'localhost',
 		user: 'user',
 		password: 'foobar',
