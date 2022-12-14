@@ -38,6 +38,31 @@ export const AnimalController = (server: FastifyInstance) => ({
 		}
 	},
 
+	async getAllAnimals(request: FastifyRequest, reply: FastifyReply) {
+		try {
+			const organizationId = request.auth.organizationId
+
+			const [results] = (await server.mysql.query(
+				`SELECT Animals.*, Shelters.name as shelterName
+				FROM Animals
+				JOIN Shelters ON Animals.shelter = Shelters.shelterId
+				AND Animals.organization = ?`,
+				[organizationId],
+			)) as [Animal[], unknown]
+
+			reply.status(200)
+
+			return results
+		} catch (error) {
+			reply.status(500)
+
+			return {
+				message: 'Failed to get shelter animals',
+				error,
+			}
+		}
+	},
+
 	async getAnimals(request: FastifyRequest<{ Params: ShelterParams }>, reply: FastifyReply) {
 		try {
 			const { shelterId } = request.params

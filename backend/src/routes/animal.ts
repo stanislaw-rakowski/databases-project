@@ -5,6 +5,7 @@ import {
 	ShelterParamsSchema,
 	AnimalSchema,
 	AnimalsSchema,
+	AllAnimalsSchema,
 	AnimalRequestSchema,
 	AnimalResponseSchema,
 } from '../schemas/animal'
@@ -16,6 +17,17 @@ export default async function Animal(server: FastifyInstance) {
 	const controller = AnimalController(server)
 
 	server.addHook('preHandler', server.verifyBearerAuth)
+
+	server.route({
+		url: '/',
+		method: 'GET',
+		schema: {
+			response: {
+				200: AllAnimalsSchema,
+			},
+		},
+		handler: controller.getAllAnimals,
+	})
 
 	server.route({
 		url: '/all/:shelterId',

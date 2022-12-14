@@ -13,6 +13,15 @@ export const AnimalSchema = Type.Object({
 
 export type Animal = Static<typeof AnimalSchema>
 
+export const AllAnimalsSchema = Type.Array(
+	Type.Intersect([
+		AnimalSchema,
+		Type.Object({
+			shelterName: Type.String(),
+		}),
+	]),
+)
+
 export const ShelterParamsSchema = Type.Object({
 	shelterId: Type.String({ format: 'uuid' }),
 })

@@ -37,6 +37,8 @@ export type Animal = AnimalData & {
 	employee: string
 }
 
+export type AnimalWithShelter = Animal & { shelterName: string }
+
 export type AnimalForm = {
 	[K in keyof AnimalData]: K extends 'gender' | 'species' ? AnimalData[K] | '' : AnimalData[K]
 }

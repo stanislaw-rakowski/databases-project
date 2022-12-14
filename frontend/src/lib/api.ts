@@ -1,5 +1,15 @@
 import { fetcher } from './fetcher'
-import { AuthData, AuthRequest, ShelterData, Shelter, Animal, AnimalData, Employee, EmployeeData } from '../types'
+import {
+	AuthData,
+	AuthRequest,
+	ShelterData,
+	Shelter,
+	Animal,
+	AnimalWithShelter,
+	AnimalData,
+	Employee,
+	EmployeeData,
+} from '../types'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
 
@@ -70,6 +80,10 @@ export const deleteShelterById = (shelterId: string) => {
 }
 
 /* Animal */
+
+export const getAllAnimals = () => {
+	return callApiEndpoint<never, AnimalWithShelter[]>('GET', `${baseUrl}/animals`)
+}
 
 export const getAnimals = (shelterId: string) => {
 	return callApiEndpoint<never, Animal[]>('GET', `${baseUrl}/animals/all/${shelterId}`)
