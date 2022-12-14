@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../components/common'
-import { createEmployee, getEmployees, deleteEmployees, getShelters } from '../../lib/api'
-import { Employee, Shelter } from '../../types'
-import SideBarMenu from '../../components/SideBarMenu'
-import Button from '../../components/Button'
-import InputField from '../../components/form/InputField'
-import SelectField from '../../components/form/SelectField'
-import Modal from '../../components/Modal'
-import ActionModal from '../../components/ActionModal'
+import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
+import { createEmployee, getEmployees, deleteEmployees, getShelters } from '../../../lib/api'
+import { Employee, Shelter } from '../../../types'
+import SideBarMenu from '../../../components/SideBarMenu'
+import Button from '../../../components/Button'
+import InputField from '../../../components/form/InputField'
+import SelectField from '../../../components/form/SelectField'
+import Modal from '../../../components/Modal'
+import ActionModal from '../../../components/ActionModal'
 
 const ButtonsSection = styled.div`
 	display: flex;
@@ -26,7 +26,7 @@ const ResultRow = styled(Row)`
 	}
 `
 
-const EmployeePage = () => {
+const EmployeesPage = () => {
 	const [showEmployeeAddModal, setShowEmployeeAddModal] = React.useState(false)
 	const [showDeleteEmployeesModal, setShowDeleteEmployeesModal] = React.useState(false)
 	const [employeeName, setEmployeeName] = React.useState('')
@@ -40,7 +40,7 @@ const EmployeePage = () => {
 
 			setEmployees(employeesData)
 			setShelters(sheltersData)
-			setSelectedShelter(sheltersData[0].name)
+			setSelectedShelter(sheltersData[0]?.name)
 		}
 
 		getData()
@@ -120,18 +120,19 @@ const EmployeePage = () => {
 					</Modal>
 				)}
 				<Results>
-					{employees.map(({ id, name, shelterName }, index) => (
-						<ResultRow key={id}>
-							<span>{index + 1}</span>
-							<span>{name}</span>
-							<span>{shelterName}</span>
-							<Link to={`/app/employee/${id}`}>Details</Link>
-						</ResultRow>
-					))}
+					{employees &&
+						employees.map(({ id, name, shelterName }, index) => (
+							<ResultRow key={id}>
+								<span>{index + 1}</span>
+								<span>{name}</span>
+								<span>{shelterName}</span>
+								<Link to={`/app/employee/${id}`}>Details</Link>
+							</ResultRow>
+						))}
 				</Results>
 			</AppContent>
 		</AppWrapper>
 	)
 }
 
-export default EmployeePage
+export default EmployeesPage
