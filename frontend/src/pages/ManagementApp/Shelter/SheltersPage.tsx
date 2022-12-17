@@ -2,7 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaLock, FaLockOpen } from 'react-icons/fa'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
+import {
+	AppWrapper,
+	AppContent,
+	StyledForm,
+	TopSection,
+	SubHeading,
+	Results,
+	Row,
+	ButtonsSection,
+} from '../../../components/common'
 import { createShelter, getShelters, deleteShelters } from '../../../lib/api'
 import { Shelter } from '../../../types'
 import SideBarMenu from '../../../components/SideBarMenu'
@@ -10,11 +19,6 @@ import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import Modal from '../../../components/Modal'
 import ActionModal from '../../../components/ActionModal'
-
-const ButtonsSection = styled.div`
-	display: flex;
-	justify-content: space-between;
-`
 
 const ResultRow = styled(Row)`
 	span {
@@ -26,7 +30,7 @@ const ResultRow = styled(Row)`
 	}
 `
 
-const ManagementPage = () => {
+const SheltersPage = () => {
 	const [showShelterCreationModal, setShowShelterCreationModal] = React.useState(false)
 	const [showDeleteSheltersModal, setShowDeleteSheltersModal] = React.useState(false)
 	const [shelterName, setShelterName] = React.useState('')
@@ -111,4 +115,4 @@ const ManagementPage = () => {
 	)
 }
 
-export default ManagementPage
+export default SheltersPage

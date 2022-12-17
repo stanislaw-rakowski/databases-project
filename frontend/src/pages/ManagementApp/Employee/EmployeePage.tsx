@@ -1,7 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams, useNavigate } from 'react-router-dom'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
+import {
+	AppWrapper,
+	AppContent,
+	StyledForm,
+	TopSection,
+	SubHeading,
+	Results,
+	Row,
+	ButtonsSection,
+} from '../../../components/common'
 import { getEmployeeById, deleteEmployeeById, updateEmployeeById } from '../../../lib/api'
 import { Employee } from '../../../types'
 import SideBarMenu from '../../../components/SideBarMenu'
@@ -9,11 +18,6 @@ import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import Modal from '../../../components/Modal'
 import ActionModal from '../../../components/ActionModal'
-
-const ButtonsSection = styled.div`
-	display: flex;
-	justify-content: space-between;
-`
 
 const ResultRow = styled(Row)`
 	span {

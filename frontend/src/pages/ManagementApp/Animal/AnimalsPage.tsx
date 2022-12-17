@@ -1,7 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { AppWrapper, AppContent, TopSection, SubHeading, Results, Row, StyledForm } from '../../../components/common'
+import {
+	AppWrapper,
+	AppContent,
+	TopSection,
+	SubHeading,
+	Results,
+	Row,
+	StyledForm,
+	ButtonsSection,
+} from '../../../components/common'
 import { SpeciesIcon, GenderIcon } from '../../../components/icons'
 import { getAllAnimals, createAnimal, getShelters } from '../../../lib/api'
 import { AnimalWithShelter, Shelter, AnimalForm, AnimalData } from '../../../types'
@@ -20,11 +29,6 @@ const ResultRow = styled(Row)`
 	span:nth-of-type(2) {
 		flex: 3;
 	}
-`
-
-const ButtonsSection = styled.div`
-	display: flex;
-	justify-content: space-between;
 `
 
 const AnimalsPage = () => {
@@ -153,21 +157,20 @@ const AnimalsPage = () => {
 					</Modal>
 				)}
 				<Results>
-					{animals &&
-						animals.map(({ id, name, gender, species, shelterName }, index) => (
-							<ResultRow key={id}>
-								<span>{index + 1}</span>
-								<span>{name}</span>
-								<span>
-									<GenderIcon gender={gender} />
-								</span>
-								<span>
-									<SpeciesIcon species={species} />
-								</span>
-								<span>{shelterName}</span>
-								<Link to={`/app/animal/${id}`}>Details</Link>
-							</ResultRow>
-						))}
+					{animals.map(({ id, name, gender, species, shelterName }, index) => (
+						<ResultRow key={id}>
+							<span>{index + 1}</span>
+							<span>{name}</span>
+							<span>
+								<GenderIcon gender={gender} />
+							</span>
+							<span>
+								<SpeciesIcon species={species} />
+							</span>
+							<span>{shelterName}</span>
+							<Link to={`/app/animal/${id}`}>Details</Link>
+						</ResultRow>
+					))}
 				</Results>
 			</AppContent>
 		</AppWrapper>

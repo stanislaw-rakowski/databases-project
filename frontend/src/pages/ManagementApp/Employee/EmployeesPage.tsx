@@ -1,7 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
+import {
+	AppWrapper,
+	AppContent,
+	StyledForm,
+	TopSection,
+	SubHeading,
+	Results,
+	Row,
+	ButtonsSection,
+} from '../../../components/common'
 import { createEmployee, getEmployees, deleteEmployees, getShelters } from '../../../lib/api'
 import { Employee, Shelter } from '../../../types'
 import SideBarMenu from '../../../components/SideBarMenu'
@@ -10,11 +19,6 @@ import InputField from '../../../components/form/InputField'
 import SelectField from '../../../components/form/SelectField'
 import Modal from '../../../components/Modal'
 import ActionModal from '../../../components/ActionModal'
-
-const ButtonsSection = styled.div`
-	display: flex;
-	justify-content: space-between;
-`
 
 const ResultRow = styled(Row)`
 	span {
@@ -120,15 +124,14 @@ const EmployeesPage = () => {
 					</Modal>
 				)}
 				<Results>
-					{employees &&
-						employees.map(({ id, name, shelterName }, index) => (
-							<ResultRow key={id}>
-								<span>{index + 1}</span>
-								<span>{name}</span>
-								<span>{shelterName}</span>
-								<Link to={`/app/employee/${id}`}>Details</Link>
-							</ResultRow>
-						))}
+					{employees.map(({ id, name, shelterName }, index) => (
+						<ResultRow key={id}>
+							<span>{index + 1}</span>
+							<span>{name}</span>
+							<span>{shelterName}</span>
+							<Link to={`/app/employee/${id}`}>Details</Link>
+						</ResultRow>
+					))}
 				</Results>
 			</AppContent>
 		</AppWrapper>

@@ -36,6 +36,11 @@ export const SubHeading = styled.h1`
 	font-weight: 800;
 `
 
+export const ButtonsSection = styled.div`
+	display: flex;
+	justify-content: space-between;
+`
+
 export const StyledForm = styled.form`
 	width: 100%;
 	display: flex;
