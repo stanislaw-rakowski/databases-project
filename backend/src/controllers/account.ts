@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 import { sign } from 'jsonwebtoken'
 import { hashPassword, verifyPassword } from '../utils/hash'
 import { Account } from '../schemas/account'
-import { shelters, employees, animals } from '../utils/data'
+import getMockedData from '../utils/getMockedData'
 
 export const AccountController = (server: FastifyInstance) => ({
 	async createAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
@@ -91,8 +91,6 @@ export const AccountController = (server: FastifyInstance) => ({
 				{ expiresIn: '24h' },
 			)
 
-			reply.setCookie('token', token)
-
 			reply.status(200)
 
 			return {
@@ -139,6 +137,10 @@ export const AccountController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 
+			const { shelters, employees, animals } = getMockedData()
+
+			await server.mysql.query(`SET FOREIGN_KEY_CHECKS=0`)
+
 			await Promise.all(
 				shelters.map(({ id, name, published }) => {
 					server.mysql.query(
@@ -168,6 +170,8 @@ export const AccountController = (server: FastifyInstance) => ({
 					)
 				}),
 			)
+
+			await server.mysql.query(`SET FOREIGN_KEY_CHECKS=1`)
 
 			reply.status(200)
 
