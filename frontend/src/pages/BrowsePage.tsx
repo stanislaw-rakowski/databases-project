@@ -14,7 +14,12 @@ const Wrapper = styled.div`
 	padding: 2rem 150px;
 `
 
+const StyledResults = styled(Results)`
+	width: 100%;
+`
+
 const AnimalRow = styled(Row)`
+	width: 100%;
 	gap: 1rem;
 
 	span {
@@ -23,6 +28,8 @@ const AnimalRow = styled(Row)`
 `
 
 const ShelterRow = styled(Row)`
+	width: 100%;
+
 	span {
 		flex: 1;
 	}
@@ -52,16 +59,16 @@ const BrowsePage = () => {
 	return (
 		<Wrapper>
 			<SubHeading>Browse shelters</SubHeading>
-			<Results>
+			<StyledResults>
 				{shelters.map(({ shelterId, name }, index) => (
 					<ShelterRow key={shelterId}>
 						<span>{index + 1}</span>
 						<span>{name}</span>
 					</ShelterRow>
 				))}
-			</Results>
+			</StyledResults>
 			<SubHeading>Browse animals</SubHeading>
-			<Results>
+			<StyledResults>
 				{animals.map(({ id, name, birthDate, gender, species }, index) => (
 					<AnimalRow key={id}>
 						<span>{index + 1}</span>
@@ -75,7 +82,7 @@ const BrowsePage = () => {
 						</span>
 					</AnimalRow>
 				))}
-			</Results>
+			</StyledResults>
 		</Wrapper>
 	)
 }
