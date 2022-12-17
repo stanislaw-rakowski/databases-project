@@ -34,15 +34,19 @@ const EmployeePage = () => {
 	const [employee, setEmployee] = React.useState<Employee | null>(null)
 
 	if (!id) {
-		navigate('/app/employee/all')
-		return
+		navigate('/app/employee')
+		return null
 	}
 
 	React.useEffect(() => {
 		const getData = async () => {
-			const data = await getEmployeeById(id)
-			setEmployee(data)
-			setEmployeeName(data.name)
+			try {
+				const data = await getEmployeeById(id)
+				setEmployee(data)
+				setEmployeeName(data.name)
+			} catch {
+				navigate('/app/employee')
+			}
 		}
 
 		getData()

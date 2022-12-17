@@ -9,8 +9,10 @@ import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import BrowsePage from './pages/BrowsePage'
 import ManagementPage from './pages/ManagementApp/ManagementPage'
-import ShelterPage from './pages/ManagementApp/ShelterPage'
-import AnimalPage from './pages/ManagementApp/AnimalPage'
+import ShelterPage from './pages/ManagementApp/Shelter/ShelterPage'
+import SheltersPage from './pages/ManagementApp/Shelter/SheltersPage'
+import AnimalPage from './pages/ManagementApp/Animal/AnimalPage'
+import AnimalsPage from './pages/ManagementApp/Animal/AnimalsPage'
 import EmployeePage from './pages/ManagementApp/Employee/EmployeePage'
 import EmployeesPage from './pages/ManagementApp/Employee/EmployeesPage'
 import AccountPage from './pages/ManagementApp/AccountPage'
@@ -27,10 +29,12 @@ const App = () => {
 				<Route path="/log-in" element={<LoginPage />} />
 				<Route element={<ProtectedRoute />}>
 					<Route path="/app" element={<ManagementPage />} />
+					<Route path="/app/shelter" element={<SheltersPage />} />
 					<Route path="/app/shelter/:id" element={<ShelterPage />} />
+					<Route path="/app/animal" element={<AnimalsPage />} />
 					<Route path="/app/animal/:id" element={<AnimalPage />} />
+					<Route path="/app/employee" element={<EmployeesPage />} />
 					<Route path="/app/employee/:id" element={<EmployeePage />} />
-					<Route path="/app/employee/all" element={<EmployeesPage />} />
 					<Route path="/app/account" element={<AccountPage />} />
 				</Route>
 			</Routes>

@@ -48,7 +48,7 @@ const EmployeesPage = () => {
 
 	const shelterOptions = React.useMemo(() => [...new Set(shelters.map(({ name }) => name))], [shelters.length])
 
-	const handleShelterCreate = async (event: React.FormEvent) => {
+	const handleEmployeeCreate = async (event: React.FormEvent) => {
 		event.preventDefault()
 
 		const shelterId = shelters.find((shelter) => shelter.name === selectedShelter)?.shelterId
@@ -98,7 +98,7 @@ const EmployeesPage = () => {
 				)}
 				{showEmployeeAddModal && selectedShelter && (
 					<Modal title="Add employee" onClose={() => setShowEmployeeAddModal(false)}>
-						<StyledForm onSubmit={handleShelterCreate}>
+						<StyledForm onSubmit={handleEmployeeCreate}>
 							<InputField
 								label="Name"
 								type="text"
