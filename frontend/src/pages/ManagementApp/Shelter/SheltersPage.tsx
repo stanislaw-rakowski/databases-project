@@ -2,19 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaLock, FaLockOpen } from 'react-icons/fa'
-import {
-	AppWrapper,
-	AppContent,
-	StyledForm,
-	TopSection,
-	SubHeading,
-	Results,
-	Row,
-	ButtonsSection,
-} from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection } from '../../../components/common'
 import { createShelter, getShelters, deleteShelters } from '../../../lib/api'
 import { Shelter } from '../../../types'
-import SideBarMenu from '../../../components/SideBarMenu'
+import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import Modal from '../../../components/Modal'
@@ -61,57 +52,54 @@ const SheltersPage = () => {
 	}
 
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<TopSection>
-					<SubHeading>Manage your shelters</SubHeading>
-					<ButtonsSection>
-						<Button variant="primary" onClick={() => setShowShelterCreationModal(true)}>
-							Create shelter
-						</Button>
-						<Button variant="destructive" onClick={() => setShowDeleteSheltersModal(true)}>
-							Delete shelters
-						</Button>
-					</ButtonsSection>
-				</TopSection>
-				{showDeleteSheltersModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText="This action will irreversibly delete all your shelters"
-						acceptCta="Yes, delete"
-						onAccept={handleAllSheltersDelete}
-						cancelCta="No, go back"
-						onClose={() => setShowDeleteSheltersModal(false)}
-					/>
-				)}
-				{showShelterCreationModal && (
-					<Modal title="Create shelter" onClose={() => setShowShelterCreationModal(false)}>
-						<StyledForm onSubmit={handleShelterCreate}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter shelter name"
-								value={shelterName}
-								onChange={setShelterName}
-								required
-							/>
-							<Button variant="submit">Create</Button>
-						</StyledForm>
-					</Modal>
-				)}
-				<Results>
-					{shelters.map(({ shelterId, name, published }, index) => (
-						<ResultRow key={shelterId}>
-							<span>{index + 1}</span>
-							<span>{name}</span>
-							<span>{published === 0 ? <FaLock /> : <FaLockOpen />}</span>
-							<Link to={`/app/shelter/${shelterId}`}>Details</Link>
-						</ResultRow>
-					))}
-				</Results>
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<TopSection>
+				<SubHeading>Manage your shelters</SubHeading>
+				<ButtonsSection>
+					<Button variant="primary" onClick={() => setShowShelterCreationModal(true)}>
+						Create shelter
+					</Button>
+					<Button variant="destructive" onClick={() => setShowDeleteSheltersModal(true)}>
+						Delete shelters
+					</Button>
+				</ButtonsSection>
+			</TopSection>
+			{showDeleteSheltersModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText="This action will irreversibly delete all your shelters"
+					acceptCta="Yes, delete"
+					onAccept={handleAllSheltersDelete}
+					cancelCta="No, go back"
+					onClose={() => setShowDeleteSheltersModal(false)}
+				/>
+			)}
+			{showShelterCreationModal && (
+				<Modal title="Create shelter" onClose={() => setShowShelterCreationModal(false)}>
+					<StyledForm onSubmit={handleShelterCreate}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter shelter name"
+							value={shelterName}
+							onChange={setShelterName}
+							required
+						/>
+						<Button variant="submit">Create</Button>
+					</StyledForm>
+				</Modal>
+			)}
+			<Results>
+				{shelters.map(({ shelterId, name, published }, index) => (
+					<ResultRow key={shelterId}>
+						<span>{index + 1}</span>
+						<span>{name}</span>
+						<span>{published === 0 ? <FaLock /> : <FaLockOpen />}</span>
+						<Link to={`/app/shelter/${shelterId}`}>Details</Link>
+					</ResultRow>
+				))}
+			</Results>
+		</AppLayout>
 	)
 }
 

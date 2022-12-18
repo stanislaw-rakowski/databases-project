@@ -1,14 +1,10 @@
-import { AppWrapper, AppContent } from '../../components/common'
-import SideBarMenu from '../../components/SideBarMenu'
+import AppLayout from '../../components/AppLayout'
 
 const ManagementPage = () => {
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<h1>Welcome!</h1>
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<h1>Welcome!</h1>
+		</AppLayout>
 	)
 }
 

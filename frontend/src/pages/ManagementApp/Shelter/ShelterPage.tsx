@@ -2,7 +2,6 @@ import React from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import {
-	getShelters as fetchShelters,
 	getShelterById,
 	deleteShelterById,
 	updateShelterById,
@@ -11,9 +10,9 @@ import {
 	deleteAnimals,
 } from '../../../lib/api'
 import { Animal, AnimalData, AnimalForm, Shelter } from '../../../types'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
 import { SpeciesIcon, GenderIcon } from '../../../components/icons'
-import SideBarMenu from '../../../components/SideBarMenu'
+import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import TextAreaField from '../../../components/form/TextAreaField'
@@ -78,12 +77,7 @@ const ShelterPage = () => {
 	}, [])
 
 	if (!shelter) {
-		return (
-			<AppWrapper>
-				<SideBarMenu />
-				<AppContent />
-			</AppWrapper>
-		)
+		return <AppLayout />
 	}
 
 	const handleShelterEdit = async (event: React.FormEvent) => {
@@ -146,152 +140,149 @@ const ShelterPage = () => {
 	}
 
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<TopSection>
-					<h2>Shelter</h2>
-					<SubHeading>{shelter.name}</SubHeading>
-					<ButtonsSection>
-						<span>
-							<Button variant="primary" onClick={() => setShowAddAnimalModal((curr) => !curr)}>
-								Add animal
-							</Button>
-							<Button
-								variant="primary"
-								onClick={() => {
-									setShowShelterEditModal((curr) => !curr)
-									setShelterName(shelter.name)
-								}}
-							>
-								Edit
-							</Button>
-							<Button variant="secondary" onClick={() => setShowPublishShelterModal(true)}>
-								{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
-							</Button>
-						</span>
-						<span>
-							<Button variant="destructive" onClick={() => setShowDeleteShelterModal(true)}>
-								Delete
-							</Button>
-							<Button variant="destructive" onClick={() => setShowDeleteAnimalsModal(true)}>
-								Delete all animals
-							</Button>
-						</span>
-					</ButtonsSection>
-				</TopSection>
-				{showPublishShelterModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText={`This action will ${Boolean(shelter.published) ? 'unpublish' : 'publish'} your shelter and ${
-							Boolean(shelter.published) ? 'hide it from' : "make it visible with all it's animals on"
-						} our public page`}
-						acceptCta={`Yes, ${Boolean(shelter.published) ? 'unpublish' : 'publish'}`}
-						onAccept={handleShelterPublish}
-						cancelCta="No, go back"
-						onClose={() => setShowPublishShelterModal(false)}
-					/>
-				)}
-				{showDeleteShelterModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText="This action will irreversibly delete your shelter"
-						acceptCta="Yes, delete"
-						onAccept={handleShelterDelete}
-						cancelCta="No, go back"
-						onClose={() => setShowDeleteShelterModal(false)}
-					/>
-				)}
-				{showDeleteAnimalsModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText="This action will irreversibly delete all your animals in this shelter"
-						acceptCta="Yes, delete"
-						onAccept={handleAllAnimalsDelete}
-						cancelCta="No, go back"
-						onClose={() => setShowDeleteAnimalsModal(false)}
-					/>
-				)}
-				{showShelterEditModal && (
-					<Modal title="Edit shelter" onClose={() => setShowShelterEditModal(false)}>
-						<StyledForm onSubmit={handleShelterEdit}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter shelter name"
-								value={shelterName}
-								onChange={setShelterName}
-								required
-							/>
-							<Button variant="submit">Edit</Button>
-						</StyledForm>
-					</Modal>
-				)}
-				{showAddAnimalModal && (
-					<Modal title="Add animal" onClose={() => setShowAddAnimalModal(false)}>
-						<StyledForm onSubmit={handleAnimalAdd}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter animal name"
-								value={animalFormData.name}
-								onChange={handleInputValueChange('name')}
-								required
-							/>
-							<InputField
-								label="Birth date"
-								type="date"
-								placeholder="Enter birth date"
-								value={animalFormData.birthDate}
-								onChange={handleInputValueChange('birthDate')}
-								required
-							/>
-							<SelectField
-								label="Gender"
-								placeholder="Enter animal gender"
-								value={animalFormData.gender}
-								options={['male', 'female']}
-								onChange={handleInputValueChange('gender')}
-								required
-							/>
-							<SelectField
-								label="Species"
-								placeholder="Enter animal species"
-								value={animalFormData.species}
-								options={['dog', 'cat', 'other']}
-								onChange={handleInputValueChange('species')}
-								required
-							/>
-							<TextAreaField
-								label="Description"
-								placeholder="Enter description"
-								value={animalFormData.description}
-								onChange={handleInputValueChange('description')}
-								required
-							/>
-							<Button variant="submit">Add</Button>
-						</StyledForm>
-					</Modal>
-				)}
-				<Results>
-					{animals &&
-						animals.map(({ id, name, birthDate, gender, species }, index) => (
-							<ResultRow key={id}>
-								<span>{index + 1}</span>
-								<span>{name}</span>
-								<span>{birthDate.split('T')[0]}</span>
-								<span>
-									<GenderIcon gender={gender} />
-								</span>
-								<span>
-									<SpeciesIcon species={species} />
-								</span>
-								<Link to={`/app/animal/${id}`}>Details</Link>
-							</ResultRow>
-						))}
-				</Results>
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<TopSection>
+				<h2>Shelter</h2>
+				<SubHeading>{shelter.name}</SubHeading>
+				<ButtonsSection>
+					<span>
+						<Button variant="primary" onClick={() => setShowAddAnimalModal((curr) => !curr)}>
+							Add animal
+						</Button>
+						<Button
+							variant="primary"
+							onClick={() => {
+								setShowShelterEditModal((curr) => !curr)
+								setShelterName(shelter.name)
+							}}
+						>
+							Edit
+						</Button>
+						<Button variant="secondary" onClick={() => setShowPublishShelterModal(true)}>
+							{Boolean(shelter.published) ? 'Unpublish' : 'Publish'}
+						</Button>
+					</span>
+					<span>
+						<Button variant="destructive" onClick={() => setShowDeleteShelterModal(true)}>
+							Delete
+						</Button>
+						<Button variant="destructive" onClick={() => setShowDeleteAnimalsModal(true)}>
+							Delete all animals
+						</Button>
+					</span>
+				</ButtonsSection>
+			</TopSection>
+			{showPublishShelterModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText={`This action will ${Boolean(shelter.published) ? 'unpublish' : 'publish'} your shelter and ${
+						Boolean(shelter.published) ? 'hide it from' : "make it visible with all it's animals on"
+					} our public page`}
+					acceptCta={`Yes, ${Boolean(shelter.published) ? 'unpublish' : 'publish'}`}
+					onAccept={handleShelterPublish}
+					cancelCta="No, go back"
+					onClose={() => setShowPublishShelterModal(false)}
+				/>
+			)}
+			{showDeleteShelterModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText="This action will irreversibly delete your shelter"
+					acceptCta="Yes, delete"
+					onAccept={handleShelterDelete}
+					cancelCta="No, go back"
+					onClose={() => setShowDeleteShelterModal(false)}
+				/>
+			)}
+			{showDeleteAnimalsModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText="This action will irreversibly delete all your animals in this shelter"
+					acceptCta="Yes, delete"
+					onAccept={handleAllAnimalsDelete}
+					cancelCta="No, go back"
+					onClose={() => setShowDeleteAnimalsModal(false)}
+				/>
+			)}
+			{showShelterEditModal && (
+				<Modal title="Edit shelter" onClose={() => setShowShelterEditModal(false)}>
+					<StyledForm onSubmit={handleShelterEdit}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter shelter name"
+							value={shelterName}
+							onChange={setShelterName}
+							required
+						/>
+						<Button variant="submit">Edit</Button>
+					</StyledForm>
+				</Modal>
+			)}
+			{showAddAnimalModal && (
+				<Modal title="Add animal" onClose={() => setShowAddAnimalModal(false)}>
+					<StyledForm onSubmit={handleAnimalAdd}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter animal name"
+							value={animalFormData.name}
+							onChange={handleInputValueChange('name')}
+							required
+						/>
+						<InputField
+							label="Birth date"
+							type="date"
+							placeholder="Enter birth date"
+							value={animalFormData.birthDate}
+							onChange={handleInputValueChange('birthDate')}
+							required
+						/>
+						<SelectField
+							label="Gender"
+							placeholder="Enter animal gender"
+							value={animalFormData.gender}
+							options={['male', 'female']}
+							onChange={handleInputValueChange('gender')}
+							required
+						/>
+						<SelectField
+							label="Species"
+							placeholder="Enter animal species"
+							value={animalFormData.species}
+							options={['dog', 'cat', 'other']}
+							onChange={handleInputValueChange('species')}
+							required
+						/>
+						<TextAreaField
+							label="Description"
+							placeholder="Enter description"
+							value={animalFormData.description}
+							onChange={handleInputValueChange('description')}
+							required
+						/>
+						<Button variant="submit">Add</Button>
+					</StyledForm>
+				</Modal>
+			)}
+			<Results>
+				{animals &&
+					animals.map(({ id, name, birthDate, gender, species }, index) => (
+						<ResultRow key={id}>
+							<span>{index + 1}</span>
+							<span>{name}</span>
+							<span>{birthDate.split('T')[0]}</span>
+							<span>
+								<GenderIcon gender={gender} />
+							</span>
+							<span>
+								<SpeciesIcon species={species} />
+							</span>
+							<Link to={`/app/animal/${id}`}>Details</Link>
+						</ResultRow>
+					))}
+			</Results>
+		</AppLayout>
 	)
 }
 

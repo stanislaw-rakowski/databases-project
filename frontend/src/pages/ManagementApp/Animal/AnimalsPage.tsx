@@ -1,20 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import {
-	AppWrapper,
-	AppContent,
-	TopSection,
-	SubHeading,
-	Results,
-	Row,
-	StyledForm,
-	ButtonsSection,
-} from '../../../components/common'
+import { TopSection, SubHeading, Results, Row, StyledForm, ButtonsSection } from '../../../components/common'
 import { SpeciesIcon, GenderIcon } from '../../../components/icons'
 import { getAllAnimals, createAnimal, getShelters } from '../../../lib/api'
 import { AnimalWithShelter, Shelter, AnimalForm, AnimalData } from '../../../types'
-import SideBarMenu from '../../../components/SideBarMenu'
+import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import TextAreaField from '../../../components/form/TextAreaField'
@@ -91,89 +82,86 @@ const AnimalsPage = () => {
 	}
 
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<TopSection>
-					<SubHeading>Manage your animals</SubHeading>
-					<ButtonsSection>
-						<Button variant="primary" onClick={() => setShowAddAnimalModal((curr) => !curr)}>
-							Add animal
-						</Button>
-					</ButtonsSection>
-				</TopSection>
-				{showAddAnimalModal && selectedShelter && (
-					<Modal title="Add animal" onClose={() => setShowAddAnimalModal(false)}>
-						<StyledForm onSubmit={handleAnimalAdd}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter animal name"
-								value={animalFormData.name}
-								onChange={handleInputValueChange('name')}
-								required
-							/>
-							<SelectField
-								label="Shelter"
-								placeholder="Select shelter"
-								options={shelterOptions}
-								value={selectedShelter}
-								onChange={setSelectedShelter}
-								required
-							/>
-							<InputField
-								label="Birth date"
-								type="date"
-								placeholder="Enter birth date"
-								value={animalFormData.birthDate}
-								onChange={handleInputValueChange('birthDate')}
-								required
-							/>
-							<SelectField
-								label="Gender"
-								placeholder="Enter animal gender"
-								value={animalFormData.gender}
-								options={['male', 'female']}
-								onChange={handleInputValueChange('gender')}
-								required
-							/>
-							<SelectField
-								label="Species"
-								placeholder="Enter animal species"
-								value={animalFormData.species}
-								options={['dog', 'cat', 'other']}
-								onChange={handleInputValueChange('species')}
-								required
-							/>
-							<TextAreaField
-								label="Description"
-								placeholder="Enter description"
-								value={animalFormData.description}
-								onChange={handleInputValueChange('description')}
-								required
-							/>
-							<Button variant="submit">Add</Button>
-						</StyledForm>
-					</Modal>
-				)}
-				<Results>
-					{animals.map(({ id, name, gender, species, shelterName }, index) => (
-						<ResultRow key={id}>
-							<span>{index + 1}</span>
-							<span>{name}</span>
-							<span>
-								<GenderIcon gender={gender} />
-							</span>
-							<span>
-								<SpeciesIcon species={species} />
-							</span>
-							<span>{shelterName}</span>
-							<Link to={`/app/animal/${id}`}>Details</Link>
-						</ResultRow>
-					))}
-				</Results>
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<TopSection>
+				<SubHeading>Manage your animals</SubHeading>
+				<ButtonsSection>
+					<Button variant="primary" onClick={() => setShowAddAnimalModal((curr) => !curr)}>
+						Add animal
+					</Button>
+				</ButtonsSection>
+			</TopSection>
+			{showAddAnimalModal && selectedShelter && (
+				<Modal title="Add animal" onClose={() => setShowAddAnimalModal(false)}>
+					<StyledForm onSubmit={handleAnimalAdd}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter animal name"
+							value={animalFormData.name}
+							onChange={handleInputValueChange('name')}
+							required
+						/>
+						<SelectField
+							label="Shelter"
+							placeholder="Select shelter"
+							options={shelterOptions}
+							value={selectedShelter}
+							onChange={setSelectedShelter}
+							required
+						/>
+						<InputField
+							label="Birth date"
+							type="date"
+							placeholder="Enter birth date"
+							value={animalFormData.birthDate}
+							onChange={handleInputValueChange('birthDate')}
+							required
+						/>
+						<SelectField
+							label="Gender"
+							placeholder="Enter animal gender"
+							value={animalFormData.gender}
+							options={['male', 'female']}
+							onChange={handleInputValueChange('gender')}
+							required
+						/>
+						<SelectField
+							label="Species"
+							placeholder="Enter animal species"
+							value={animalFormData.species}
+							options={['dog', 'cat', 'other']}
+							onChange={handleInputValueChange('species')}
+							required
+						/>
+						<TextAreaField
+							label="Description"
+							placeholder="Enter description"
+							value={animalFormData.description}
+							onChange={handleInputValueChange('description')}
+							required
+						/>
+						<Button variant="submit">Add</Button>
+					</StyledForm>
+				</Modal>
+			)}
+			<Results>
+				{animals.map(({ id, name, gender, species, shelterName }, index) => (
+					<ResultRow key={id}>
+						<span>{index + 1}</span>
+						<span>{name}</span>
+						<span>
+							<GenderIcon gender={gender} />
+						</span>
+						<span>
+							<SpeciesIcon species={species} />
+						</span>
+						<span>{shelterName}</span>
+						<Link to={`/app/animal/${id}`}>Details</Link>
+					</ResultRow>
+				))}
+			</Results>
+		</AppLayout>
 	)
 }
 

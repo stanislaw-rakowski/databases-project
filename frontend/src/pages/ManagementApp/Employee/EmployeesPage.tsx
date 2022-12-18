@@ -1,19 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import {
-	AppWrapper,
-	AppContent,
-	StyledForm,
-	TopSection,
-	SubHeading,
-	Results,
-	Row,
-	ButtonsSection,
-} from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection } from '../../../components/common'
 import { createEmployee, getEmployees, deleteEmployees, getShelters } from '../../../lib/api'
 import { Employee, Shelter } from '../../../types'
-import SideBarMenu from '../../../components/SideBarMenu'
+import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import SelectField from '../../../components/form/SelectField'
@@ -76,65 +67,62 @@ const EmployeesPage = () => {
 	}
 
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<TopSection>
-					<SubHeading>Manage your employees</SubHeading>
-					<ButtonsSection>
-						<Button variant="primary" onClick={() => setShowEmployeeAddModal(true)}>
-							Add employee
-						</Button>
-						<Button variant="destructive" onClick={() => setShowDeleteEmployeesModal(true)}>
-							Delete employees
-						</Button>
-					</ButtonsSection>
-				</TopSection>
-				{showDeleteEmployeesModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText="This action will irreversibly delete all your employees"
-						acceptCta="Yes, delete"
-						onAccept={handleAllEmployeesDelete}
-						cancelCta="No, go back"
-						onClose={() => setShowDeleteEmployeesModal(false)}
-					/>
-				)}
-				{showEmployeeAddModal && selectedShelter && (
-					<Modal title="Add employee" onClose={() => setShowEmployeeAddModal(false)}>
-						<StyledForm onSubmit={handleEmployeeCreate}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter employee name"
-								value={employeeName}
-								onChange={setEmployeeName}
-								required
-							/>
-							<SelectField
-								label="Shelter"
-								placeholder="Select shelter"
-								options={shelterOptions}
-								value={selectedShelter}
-								onChange={setSelectedShelter}
-								required
-							/>
-							<Button variant="submit">Create</Button>
-						</StyledForm>
-					</Modal>
-				)}
-				<Results>
-					{employees.map(({ id, name, shelterName }, index) => (
-						<ResultRow key={id}>
-							<span>{index + 1}</span>
-							<span>{name}</span>
-							<span>{shelterName}</span>
-							<Link to={`/app/employee/${id}`}>Details</Link>
-						</ResultRow>
-					))}
-				</Results>
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<TopSection>
+				<SubHeading>Manage your employees</SubHeading>
+				<ButtonsSection>
+					<Button variant="primary" onClick={() => setShowEmployeeAddModal(true)}>
+						Add employee
+					</Button>
+					<Button variant="destructive" onClick={() => setShowDeleteEmployeesModal(true)}>
+						Delete employees
+					</Button>
+				</ButtonsSection>
+			</TopSection>
+			{showDeleteEmployeesModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText="This action will irreversibly delete all your employees"
+					acceptCta="Yes, delete"
+					onAccept={handleAllEmployeesDelete}
+					cancelCta="No, go back"
+					onClose={() => setShowDeleteEmployeesModal(false)}
+				/>
+			)}
+			{showEmployeeAddModal && selectedShelter && (
+				<Modal title="Add employee" onClose={() => setShowEmployeeAddModal(false)}>
+					<StyledForm onSubmit={handleEmployeeCreate}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter employee name"
+							value={employeeName}
+							onChange={setEmployeeName}
+							required
+						/>
+						<SelectField
+							label="Shelter"
+							placeholder="Select shelter"
+							options={shelterOptions}
+							value={selectedShelter}
+							onChange={setSelectedShelter}
+							required
+						/>
+						<Button variant="submit">Create</Button>
+					</StyledForm>
+				</Modal>
+			)}
+			<Results>
+				{employees.map(({ id, name, shelterName }, index) => (
+					<ResultRow key={id}>
+						<span>{index + 1}</span>
+						<span>{name}</span>
+						<span>{shelterName}</span>
+						<Link to={`/app/employee/${id}`}>Details</Link>
+					</ResultRow>
+				))}
+			</Results>
+		</AppLayout>
 	)
 }
 

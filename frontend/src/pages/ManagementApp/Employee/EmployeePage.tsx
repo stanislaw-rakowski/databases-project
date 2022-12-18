@@ -1,19 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams, useNavigate } from 'react-router-dom'
-import {
-	AppWrapper,
-	AppContent,
-	StyledForm,
-	TopSection,
-	SubHeading,
-	Results,
-	Row,
-	ButtonsSection,
-} from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection } from '../../../components/common'
 import { getEmployeeById, deleteEmployeeById, updateEmployeeById } from '../../../lib/api'
 import { Employee } from '../../../types'
-import SideBarMenu from '../../../components/SideBarMenu'
+import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import Modal from '../../../components/Modal'
@@ -57,12 +48,7 @@ const EmployeePage = () => {
 	}, [])
 
 	if (!employee) {
-		return (
-			<AppWrapper>
-				<SideBarMenu />
-				<AppContent />
-			</AppWrapper>
-		)
+		return <AppLayout />
 	}
 
 	const handleEmployeeEdit = async (event: React.FormEvent) => {
@@ -86,53 +72,50 @@ const EmployeePage = () => {
 	}
 
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<TopSection>
-					<SubHeading>Employee Page</SubHeading>
-					<ButtonsSection>
-						<Button variant="primary" onClick={() => setShowEmployeeEditModal(true)}>
-							Edit employee
-						</Button>
-						<Button variant="destructive" onClick={() => setShowDeleteEmployeeModal(true)}>
-							Delete employee
-						</Button>
-					</ButtonsSection>
-				</TopSection>
-				{showDeleteEmployeeModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText="This action will irreversibly delete this employee"
-						acceptCta="Yes, delete"
-						onAccept={handleEmployeeDelete}
-						cancelCta="No, go back"
-						onClose={() => setShowDeleteEmployeeModal(false)}
-					/>
-				)}
-				{showEmployeeEditModal && (
-					<Modal title="Edit employee" onClose={() => setShowEmployeeEditModal(false)}>
-						<StyledForm onSubmit={handleEmployeeEdit}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter employee name"
-								value={employeeName}
-								onChange={setEmployeeName}
-								required
-							/>
-							<Button variant="submit">Edit</Button>
-						</StyledForm>
-					</Modal>
-				)}
-				<Results>
-					<ResultRow>
-						<span>{employee.name}</span>
-						<span>{employee.shelterName}</span>
-					</ResultRow>
-				</Results>
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<TopSection>
+				<SubHeading>Employee Page</SubHeading>
+				<ButtonsSection>
+					<Button variant="primary" onClick={() => setShowEmployeeEditModal(true)}>
+						Edit employee
+					</Button>
+					<Button variant="destructive" onClick={() => setShowDeleteEmployeeModal(true)}>
+						Delete employee
+					</Button>
+				</ButtonsSection>
+			</TopSection>
+			{showDeleteEmployeeModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText="This action will irreversibly delete this employee"
+					acceptCta="Yes, delete"
+					onAccept={handleEmployeeDelete}
+					cancelCta="No, go back"
+					onClose={() => setShowDeleteEmployeeModal(false)}
+				/>
+			)}
+			{showEmployeeEditModal && (
+				<Modal title="Edit employee" onClose={() => setShowEmployeeEditModal(false)}>
+					<StyledForm onSubmit={handleEmployeeEdit}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter employee name"
+							value={employeeName}
+							onChange={setEmployeeName}
+							required
+						/>
+						<Button variant="submit">Edit</Button>
+					</StyledForm>
+				</Modal>
+			)}
+			<Results>
+				<ResultRow>
+					<span>{employee.name}</span>
+					<span>{employee.shelterName}</span>
+				</ResultRow>
+			</Results>
+		</AppLayout>
 	)
 }
 

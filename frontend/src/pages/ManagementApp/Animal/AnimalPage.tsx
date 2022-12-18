@@ -1,10 +1,10 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { AppWrapper, AppContent, StyledForm, TopSection, SubHeading } from '../../../components/common'
+import { StyledForm, TopSection, SubHeading } from '../../../components/common'
 import { getAnimalById, updateAnimalById, deleteAnimalById } from '../../../lib/api'
 import { Animal, AnimalForm, AnimalData } from '../../../types'
-import SideBarMenu from '../../../components/SideBarMenu'
+import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
 import InputField from '../../../components/form/InputField'
 import SelectField from '../../../components/form/SelectField'
@@ -62,12 +62,7 @@ const AnimalPage = () => {
 	}, [])
 
 	if (!animal) {
-		return (
-			<AppWrapper>
-				<SideBarMenu />
-				<AppContent />
-			</AppWrapper>
-		)
+		return <AppLayout />
 	}
 
 	const handleInputValueChange = (key: keyof AnimalForm) => (value: AnimalForm[typeof key]) => {
@@ -99,82 +94,79 @@ const AnimalPage = () => {
 	}
 
 	return (
-		<AppWrapper>
-			<SideBarMenu />
-			<AppContent>
-				<TopSection>
-					<h2>Animal</h2>
-					<SubHeading>{animal.name}</SubHeading>
-					<ButtonsSection>
-						<Button variant="primary" onClick={() => setShowEditModal((curr) => !curr)}>
-							Edit
-						</Button>
-						<Button variant="destructive" onClick={() => setShowDeleteModal(true)}>
-							Delete
-						</Button>
-					</ButtonsSection>
-				</TopSection>
-				<p>
-					{animal.birthDate} - {animal.gender} - {animal.species} - {animal.description}
-				</p>
-				{showDeleteModal && (
-					<ActionModal
-						text="Are you sure?"
-						subText="This action will irreversibly delete this animal"
-						acceptCta="Yes, delete"
-						onAccept={handleAnimalDelete}
-						cancelCta="No, go back"
-						onClose={() => setShowDeleteModal(false)}
-					/>
-				)}
-				{showEditModal && (
-					<Modal title="Edit animal" onClose={() => setShowEditModal(false)}>
-						<StyledForm onSubmit={handleAnimalEdit}>
-							<InputField
-								label="Name"
-								type="text"
-								placeholder="Enter animal name"
-								value={animalFormData.name}
-								onChange={handleInputValueChange('name')}
-								required
-							/>
-							<InputField
-								label="Birth date"
-								type="date"
-								placeholder="Enter birth date"
-								value={animalFormData.birthDate}
-								onChange={handleInputValueChange('birthDate')}
-								required
-							/>
-							<SelectField
-								label="Gender"
-								placeholder="Enter animal gender"
-								value={animalFormData.gender}
-								options={['male', 'female']}
-								onChange={handleInputValueChange('gender')}
-								required
-							/>
-							<SelectField
-								label="Species"
-								placeholder="Enter animal species"
-								value={animalFormData.species}
-								options={['dog', 'cat', 'other']}
-								onChange={handleInputValueChange('species')}
-								required
-							/>
-							<TextAreaField
-								label="Description"
-								placeholder="Enter description"
-								value={animalFormData.description}
-								onChange={handleInputValueChange('description')}
-								required
-							/>
-							<Button variant="submit">Edit</Button>
-						</StyledForm>
-					</Modal>
-				)}
-			</AppContent>
-		</AppWrapper>
+		<AppLayout>
+			<TopSection>
+				<h2>Animal</h2>
+				<SubHeading>{animal.name}</SubHeading>
+				<ButtonsSection>
+					<Button variant="primary" onClick={() => setShowEditModal((curr) => !curr)}>
+						Edit
+					</Button>
+					<Button variant="destructive" onClick={() => setShowDeleteModal(true)}>
+						Delete
+					</Button>
+				</ButtonsSection>
+			</TopSection>
+			<p>
+				{animal.birthDate} - {animal.gender} - {animal.species} - {animal.description}
+			</p>
+			{showDeleteModal && (
+				<ActionModal
+					text="Are you sure?"
+					subText="This action will irreversibly delete this animal"
+					acceptCta="Yes, delete"
+					onAccept={handleAnimalDelete}
+					cancelCta="No, go back"
+					onClose={() => setShowDeleteModal(false)}
+				/>
+			)}
+			{showEditModal && (
+				<Modal title="Edit animal" onClose={() => setShowEditModal(false)}>
+					<StyledForm onSubmit={handleAnimalEdit}>
+						<InputField
+							label="Name"
+							type="text"
+							placeholder="Enter animal name"
+							value={animalFormData.name}
+							onChange={handleInputValueChange('name')}
+							required
+						/>
+						<InputField
+							label="Birth date"
+							type="date"
+							placeholder="Enter birth date"
+							value={animalFormData.birthDate}
+							onChange={handleInputValueChange('birthDate')}
+							required
+						/>
+						<SelectField
+							label="Gender"
+							placeholder="Enter animal gender"
+							value={animalFormData.gender}
+							options={['male', 'female']}
+							onChange={handleInputValueChange('gender')}
+							required
+						/>
+						<SelectField
+							label="Species"
+							placeholder="Enter animal species"
+							value={animalFormData.species}
+							options={['dog', 'cat', 'other']}
+							onChange={handleInputValueChange('species')}
+							required
+						/>
+						<TextAreaField
+							label="Description"
+							placeholder="Enter description"
+							value={animalFormData.description}
+							onChange={handleInputValueChange('description')}
+							required
+						/>
+						<Button variant="submit">Edit</Button>
+					</StyledForm>
+				</Modal>
+			)}
+		</AppLayout>
 	)
 }
 
