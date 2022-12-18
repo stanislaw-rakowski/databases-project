@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection } from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection, Legend } from '../../../components/common'
 import { createEmployee, getEmployees, deleteEmployees, getShelters } from '../../../lib/api'
 import { Employee, Shelter } from '../../../types'
 import AppLayout from '../../../components/AppLayout'
@@ -12,10 +12,12 @@ import Modal from '../../../components/Modal'
 import ActionModal from '../../../components/ActionModal'
 
 const ResultRow = styled(Row)`
-	span {
-		flex: 1;
+	span:nth-of-type(2) {
+		flex: 3;
 	}
+`
 
+const StyledLegend = styled(Legend)`
 	span:nth-of-type(2) {
 		flex: 3;
 	}
@@ -113,6 +115,12 @@ const EmployeesPage = () => {
 				</Modal>
 			)}
 			<Results>
+				<StyledLegend>
+					<span>No.</span>
+					<span>Name</span>
+					<span>Shelter</span>
+					<div>Page link</div>
+				</StyledLegend>
 				{employees.map(({ id, name, shelterName }, index) => (
 					<ResultRow key={id}>
 						<span>{index + 1}</span>

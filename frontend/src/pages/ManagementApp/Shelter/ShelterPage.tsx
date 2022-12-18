@@ -10,7 +10,7 @@ import {
 	deleteAnimals,
 } from '../../../lib/api'
 import { Animal, AnimalData, AnimalForm, Shelter } from '../../../types'
-import { StyledForm, TopSection, SubHeading, Results, Row } from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row, Legend } from '../../../components/common'
 import { SpeciesIcon, GenderIcon } from '../../../components/icons'
 import AppLayout from '../../../components/AppLayout'
 import Button from '../../../components/Button'
@@ -32,10 +32,10 @@ const ButtonsSection = styled.div`
 
 const ResultRow = styled(Row)`
 	gap: 1rem;
+`
 
-	span {
-		flex: 1;
-	}
+const StyledLegend = styled(Legend)`
+	gap: 1rem;
 `
 
 const ShelterPage = () => {
@@ -266,6 +266,14 @@ const ShelterPage = () => {
 				</Modal>
 			)}
 			<Results>
+				<StyledLegend>
+					<span>No.</span>
+					<span>Name</span>
+					<span>Birth date</span>
+					<span>Gender</span>
+					<span>Species</span>
+					<div>Page link</div>
+				</StyledLegend>
 				{animals &&
 					animals.map(({ id, name, birthDate, gender, species }, index) => (
 						<ResultRow key={id}>

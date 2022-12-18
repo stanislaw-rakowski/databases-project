@@ -11,10 +11,6 @@ import Modal from '../../../components/Modal'
 import ActionModal from '../../../components/ActionModal'
 
 const ResultRow = styled(Row)`
-	span {
-		flex: 1;
-	}
-
 	span:nth-of-type(2) {
 		flex: 3;
 	}

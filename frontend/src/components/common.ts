@@ -79,6 +79,10 @@ export const Results = styled.ol`
 	gap: 1rem;
 	padding: 0;
 	list-style: none;
+	max-height: calc(100% - 200px);
+	overflow-y: auto;
+	padding-bottom: 50px;
+	padding-right: 20px;
 `
 
 export const Row = styled.li`
@@ -93,5 +97,23 @@ export const Row = styled.li`
 
 	a {
 		color: inherit;
+	}
+
+	span {
+		flex: 1;
+	}
+`
+
+export const Legend = styled.li`
+	width: 100%;
+	border-radius: 4px;
+	padding: 14px 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.2rem;
+
+	span {
+		flex: 1;
 	}
 `

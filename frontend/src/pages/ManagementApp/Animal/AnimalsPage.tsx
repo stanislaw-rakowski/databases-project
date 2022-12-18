@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { TopSection, SubHeading, Results, Row, StyledForm, ButtonsSection } from '../../../components/common'
+import { TopSection, SubHeading, Results, Row, StyledForm, ButtonsSection, Legend } from '../../../components/common'
 import { SpeciesIcon, GenderIcon } from '../../../components/icons'
 import { getAllAnimals, createAnimal, getShelters } from '../../../lib/api'
 import { AnimalWithShelter, Shelter, AnimalForm, AnimalData } from '../../../types'
@@ -13,10 +13,12 @@ import SelectField from '../../../components/form/SelectField'
 import Modal from '../../../components/Modal'
 
 const ResultRow = styled(Row)`
-	span {
-		flex: 1;
+	span:nth-of-type(2) {
+		flex: 3;
 	}
+`
 
+const StyledLegend = styled(Legend)`
 	span:nth-of-type(2) {
 		flex: 3;
 	}
@@ -146,6 +148,14 @@ const AnimalsPage = () => {
 				</Modal>
 			)}
 			<Results>
+				<StyledLegend>
+					<span>No.</span>
+					<span>Name</span>
+					<span>Gender</span>
+					<span>Species</span>
+					<span>Shelter</span>
+					<div>Page link</div>
+				</StyledLegend>
 				{animals.map(({ id, name, gender, species, shelterName }, index) => (
 					<ResultRow key={id}>
 						<span>{index + 1}</span>

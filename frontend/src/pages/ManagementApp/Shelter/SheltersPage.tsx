@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaLock, FaLockOpen } from 'react-icons/fa'
-import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection } from '../../../components/common'
+import { StyledForm, TopSection, SubHeading, Results, Row, ButtonsSection, Legend } from '../../../components/common'
 import { createShelter, getShelters, deleteShelters } from '../../../lib/api'
 import { Shelter } from '../../../types'
 import AppLayout from '../../../components/AppLayout'
@@ -12,10 +12,12 @@ import Modal from '../../../components/Modal'
 import ActionModal from '../../../components/ActionModal'
 
 const ResultRow = styled(Row)`
-	span {
-		flex: 1;
+	span:nth-of-type(2) {
+		flex: 4;
 	}
+`
 
+const StyledLegend = styled(Legend)`
 	span:nth-of-type(2) {
 		flex: 4;
 	}
@@ -90,6 +92,12 @@ const SheltersPage = () => {
 				</Modal>
 			)}
 			<Results>
+				<StyledLegend>
+					<span>No.</span>
+					<span>Name</span>
+					<span>Published</span>
+					<div>Page link</div>
+				</StyledLegend>
 				{shelters.map(({ shelterId, name, published }, index) => (
 					<ResultRow key={shelterId}>
 						<span>{index + 1}</span>
