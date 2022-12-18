@@ -1,5 +1,6 @@
 import { ThemeProvider } from 'styled-components'
 import { Routes, Route } from 'react-router-dom'
+import { LiveChatWidget } from '@livechat/widget-react'
 import theme from './styles/theme'
 import GlobalStyles from './styles/GlobalStyles'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -21,6 +22,7 @@ const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyles />
+			<LiveChatWidget license="14842539" />
 			<Routes>
 				<Route path="/" element={<HomePage />} />
 				<Route path="/about" element={<LandingPage />} />
