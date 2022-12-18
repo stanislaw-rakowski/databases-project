@@ -66,17 +66,17 @@ const ActionModal = ({ text, subText, acceptCta, onAccept, cancelCta, onClose }:
 				<Title>{text}</Title>
 				<Text>{subText}</Text>
 				<ButtonsSection>
+					<Button onClick={onClose} variant="primary">
+						{cancelCta}
+					</Button>
 					<Button
 						onClick={() => {
 							onAccept()
 							onClose()
 						}}
-						variant="primary"
+						variant="destructive"
 					>
 						{acceptCta}
-					</Button>
-					<Button onClick={onClose} variant="destructive">
-						{cancelCta}
 					</Button>
 				</ButtonsSection>
 			</Content>
