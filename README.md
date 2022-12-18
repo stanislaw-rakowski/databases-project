@@ -29,24 +29,31 @@ Enter backend app folder:
 Create `.env` file at the root of directory and fill it with:
 
 ```
-DATABASE_URL=
 PRIVATE_KEY=
+MYSQLDATABASE=
+MYSQLHOST=
+MYSQLPASSWORD=
+MYSQLPORT=
+MYSQLUSER=
+MYSQL_URL=
 ```
+
+Key `PRIVATE_KEY` must be filled with some random value, but the rest should stay empty
 
 Install the dependencies:
 
 `npm i`
 
-Spin up Docker container:
+Spin up the Docker container in one terminal (or use detached mode providing `-d` flag):
 
 `docker-compose up`
 
-Start the app in dev mode:
+Start the app in dev mode in second terminal:
 
 `npm run dev`
 
 The server is running at [http://localhost:5000](http://localhost:5000)
 
-After finishing remove docker container:
+After finishing decompose the docker container:
 
 `docker-compose down`
