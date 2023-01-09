@@ -26,6 +26,12 @@ CREATE TABLE Employees (
     FOREIGN KEY (organization) REFERENCES Accounts(organizationId) ON DELETE SET NULL
 );
 
+CREATE TABLE Species (
+    name ENUM('dog', 'cat', 'other'),
+    count SMALLINT UNSIGNED,
+    PRIMARY KEY (name)
+);
+
 CREATE TABLE Animals (
     id VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255),
@@ -41,6 +47,26 @@ CREATE TABLE Animals (
     PRIMARY KEY (id),
     FOREIGN KEY (shelter) REFERENCES Shelters(shelterId) ON DELETE SET NULL,
     FOREIGN KEY (organization) REFERENCES Accounts(organizationId) ON DELETE SET NULL,
-    FOREIGN KEY (employee) REFERENCES Employees(id) ON DELETE SET NULL
+    FOREIGN KEY (employee) REFERENCES Employees(id) ON DELETE SET NULL,
+    FOREIGN KEY (species) REFERENCES Species(name) ON DELETE SET NULL
 );
 
+INSERT INTO Species (name, count) VALUES ('dog', 0);
+INSERT INTO Species (name, count) VALUES ('cat', 0);
+INSERT INTO Species (name, count) VALUES ('other', 0);
+
+DELIMITER $$
+CREATE TRIGGER increment_species_count AFTER INSERT ON Animals
+FOR EACH ROW
+BEGIN
+   UPDATE Species SET count = count + 1 WHERE name = NEW.species;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER decrement_species_count AFTER DELETE ON Animals
+FOR EACH ROW
+BEGIN
+   UPDATE Species SET count = count - 1 WHERE name = OLD.species;
+END$$
+DELIMITER ;

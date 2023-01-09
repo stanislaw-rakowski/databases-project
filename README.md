@@ -8,7 +8,9 @@ Enter frontend app folder:
 
 Create `.env` file at the root of directory and fill it with:
 
-`VITE_SERVER_URL=http://localhost:5000`
+```
+VITE_SERVER_URL=http://localhost:5000
+```
 
 Install the dependencies:
 
