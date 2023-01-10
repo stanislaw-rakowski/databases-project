@@ -1,5 +1,9 @@
 # Databases project
 
+## Requirements
+
+Docker and Node.js installed on the computer.
+
 ## Frontend development
 
 Enter frontend app folder:
