@@ -56,17 +56,17 @@ INSERT INTO Species (name, count) VALUES ('cat', 0);
 INSERT INTO Species (name, count) VALUES ('other', 0);
 
 DELIMITER $$
+
 CREATE TRIGGER increment_species_count AFTER INSERT ON Animals
 FOR EACH ROW
 BEGIN
    UPDATE Species SET count = count + 1 WHERE name = NEW.species;
 END$$
-DELIMITER ;
 
-DELIMITER $$
 CREATE TRIGGER decrement_species_count AFTER DELETE ON Animals
 FOR EACH ROW
 BEGIN
    UPDATE Species SET count = count - 1 WHERE name = OLD.species;
 END$$
+
 DELIMITER ;
