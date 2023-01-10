@@ -1,9 +1,10 @@
 import AppLayout from '../../components/AppLayout'
+import { SubHeading } from '../../components/common'
 
 const ManagementPage = () => {
 	return (
 		<AppLayout>
-			<h1>Welcome!</h1>
+			<SubHeading>Welcome!</SubHeading>
 		</AppLayout>
 	)
 }

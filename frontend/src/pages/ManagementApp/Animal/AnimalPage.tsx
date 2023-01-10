@@ -108,7 +108,16 @@ const AnimalPage = () => {
 				</ButtonsSection>
 			</TopSection>
 			<p>
-				{animal.birthDate} - {animal.gender} - {animal.species} - {animal.description}
+				Species: <strong>{animal.species}</strong>
+			</p>
+			<p>
+				Gender: <strong>{animal.gender}</strong>
+			</p>
+			<p>
+				Birth date: <strong>{animal.birthDate}</strong>
+			</p>
+			<p>
+				Description: <strong>{animal.description}</strong>
 			</p>
 			{showDeleteModal && (
 				<ActionModal

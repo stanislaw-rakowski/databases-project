@@ -70,7 +70,8 @@ const EmployeePage = () => {
 	return (
 		<AppLayout>
 			<TopSection>
-				<SubHeading>Employee Page</SubHeading>
+				<h2>Employee Page</h2>
+				<SubHeading>{employee.name}</SubHeading>
 				<ButtonsSection>
 					<Button variant="primary" onClick={() => setShowEmployeeEditModal(true)}>
 						Edit employee
@@ -80,6 +81,9 @@ const EmployeePage = () => {
 					</Button>
 				</ButtonsSection>
 			</TopSection>
+			<p>
+				Shelter: <strong>{employee.shelterName}</strong>
+			</p>
 			{showDeleteEmployeeModal && (
 				<ActionModal
 					text="Are you sure?"
@@ -105,12 +109,6 @@ const EmployeePage = () => {
 					</StyledForm>
 				</Modal>
 			)}
-			<Results>
-				<ResultRow>
-					<span>{employee.name}</span>
-					<span>{employee.shelterName}</span>
-				</ResultRow>
-			</Results>
 		</AppLayout>
 	)
 }
