@@ -112,11 +112,33 @@ export const AccountController = (server: FastifyInstance) => ({
 		try {
 			const organizationId = request.auth.organizationId
 
+			await server.mysql.query('START TRANSACTION')
+
 			await server.mysql.query(
 				`DELETE FROM Accounts 
 				WHERE organizationId = ?`,
 				[organizationId],
 			)
+
+			await server.mysql.query(
+				`DELETE FROM Shelters 
+				WHERE owner = ?`,
+				[organizationId],
+			)
+
+			await server.mysql.query(
+				`DELETE FROM Employees 
+				WHERE organization = ?`,
+				[organizationId],
+			)
+
+			await server.mysql.query(
+				`DELETE FROM Animals 
+				WHERE organization = ?`,
+				[organizationId],
+			)
+
+			await server.mysql.query('COMMIT')
 
 			reply.status(200)
 
